@@ -1,0 +1,20 @@
+{
+  "name": "doc-quality-checker",
+  "version": "1.0.0",
+  "description": "MCP server for documentation quality checking — training project",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "npx ts-node src/index.ts"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.1",
+    "zod": "^3.24.4"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3",
+    "@types/node": "^22.12.0",
+    "ts-node": "^10.9.2"
+  }
+}
