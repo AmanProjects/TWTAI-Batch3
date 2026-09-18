@@ -1,0 +1,644 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module 3 Slides: Prompt Engineering for Documentation Professionals | Tech Writer's Tribe</title>
+  <style>
+    :root {
+      --bg: #f5f7fa;
+      --panel: #ffffff;
+      --ink: #1a2332;
+      --muted: #5a6a7e;
+      --accent: #1a56db;
+      --accent-light: #ebf5ff;
+      --accent-2: #0e9f6e;
+      --line: #e2e8f0;
+      --shadow: 0 4px 24px rgba(26, 35, 50, 0.10);
+      --shadow-lg: 0 8px 40px rgba(26, 35, 50, 0.16);
+      --level-bg: #e3f2fd;
+      --level-text: #1565c0;
+      --level-border: #64b5f6;
+      --code-bg: #1e293b;
+      --code-text: #e2e8f0;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Inter", "Segoe UI", -apple-system, sans-serif;
+      color: var(--ink);
+      background: linear-gradient(135deg, #f0f4ff 0%, #f5f7fa 50%, #eef7f4 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* ── Header bar ── */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1.5rem;
+      background: var(--panel);
+      border-bottom: 1px solid var(--line);
+      flex-shrink: 0;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .brand {
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: var(--accent);
+      letter-spacing: -0.01em;
+    }
+
+    .header-title {
+      font-size: 0.9rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .level-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.22rem 0.65rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      background: var(--level-bg);
+      color: var(--level-text);
+      border: 1px solid var(--level-border);
+    }
+
+    /* ── Slide stage ── */
+    .stage {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem 1.5rem;
+      overflow: hidden;
+    }
+
+    .slide {
+      width: min(1100px, 96vw);
+      height: min(660px, calc(100vh - 130px));
+      background: var(--panel);
+      border-radius: 20px;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-lg);
+      padding: 2rem 2.5rem 1.5rem;
+      display: none;
+      flex-direction: column;
+      gap: 0.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide.active { display: flex; }
+
+    /* Decorative accent circle */
+    .slide::before {
+      content: "";
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      right: -180px;
+      top: -180px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(26,86,219,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .slide-number {
+      position: absolute;
+      top: 1rem;
+      right: 1.5rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    /* ── Slide body typography ── */
+    .slide-body {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .slide-body::-webkit-scrollbar { width: 4px; }
+    .slide-body::-webkit-scrollbar-thumb { background: var(--line); border-radius: 2px; }
+
+    .slide-body h1 {
+      font-size: clamp(1.6rem, 3.2vw, 2.6rem);
+      line-height: 1.15;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin-bottom: 0.1rem;
+    }
+
+    .slide-body h2 {
+      font-size: clamp(1.1rem, 2vw, 1.6rem);
+      font-weight: 600;
+      color: var(--accent);
+      margin-top: 0.5rem;
+    }
+
+    .slide-body h3 {
+      font-size: clamp(0.95rem, 1.5vw, 1.2rem);
+      font-weight: 600;
+      color: var(--muted);
+      margin-top: 0.3rem;
+    }
+
+    .slide-body h4 {
+      font-size: clamp(0.85rem, 1.3vw, 1.05rem);
+      font-weight: 600;
+      color: var(--ink);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-top: 0.5rem;
+    }
+
+    .slide-body p {
+      font-size: clamp(0.95rem, 1.4vw, 1.1rem);
+      line-height: 1.6;
+      color: var(--ink);
+    }
+
+    .slide-body strong { color: var(--ink); }
+
+    .slide-body blockquote {
+      border-left: 4px solid var(--accent);
+      padding: 0.7rem 1rem;
+      background: var(--accent-light);
+      border-radius: 0 10px 10px 0;
+      font-size: clamp(1rem, 1.6vw, 1.25rem);
+      font-style: italic;
+      color: var(--ink);
+      margin: 0.3rem 0;
+    }
+
+    .slide-body ul,
+    .slide-body ol {
+      padding-left: 1.4rem;
+      font-size: clamp(0.92rem, 1.35vw, 1.08rem);
+      line-height: 1.5;
+    }
+
+    .slide-body li { margin: 0.3rem 0; }
+
+    .slide-body ul.checklist { list-style: none; padding-left: 0.2rem; }
+    .slide-body ul.checklist li { display: flex; align-items: flex-start; gap: 0.5rem; }
+    .slide-body ul.checklist input { margin-top: 0.2rem; accent-color: var(--accent-2); }
+
+    .slide-body table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: clamp(0.8rem, 1.15vw, 0.96rem);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+    }
+
+    .slide-body th {
+      background: var(--accent-light);
+      color: var(--accent);
+      font-weight: 700;
+      padding: 0.5rem 0.7rem;
+      text-align: left;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .slide-body td {
+      padding: 0.45rem 0.7rem;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+
+    .slide-body tr:last-child td { border-bottom: none; }
+    .slide-body tr:nth-child(even) td { background: #f8fafc; }
+
+    .slide-body code {
+      background: #f1f5f9;
+      padding: 0.1em 0.35em;
+      border-radius: 4px;
+      font-family: "JetBrains Mono", "Fira Code", Menlo, monospace;
+      font-size: 0.9em;
+      color: #c7254e;
+      border: 1px solid #e2e8f0;
+    }
+
+    .slide-body pre.code-block {
+      background: var(--code-bg);
+      color: var(--code-text);
+      border-radius: 12px;
+      padding: 1rem 1.2rem;
+      font-family: "JetBrains Mono", "Fira Code", Menlo, monospace;
+      font-size: clamp(0.75rem, 1.05vw, 0.9rem);
+      line-height: 1.55;
+      overflow-x: auto;
+      margin: 0.3rem 0;
+      flex-shrink: 0;
+    }
+
+    .slide-body pre.code-block code {
+      background: none;
+      border: none;
+      color: inherit;
+      padding: 0;
+      font-size: inherit;
+    }
+
+    /* ── Controls ── */
+    .controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      padding: 0.75rem 1.5rem;
+      background: var(--panel);
+      border-top: 1px solid var(--line);
+      flex-shrink: 0;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 1.1rem;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--ink);
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .btn:hover { background: var(--accent-light); border-color: var(--accent); color: var(--accent); }
+    .btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    .btn-primary:hover { background: #1447b5; border-color: #1447b5; color: #fff; }
+
+    .progress-wrap {
+      flex: 1;
+      max-width: 400px;
+      background: var(--line);
+      border-radius: 999px;
+      height: 4px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      border-radius: 999px;
+      transition: width 0.25s ease;
+    }
+
+    .slide-counter {
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-weight: 500;
+      min-width: 60px;
+      text-align: center;
+    }
+
+    /* ── Keyboard hint ── */
+    .kbd-hint {
+      font-size: 0.73rem;
+      color: var(--muted);
+      opacity: 0.7;
+    }
+
+    kbd {
+      display: inline-block;
+      padding: 0.05em 0.35em;
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 0.85em;
+    }
+
+    /* ── Speaker notes overlay ── */
+    .notes-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 100;
+      align-items: flex-end;
+      padding: 2rem;
+    }
+
+    .notes-overlay.visible { display: flex; }
+
+    .notes-panel {
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--panel);
+      border-radius: 16px;
+      padding: 1.5rem;
+      max-height: 50vh;
+      overflow-y: auto;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .notes-panel h4 { color: var(--accent); margin-bottom: 0.5rem; }
+    .notes-panel p { font-size: 0.92rem; line-height: 1.55; }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      .slide { padding: 1.2rem 1.1rem; border-radius: 14px; }
+      .slide-body h1 { font-size: 1.4rem; }
+      .header-title { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-left">
+      <span class="brand">TWT</span>
+      <span class="header-title">Module 3 Slides: Prompt Engineering for Documentation Professionals</span>
+    </div>
+    <div class="level-badge">🔵 Beginner</div>
+  </header>
+
+  <main class="stage" id="stage">
+    <section class="slide" id="slide-1">
+      <div class="slide-number">1 / 14</div>
+      <div class="slide-body"><h1>Prompt Engineering</h1>
+<h3>For Documentation Professionals</h3>
+<h4>Module 3 of 8 | 🔵 Beginner Level</h4>
+<p><strong>Tech Writer's Tribe</strong></p>
+<p>AI-Powered Documentation Mastery</p>
+</div>
+    </section>
+
+    <section class="slide" id="slide-2">
+      <div class="slide-number">2 / 14</div>
+      <div class="slide-body"><h1>Quick Recap: Module 2</h1>
+<ul>
+<li>MCP = the USB standard for AI tools</li>
+<li>Skills = reusable prompt templates in markdown</li>
+<li>Tools = deterministic code functions</li>
+<li><strong>Technical writers are natural skill creators</strong></li>
+</ul>
+<blockquote>"Show us the documentation task you picked.</blockquote>
+<blockquote>What does 'done well' look like?"</blockquote>
+</div>
+    </section>
+
+    <section class="slide" id="slide-3">
+      <div class="slide-number">3 / 14</div>
+      <div class="slide-body"><h1>The Prompt → Skill → Agent Spectrum</h1>
+<pre class="code-block"><code>Simple ─────────────────────────────────── Complex
+
+One-off Prompt      Skill (Reusable)      Agent (Autonomous)
+
+"Fix this typo"     /check-api-doc        Full automation
+
+Low effort          Medium effort         High capability
+Zero reuse          High reuse            Needs oversight
+Inconsistent        Consistent            Most powerful</code></pre>
+<p><strong>Your goal today: move one task to a reusable skill.</strong></p>
+</div>
+    </section>
+
+    <section class="slide" id="slide-4">
+      <div class="slide-number">4 / 14</div>
+      <div class="slide-body"><h1>The RTCCO Framework</h1>
+<table>
+<thead><tr><th>Element</th><th>What It Does</th></tr></thead>
+<tbody>
+<tr><td><strong>R</strong>ole</td><td>Sets the AI's perspective and expertise</td></tr>
+<tr><td><strong>T</strong>ask</td><td>What the AI should do</td></tr>
+<tr><td><strong>C</strong>ontext</td><td>Background the AI needs</td></tr>
+<tr><td><strong>C</strong>onstraints</td><td>Boundaries and rules</td></tr>
+<tr><td><strong>O</strong>utput format</td><td>How the result should look</td></tr>
+</tbody></table>
+<blockquote>Most beginners include Role and Task.</blockquote>
+<blockquote>The differentiator is Context, Constraints, and Output.</blockquote>
+</div>
+    </section>
+
+    <section class="slide" id="slide-5">
+      <div class="slide-number">5 / 14</div>
+      <div class="slide-body"><h1>Prompt Quality Comparison</h1>
+<p><strong>Weak (no RTCCO):</strong></p>
+<pre class="code-block"><code>Review this file.</code></pre>
+<p><strong>Partial (Role + Task only):</strong></p>
+<pre class="code-block"><code>You are a technical editor.
+Review this API doc for completeness.</code></pre>
+<p><strong>Strong (full RTCCO):</strong></p>
+<pre class="code-block"><code>You are a senior technical editor with 10 years in API documentation.
+Review the API endpoint doc at $ARGUMENTS for completeness.
+Context: Readers are junior developers. We follow Google Dev Style Guide.
+Constraints: Do NOT modify code. Flag issues in prose only.
+Output: Markdown table — Section | Status | Finding | Fix</code></pre>
+</div>
+    </section>
+
+    <section class="slide" id="slide-6">
+      <div class="slide-number">6 / 14</div>
+      <div class="slide-body"><h1>Anatomy of a Claude Skill File</h1>
+<pre class="code-block"><code>.claude/
+  commands/
+    check-api-doc.md    ← your skill lives here</code></pre>
+<pre class="code-block"><code>You are a [ROLE].                         ← R
+
+Review the file at: $ARGUMENTS            ← T + input
+
+Context: [who reads it, style guide]      ← C
+
+Check for:
+1. [Criterion 1]
+2. [Criterion 2]                          ← detailed task
+
+Constraints: [what NOT to do]             ← C
+
+Output: [exact format description]        ← O</code></pre>
+</div>
+    </section>
+
+    <section class="slide" id="slide-7">
+      <div class="slide-number">7 / 14</div>
+      <div class="slide-body"><h1>The $ARGUMENTS Variable</h1>
+<pre class="code-block"><code>Review the documentation at: $ARGUMENTS</code></pre>
+<p>When you run:</p>
+<pre class="code-block"><code>/check-api-doc path/to/my-api.md</code></pre>
+<p><code>$ARGUMENTS</code> becomes <code>path/to/my-api.md</code></p>
+<p><strong>This is what makes a skill reusable — it works on any file.</strong></p>
+</div>
+    </section>
+
+    <section class="slide" id="slide-8">
+      <div class="slide-number">8 / 14</div>
+      <div class="slide-body"><h1>Build Your First Skill (Workshop)</h1>
+<p><strong>Step 1:</strong> Create the folder</p>
+<pre class="code-block"><code>mkdir -p .claude/commands</code></pre>
+<p><strong>Step 2:</strong> Create <code>.claude/commands/check-api-doc.md</code></p>
+<p>Use the RTCCO template. Fill in YOUR context.</p>
+<p><strong>Step 3:</strong> Test it</p>
+<pre class="code-block"><code>/check-api-doc sample-project/test-docs/bad-api-doc.md</code></pre>
+<p><strong>Step 4:</strong> Iterate</p>
+<p>Pick one thing that didn't work. Fix it.</p>
+</div>
+    </section>
+
+    <section class="slide" id="slide-9">
+      <div class="slide-number">9 / 14</div>
+      <div class="slide-body"><h1>Common First-Round Fixes</h1>
+<table>
+<thead><tr><th>Problem</th><th>Fix</th></tr></thead>
+<tbody>
+<tr><td>Role was too vague</td><td>Make it specific: "senior technical editor specializing in REST API documentation"</td></tr>
+<tr><td>Output was unstructured</td><td>Add an explicit table or list format</td></tr>
+<tr><td>AI added too much commentary</td><td>Add: "Output ONLY the table. No preamble."</td></tr>
+<tr><td>Criteria were ambiguous</td><td>Describe what PASS looks like, not just the criterion name</td></tr>
+<tr><td>False positives</td><td>Narrow the scope in Constraints</td></tr>
+</tbody></table>
+</div>
+    </section>
+
+    <section class="slide" id="slide-10">
+      <div class="slide-number">10 / 14</div>
+      <div class="slide-body"><h1>Level Up: The <code>skill-creator</code> Tool</h1>
+<p>You just built a skill by hand. Now automate the busywork.</p>
+<p><strong><code>skill-creator</code></strong> is an official Anthropic skill that <em>creates other skills</em> — it interviews you, scaffolds the file, and can test and improve existing skills.</p>
+<p><strong>Install (one time):</strong></p>
+<pre class="code-block"><code>/plugin install skill-creator@claude-plugins-official</code></pre>
+<p><strong>Use it:</strong></p>
+<pre class="code-block"><code>/skill-creator</code></pre>
+<p>Then describe your task in plain language.</p>
+<blockquote>RTCCO is the recipe. <code>skill-creator</code> is the sous-chef.</blockquote>
+</div>
+    </section>
+
+    <section class="slide" id="slide-11">
+      <div class="slide-number">11 / 14</div>
+      <div class="slide-body"><h1>Commands vs. Agent Skills</h1>
+<p><code>skill-creator</code> writes an <strong>Agent Skill</strong> — a folder with a <code>SKILL.md</code>:</p>
+<pre class="code-block"><code>.claude/skills/check-api-doc/SKILL.md</code></pre>
+<table>
+<thead><tr><th></th><th><code>.claude/commands/*.md</code></th><th><code>SKILL.md</code></th></tr></thead>
+<tbody>
+<tr><td>Frontmatter</td><td>Optional</td><td><code>name</code> + <code>description</code></td></tr>
+<tr><td>How it runs</td><td>You type <code>/name</code></td><td><code>/name</code> <strong>or</strong> auto-invoked</td></tr>
+<tr><td>Extra files</td><td>Single file</td><td>Bundle helpers</td></tr>
+</tbody></table>
+<p><strong>Both make a <code>/name</code> command.</strong> Hand-write simple prompts; use <code>skill-creator</code> for structure, auto-triggering, and testing.</p>
+</div>
+    </section>
+
+    <section class="slide" id="slide-12">
+      <div class="slide-number">12 / 14</div>
+      <div class="slide-body"><h1>Discussion</h1>
+<ol>
+<li>What was the hardest RTCCO element to write?</li>
+</ol>
+<p><em>(Most say: Constraints)</em></p>
+<ol>
+<li>What surprised you about how the AI interpreted your prompt?</li>
+</ol>
+<ol>
+<li>How is writing a skill different from writing a procedure for a human?</li>
+</ol>
+</div>
+    </section>
+
+    <section class="slide" id="slide-13">
+      <div class="slide-number">13 / 14</div>
+      <div class="slide-body"><h1>Before Module 4</h1>
+<ol>
+<li><strong>Refine</strong> your <code>/check-api-doc</code> skill — use it on real work</li>
+<li><strong>Build one more skill</strong> from scratch:</li>
+</ol>
+<p>- <code>/style-check</code> — check against your style guide</p>
+<p>- <code>/release-notes</code> — generate from changelog or git log</p>
+<p>- <code>/glossary-check</code> — flag terms needing glossary entries</p>
+<ol>
+<li><strong>Install <code>skill-creator</code></strong> and use it to build or refine one skill</li>
+<li>Come to Module 4 with <strong>a skill ready to publish for the team</strong></li>
+</ol>
+</div>
+    </section>
+
+    <section class="slide" id="slide-14">
+      <div class="slide-number">14 / 14</div>
+      <div class="slide-body"><h1>🔵 Beginner Checkpoint: Module 3</h1>
+<ul class="checklist">
+<li><input type="checkbox"  disabled> Name the 5 RTCCO elements from memory</li>
+<li><input type="checkbox"  disabled> Explain why <code>$ARGUMENTS</code> makes a skill reusable</li>
+<li><input type="checkbox"  disabled> Build a skill from a blank markdown file</li>
+<li><input type="checkbox"  disabled> Test and iterate based on output quality</li>
+<li><input type="checkbox"  disabled> Install <code>skill-creator</code> and scaffold a skill with it</li>
+<li><input type="checkbox"  disabled> Explain the difference between a command and an Agent Skill</li>
+</ul>
+<p><strong>Next: Module 4 — Sharing Your Skills →</strong></p>
+</div>
+    </section>
+  </main>
+
+  <footer class="controls">
+    <button class="btn" id="btn-prev" onclick="prevSlide()" disabled>&#8592; Prev</button>
+    <div class="progress-wrap">
+      <div class="progress-bar" id="progress-bar" style="width: 7.1%"></div>
+    </div>
+    <span class="slide-counter" id="counter">1 / 14</span>
+    <button class="btn btn-primary" id="btn-next" onclick="nextSlide()">Next &#8594;</button>
+    <span class="kbd-hint"><kbd>←</kbd><kbd>→</kbd> navigate</span>
+  </footer>
+
+  <script>
+    let current = 0;
+    const total = 14;
+    const slides = document.querySelectorAll('.slide');
+
+    function show(n) {
+      slides.forEach(s => s.classList.remove('active'));
+      slides[n].classList.add('active');
+      current = n;
+      document.getElementById('counter').textContent = (n + 1) + ' / ' + total;
+      document.getElementById('progress-bar').style.width = ((n + 1) / total * 100).toFixed(1) + '%';
+      document.getElementById('btn-prev').disabled = n === 0;
+      document.getElementById('btn-next').disabled = n === total - 1;
+      document.getElementById('btn-next').textContent = n === total - 1 ? 'End ✓' : 'Next →';
+    }
+
+    function nextSlide() { if (current < total - 1) show(current + 1); }
+    function prevSlide() { if (current > 0) show(current - 1); }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); prevSlide(); }
+      if (e.key === 'Home') { e.preventDefault(); show(0); }
+      if (e.key === 'End') { e.preventDefault(); show(total - 1); }
+    });
+
+    show(0);
+  </script>
+</body>
+</html>
