@@ -14,7 +14,7 @@ You're still in **Novice** territory — building conceptual foundations before 
 By the end of Module 2, you will be able to:
 - Explain MCP in plain language using the USB analogy
 - Distinguish between tools, resources, and prompts in MCP
-- Explain what a Claude Skill is and why technical writers are natural skill creators
+- Explain what an Agent Skill is and why technical writers are natural skill creators
 - Identify three tasks in your own workflow that could become skills or tools
 
 ---
@@ -90,11 +90,21 @@ Before USB, every device had a different proprietary connector — printers, cam
 
 ---
 
-## Claude Skills: The Docs Professional's Superpower (20 min)
+## Agent Skills: The Docs Professional's Superpower (20 min)
 
-A **Claude Skill** (also called an Agent Command) is a markdown file that contains a reusable prompt.
+An **Agent Skill** (also called a custom slash command in Claude Code) is a reusable prompt template stored as a markdown file. When you run `/skill-name`, the skill's instructions are injected into the conversation — giving the AI a specialized persona and checklist for that task.
 
-Store it in `.claude/commands/` and you can run it with `/skill-name` any time, on any file.
+Skills do **not** run code themselves. They guide the AI's behavior.
+
+### Where Skills Live (Preview)
+
+| Scope | Claude Code | Cursor | Share with team? |
+|-------|-------------|--------|-----------------|
+| **Project** | `.claude/commands/<name>.md` or `.claude/skills/<name>/SKILL.md` | `.cursor/skills/<name>/SKILL.md` | ✅ Yes |
+| **Personal** (one project) | `.claude/commands/user/<name>.md` | — | ❌ No |
+| **Global** (all projects) | `~/.claude/skills/<name>/SKILL.md` | `~/.cursor/skills/<name>/SKILL.md` | N/A |
+
+Module 3 goes deep on building these. For now: a skill is a markdown file with clear instructions — and you already write those for a living.
 
 ### The Spectrum: Prompt → Skill → Agent
 
@@ -194,7 +204,7 @@ Discuss your answers as a group.
 
 ### Reflection Questions
 
-1. What in your current workflow could become a Claude Skill?
+1. What in your current workflow could become an Agent Skill?
 2. What would need a real tool (i.e., code access to your files or systems)?
 3. What would be your *first* skill if you built one this weekend?
 
@@ -217,6 +227,7 @@ Before moving to Module 3, confirm you can:
 
 - [ ] Explain MCP using the USB analogy in your own words
 - [ ] Distinguish between a Tool, a Resource, and a Prompt in MCP
-- [ ] Explain what a Claude Skill is without using jargon
+- [ ] Explain what an Agent Skill is without using jargon
+- [ ] Name the three skill scopes (project, personal, global)
 - [ ] Name two tasks in your workflow that could become skills
 - [ ] Explain the difference between a skill and a tool (deterministic vs. AI-generated)
