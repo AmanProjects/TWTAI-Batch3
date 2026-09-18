@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Module 3 Slides: Prompt Engineering for Documentation Professionals | Tech Writer's Tribe</title>
+  <title>Module 3: Prompt Engineering & Skills Workshop | Tech Writer's Tribe</title>
   <style>
     :root {
       --bg: #f5f7fa;
@@ -381,38 +381,41 @@
   <header class="header">
     <div class="header-left">
       <span class="brand">TWT</span>
-      <span class="header-title">Module 3 Slides: Prompt Engineering for Documentation Professionals</span>
+      <span class="header-title">Module 3: Prompt Engineering &amp; Skills Workshop</span>
     </div>
     <div class="level-badge">🔵 Beginner</div>
   </header>
 
+  <!-- Facilitator notes: modules/03-prompt-engineering-beginner/lesson.md (1 slide = 1 section) -->
   <main class="stage" id="stage">
+    <!-- Slide 1: Title -->
     <section class="slide" id="slide-1">
-      <div class="slide-number">1 / 14</div>
+      <div class="slide-number">1 / 18</div>
       <div class="slide-body"><h1>Prompt Engineering</h1>
 <h3>For Documentation Professionals</h3>
-<h4>Module 3 of 8 | 🔵 Beginner Level</h4>
+<h4>Module 3 of 8 | 🔵 Beginner Level | Skills Workshop</h4>
 <p><strong>Tech Writer's Tribe</strong></p>
 <p>AI-Powered Documentation Mastery</p>
 </div>
     </section>
 
+    <!-- Slide 2: Quick Recap -->
     <section class="slide" id="slide-2">
-      <div class="slide-number">2 / 14</div>
+      <div class="slide-number">2 / 18</div>
       <div class="slide-body"><h1>Quick Recap: Module 2</h1>
 <ul>
 <li>MCP = the USB standard for AI tools</li>
-<li>Skills = reusable prompt templates in markdown</li>
+<li>Agent Skills = reusable prompt templates in markdown</li>
 <li>Tools = deterministic code functions</li>
 <li><strong>Technical writers are natural skill creators</strong></li>
 </ul>
-<blockquote>"Show us the documentation task you picked.</blockquote>
-<blockquote>What does 'done well' look like?"</blockquote>
+<blockquote>"Show us the documentation task you picked. What does 'done well' look like?"</blockquote>
 </div>
     </section>
 
+    <!-- Slide 3: Prompt → Skill → Agent Spectrum -->
     <section class="slide" id="slide-3">
-      <div class="slide-number">3 / 14</div>
+      <div class="slide-number">3 / 18</div>
       <div class="slide-body"><h1>The Prompt → Skill → Agent Spectrum</h1>
 <pre class="code-block"><code>Simple ─────────────────────────────────── Complex
 
@@ -427,8 +430,9 @@ Inconsistent        Consistent            Most powerful</code></pre>
 </div>
     </section>
 
+    <!-- Slide 4: RTCCO Framework -->
     <section class="slide" id="slide-4">
-      <div class="slide-number">4 / 14</div>
+      <div class="slide-number">4 / 18</div>
       <div class="slide-body"><h1>The RTCCO Framework</h1>
 <table>
 <thead><tr><th>Element</th><th>What It Does</th></tr></thead>
@@ -439,13 +443,13 @@ Inconsistent        Consistent            Most powerful</code></pre>
 <tr><td><strong>C</strong>onstraints</td><td>Boundaries and rules</td></tr>
 <tr><td><strong>O</strong>utput format</td><td>How the result should look</td></tr>
 </tbody></table>
-<blockquote>Most beginners include Role and Task.</blockquote>
-<blockquote>The differentiator is Context, Constraints, and Output.</blockquote>
+<blockquote>Most beginners include Role and Task. The differentiator is Context, Constraints, and Output.</blockquote>
 </div>
     </section>
 
+    <!-- Slide 5: Prompt Quality Comparison -->
     <section class="slide" id="slide-5">
-      <div class="slide-number">5 / 14</div>
+      <div class="slide-number">5 / 18</div>
       <div class="slide-body"><h1>Prompt Quality Comparison</h1>
 <p><strong>Weak (no RTCCO):</strong></p>
 <pre class="code-block"><code>Review this file.</code></pre>
@@ -461,30 +465,70 @@ Output: Markdown table — Section | Status | Finding | Fix</code></pre>
 </div>
     </section>
 
+    <!-- Slide 6: What Are Agent Skills? -->
     <section class="slide" id="slide-6">
-      <div class="slide-number">6 / 14</div>
-      <div class="slide-body"><h1>Anatomy of a Claude Skill File</h1>
-<pre class="code-block"><code>.claude/
-  commands/
-    check-api-doc.md    ← your skill lives here</code></pre>
-<pre class="code-block"><code>You are a [ROLE].                         ← R
-
-Review the file at: $ARGUMENTS            ← T + input
-
-Context: [who reads it, style guide]      ← C
-
-Check for:
-1. [Criterion 1]
-2. [Criterion 2]                          ← detailed task
-
-Constraints: [what NOT to do]             ← C
-
-Output: [exact format description]        ← O</code></pre>
+      <div class="slide-number">6 / 18</div>
+      <div class="slide-body"><h1>What Are Agent Skills?</h1>
+<p>Skills are <strong>reusable prompt templates</strong> — saved expert personas you invoke with <code>/skill-name</code>.</p>
+<ol>
+<li>Create a markdown file (<code>SKILL.md</code> or <code>.claude/commands/*.md</code>)</li>
+<li>When invoked, content is injected as instructions</li>
+<li>Claude executes using built-in tools (read, search, bash)</li>
+</ol>
+<p>Skills do <strong>not</strong> run code themselves — they guide AI behavior.</p>
+<blockquote>Use skills for AI judgment. Use MCP tools for deterministic logic.</blockquote>
 </div>
     </section>
 
+    <!-- Slide 7: Where Skills Live -->
     <section class="slide" id="slide-7">
-      <div class="slide-number">7 / 14</div>
+      <div class="slide-number">7 / 18</div>
+      <div class="slide-body"><h1>Where Skills Live</h1>
+<table>
+<thead><tr><th>Scope</th><th>Claude Code</th><th>Cursor</th><th>Git?</th></tr></thead>
+<tbody>
+<tr><td><strong>Project</strong></td><td><code>.claude/commands/&lt;name&gt;.md</code></td><td><code>.cursor/skills/&lt;name&gt;/SKILL.md</code></td><td>✅</td></tr>
+<tr><td><strong>Agent Skill</strong></td><td><code>.claude/skills/&lt;name&gt;/SKILL.md</code></td><td>—</td><td>✅</td></tr>
+<tr><td><strong>Personal</strong></td><td><code>.claude/commands/user/&lt;name&gt;.md</code></td><td>—</td><td>❌</td></tr>
+<tr><td><strong>Global</strong></td><td><code>~/.claude/skills/&lt;name&gt;/SKILL.md</code></td><td><code>~/.cursor/skills/&lt;name&gt;/SKILL.md</code></td><td>N/A</td></tr>
+</tbody></table>
+<p><strong>Priority:</strong> project skills override global when names conflict.</p>
+</div>
+    </section>
+
+    <!-- Slide 8: Format A vs Format B -->
+    <section class="slide" id="slide-8">
+      <div class="slide-number">8 / 18</div>
+      <div class="slide-body"><h1>Format A vs Format B</h1>
+<table>
+<thead><tr><th></th><th>Format A (quick)</th><th>Format B (Agent Skill)</th></tr></thead>
+<tbody>
+<tr><td><strong>Path</strong></td><td><code>.claude/commands/&lt;name&gt;.md</code></td><td><code>.claude/skills/&lt;name&gt;/SKILL.md</code></td></tr>
+<tr><td><strong>Frontmatter</strong></td><td>Optional</td><td><code>name</code> + <code>description</code></td></tr>
+<tr><td><strong>Runs via</strong></td><td><code>/name</code></td><td><code>/name</code> or auto-invoked</td></tr>
+<tr><td><strong>Best for</strong></td><td>Quick one-file prompts</td><td>Sharing, auto-discovery, helpers</td></tr>
+</tbody></table>
+<p>Start with Format A today. <code>skill-creator</code> produces Format B.</p>
+</div>
+    </section>
+
+    <!-- Slide 9: Skill Anatomy -->
+    <section class="slide" id="slide-9">
+      <div class="slide-number">9 / 18</div>
+      <div class="slide-body"><h1>Skill Anatomy (RTCCO in Practice)</h1>
+<pre class="code-block"><code>You are a [ROLE].                         ← R
+Review the file at: $ARGUMENTS            ← T + input
+Context: [audience, style guide]          ← C
+Check for: 1. … 2. …                      ← detailed task
+Constraints: [what NOT to do]             ← C
+Output: [exact table or list format]      ← O</code></pre>
+<p>Templates: <code>resources/skill-templates.md</code> · Examples: <code>sample-project/.claude/commands/</code></p>
+</div>
+    </section>
+
+    <!-- Slide 10: $ARGUMENTS -->
+    <section class="slide" id="slide-10">
+      <div class="slide-number">10 / 18</div>
       <div class="slide-body"><h1>The $ARGUMENTS Variable</h1>
 <pre class="code-block"><code>Review the documentation at: $ARGUMENTS</code></pre>
 <p>When you run:</p>
@@ -494,108 +538,118 @@ Output: [exact format description]        ← O</code></pre>
 </div>
     </section>
 
-    <section class="slide" id="slide-8">
-      <div class="slide-number">8 / 14</div>
-      <div class="slide-body"><h1>Build Your First Skill (Workshop)</h1>
+    <!-- Slide 11: Workshop -->
+    <section class="slide" id="slide-11">
+      <div class="slide-number">11 / 18</div>
+      <div class="slide-body"><h1>Workshop: Build Your First Skill</h1>
 <p><strong>Step 1:</strong> Create the folder</p>
 <pre class="code-block"><code>mkdir -p .claude/commands</code></pre>
-<p><strong>Step 2:</strong> Create <code>.claude/commands/check-api-doc.md</code></p>
-<p>Use the RTCCO template. Fill in YOUR context.</p>
+<p><strong>Step 2:</strong> Create <code>.claude/commands/check-api-doc.md</code> using RTCCO</p>
 <p><strong>Step 3:</strong> Test it</p>
 <pre class="code-block"><code>/check-api-doc sample-project/test-docs/bad-api-doc.md</code></pre>
-<p><strong>Step 4:</strong> Iterate</p>
-<p>Pick one thing that didn't work. Fix it.</p>
+<p><strong>Step 4:</strong> Iterate — fix one thing that didn't work</p>
+<p><em>Cursor users: <code>mkdir -p .cursor/skills/check-api-doc</code> and create <code>SKILL.md</code> instead.</em></p>
 </div>
     </section>
 
-    <section class="slide" id="slide-9">
-      <div class="slide-number">9 / 14</div>
+    <!-- Slide 12: Common First-Round Fixes -->
+    <section class="slide" id="slide-12">
+      <div class="slide-number">12 / 18</div>
       <div class="slide-body"><h1>Common First-Round Fixes</h1>
 <table>
 <thead><tr><th>Problem</th><th>Fix</th></tr></thead>
 <tbody>
-<tr><td>Role was too vague</td><td>Make it specific: "senior technical editor specializing in REST API documentation"</td></tr>
+<tr><td>Role was too vague</td><td>"Senior technical editor specializing in REST API documentation"</td></tr>
 <tr><td>Output was unstructured</td><td>Add an explicit table or list format</td></tr>
-<tr><td>AI added too much commentary</td><td>Add: "Output ONLY the table. No preamble."</td></tr>
-<tr><td>Criteria were ambiguous</td><td>Describe what PASS looks like, not just the criterion name</td></tr>
+<tr><td>AI added too much commentary</td><td>"Output ONLY the table. No preamble."</td></tr>
+<tr><td>Criteria were ambiguous</td><td>Describe what PASS looks like</td></tr>
 <tr><td>False positives</td><td>Narrow the scope in Constraints</td></tr>
 </tbody></table>
 </div>
     </section>
 
-    <section class="slide" id="slide-10">
-      <div class="slide-number">10 / 14</div>
+    <!-- Slide 13: VS Code & Cursor -->
+    <section class="slide" id="slide-13">
+      <div class="slide-number">13 / 18</div>
+      <div class="slide-body"><h1>Using Skills in VS Code &amp; Cursor</h1>
+<p><strong>VS Code</strong> (Claude Code extension): Cmd+Shift+P → "Claude Code: Open" → type <code>/</code></p>
+<p><strong>Cursor:</strong> Skills in <code>.cursor/skills/</code> are available to the agent; with Claude Code in the terminal, type <code>/</code></p>
+<ul>
+<li>Skills are detected automatically — no restart needed</li>
+<li>Add arguments after the command: <code>/check-api-doc path/to/file.md</code></li>
+<li>Invoke mid-conversation to switch Claude's behavior</li>
+</ul>
+</div>
+    </section>
+
+    <!-- Slide 14: Tips Do & Don't -->
+    <section class="slide" id="slide-14">
+      <div class="slide-number">14 / 18</div>
+      <div class="slide-body"><h1>Tips: Do &amp; Don't</h1>
+<table>
+<thead><tr><th>✅ Do</th><th>❌ Don't</th></tr></thead>
+<tbody>
+<tr><td>Be specific with Role</td><td>Write code inside skills — use MCP tools</td></tr>
+<tr><td>Set output format explicitly</td><td>Exceed ~500 words — split into multiple skills</td></tr>
+<tr><td>Use <code>$ARGUMENTS</code> for file input</td><td>Duplicate deterministic tool logic</td></tr>
+<tr><td>One skill = one task</td><td>Leave constraints open-ended</td></tr>
+</tbody></table>
+</div>
+    </section>
+
+    <!-- Slide 15: skill-creator -->
+    <section class="slide" id="slide-15">
+      <div class="slide-number">15 / 18</div>
       <div class="slide-body"><h1>Level Up: The <code>skill-creator</code> Tool</h1>
-<p>You just built a skill by hand. Now automate the busywork.</p>
-<p><strong><code>skill-creator</code></strong> is an official Anthropic skill that <em>creates other skills</em> — it interviews you, scaffolds the file, and can test and improve existing skills.</p>
+<p>You built a skill by hand. Now automate the busywork.</p>
+<p><strong><code>skill-creator</code></strong> interviews you, scaffolds Format B skills, and can test and improve existing ones.</p>
 <p><strong>Install (one time):</strong></p>
 <pre class="code-block"><code>/plugin install skill-creator@claude-plugins-official</code></pre>
-<p><strong>Use it:</strong></p>
-<pre class="code-block"><code>/skill-creator</code></pre>
-<p>Then describe your task in plain language.</p>
+<p><strong>Use it:</strong> <code>/skill-creator</code> — then describe your task in plain language.</p>
 <blockquote>RTCCO is the recipe. <code>skill-creator</code> is the sous-chef.</blockquote>
 </div>
     </section>
 
-    <section class="slide" id="slide-11">
-      <div class="slide-number">11 / 14</div>
-      <div class="slide-body"><h1>Commands vs. Agent Skills</h1>
-<p><code>skill-creator</code> writes an <strong>Agent Skill</strong> — a folder with a <code>SKILL.md</code>:</p>
-<pre class="code-block"><code>.claude/skills/check-api-doc/SKILL.md</code></pre>
-<table>
-<thead><tr><th></th><th><code>.claude/commands/*.md</code></th><th><code>SKILL.md</code></th></tr></thead>
-<tbody>
-<tr><td>Frontmatter</td><td>Optional</td><td><code>name</code> + <code>description</code></td></tr>
-<tr><td>How it runs</td><td>You type <code>/name</code></td><td><code>/name</code> <strong>or</strong> auto-invoked</td></tr>
-<tr><td>Extra files</td><td>Single file</td><td>Bundle helpers</td></tr>
-</tbody></table>
-<p><strong>Both make a <code>/name</code> command.</strong> Hand-write simple prompts; use <code>skill-creator</code> for structure, auto-triggering, and testing.</p>
-</div>
-    </section>
-
-    <section class="slide" id="slide-12">
-      <div class="slide-number">12 / 14</div>
+    <!-- Slide 16: Discussion -->
+    <section class="slide" id="slide-16">
+      <div class="slide-number">16 / 18</div>
       <div class="slide-body"><h1>Discussion</h1>
 <ol>
-<li>What was the hardest RTCCO element to write?</li>
-</ol>
-<p><em>(Most say: Constraints)</em></p>
-<ol>
+<li>What was the hardest RTCCO element to write? <em>(Usually: Constraints)</em></li>
 <li>What surprised you about how the AI interpreted your prompt?</li>
-</ol>
-<ol>
 <li>How is writing a skill different from writing a procedure for a human?</li>
+<li>Would you commit your skill for the team, or keep it personal?</li>
 </ol>
 </div>
     </section>
 
-    <section class="slide" id="slide-13">
-      <div class="slide-number">13 / 14</div>
+    <!-- Slide 17: Homework -->
+    <section class="slide" id="slide-17">
+      <div class="slide-number">17 / 18</div>
       <div class="slide-body"><h1>Before Module 4</h1>
 <ol>
-<li><strong>Refine</strong> your <code>/check-api-doc</code> skill — use it on real work</li>
-<li><strong>Build one more skill</strong> from scratch:</li>
-</ol>
-<p>- <code>/style-check</code> — check against your style guide</p>
-<p>- <code>/release-notes</code> — generate from changelog or git log</p>
-<p>- <code>/glossary-check</code> — flag terms needing glossary entries</p>
-<ol>
-<li><strong>Install <code>skill-creator</code></strong> and use it to build or refine one skill</li>
+<li><strong>Refine</strong> your <code>/check-api-doc</code> skill on real work</li>
+<li><strong>Build one more skill</strong> — <code>/style-check</code>, <code>/release-notes</code>, or <code>/glossary-check</code> (see <code>resources/skill-templates.md</code>)</li>
+<li><strong>Try</strong> <code>/style-check</code> on <code>sample-project/test-docs/bad-api-doc.md</code></li>
+<li><strong>Install <code>skill-creator</code></strong> and compare its output to your hand-written skill</li>
 <li>Come to Module 4 with <strong>a skill ready to publish for the team</strong></li>
 </ol>
 </div>
     </section>
 
-    <section class="slide" id="slide-14">
-      <div class="slide-number">14 / 14</div>
+    <!-- Slide 18: Beginner Checkpoint -->
+    <section class="slide" id="slide-18">
+      <div class="slide-number">18 / 18</div>
       <div class="slide-body"><h1>🔵 Beginner Checkpoint: Module 3</h1>
 <ul class="checklist">
-<li><input type="checkbox"  disabled> Name the 5 RTCCO elements from memory</li>
-<li><input type="checkbox"  disabled> Explain why <code>$ARGUMENTS</code> makes a skill reusable</li>
-<li><input type="checkbox"  disabled> Build a skill from a blank markdown file</li>
-<li><input type="checkbox"  disabled> Test and iterate based on output quality</li>
-<li><input type="checkbox"  disabled> Install <code>skill-creator</code> and scaffold a skill with it</li>
-<li><input type="checkbox"  disabled> Explain the difference between a command and an Agent Skill</li>
+<li><input type="checkbox" disabled> Name the 5 RTCCO elements from memory</li>
+<li><input type="checkbox" disabled> Explain why <code>$ARGUMENTS</code> makes a skill reusable</li>
+<li><input type="checkbox" disabled> Choose the right skill scope (project, personal, global)</li>
+<li><input type="checkbox" disabled> Build a skill from a blank markdown file</li>
+<li><input type="checkbox" disabled> Test and iterate based on output quality</li>
+<li><input type="checkbox" disabled> Identify which RTCCO element is weakest in a prompt</li>
+<li><input type="checkbox" disabled> Install <code>skill-creator</code> and scaffold a skill with it</li>
+<li><input type="checkbox" disabled> Explain Format A vs Format B</li>
 </ul>
 <p><strong>Next: Module 4 — Sharing Your Skills →</strong></p>
 </div>
@@ -605,16 +659,16 @@ Output: [exact format description]        ← O</code></pre>
   <footer class="controls">
     <button class="btn" id="btn-prev" onclick="prevSlide()" disabled>&#8592; Prev</button>
     <div class="progress-wrap">
-      <div class="progress-bar" id="progress-bar" style="width: 7.1%"></div>
+      <div class="progress-bar" id="progress-bar" style="width: 5.6%"></div>
     </div>
-    <span class="slide-counter" id="counter">1 / 14</span>
+    <span class="slide-counter" id="counter">1 / 18</span>
     <button class="btn btn-primary" id="btn-next" onclick="nextSlide()">Next &#8594;</button>
     <span class="kbd-hint"><kbd>←</kbd><kbd>→</kbd> navigate</span>
   </footer>
 
   <script>
     let current = 0;
-    const total = 14;
+    const total = 18;
     const slides = document.querySelectorAll('.slide');
 
     function show(n) {

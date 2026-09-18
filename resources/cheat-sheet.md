@@ -17,11 +17,23 @@
 
 ## Skill File Locations
 
-| Scope | Path | Commit to Git? |
-|-------|------|---------------|
-| **Project** (team-shared) | `.claude/commands/<name>.md` | ✅ Yes |
-| **Personal** (you only) | `.claude/commands/user/<name>.md` | ❌ No |
-| **Global** (all projects) | `~/.claude/skills/<name>/SKILL.md` | N/A |
+| Scope | Claude Code path | Cursor path | Commit to Git? |
+|-------|-----------------|-------------|---------------|
+| **Project** (team-shared) | `.claude/commands/<name>.md` | `.cursor/skills/<name>/SKILL.md` | ✅ Yes |
+| **Project** (Agent Skill folder) | `.claude/skills/<name>/SKILL.md` | — | ✅ Yes |
+| **Personal** (you only, one project) | `.claude/commands/user/<name>.md` | — | ❌ No |
+| **Global** (all projects) | `~/.claude/skills/<name>/SKILL.md` | `~/.cursor/skills/<name>/SKILL.md` | N/A |
+
+**Priority (Claude Code):** project skills override global skills when names conflict.
+
+### Format A vs Format B
+
+| | Format A (quick command) | Format B (Agent Skill) |
+|--|--------------------------|------------------------|
+| **Path** | `.claude/commands/<name>.md` | `.claude/skills/<name>/SKILL.md` |
+| **Frontmatter** | Optional | `name` + `description` required for global |
+| **How it runs** | You type `/<name>` | `/<name>` or auto-invoked when relevant |
+| **Best for** | Quick one-file prompts | Shared skills, auto-discovery, bundled helpers |
 
 ---
 

@@ -3,55 +3,91 @@
 
 **Duration:** 2 hours | **Prerequisite:** Modules 1–2 | **Tech Writer's Tribe**
 
+**Slides:** [`slides/module-03-prompt-engineering.html`](../../slides/module-03-prompt-engineering.html) (18 slides — share with audience)
+
+**Companion doc:** [WORKSHOP.md](./WORKSHOP.md) — extended hands-on exercises for VS Code, Cursor, and Claude Code
+
 ---
 
-## What This Level Means
+## Slide Map
 
-**Beginner** means you understand AI and MCP conceptually and are now ready to *build*. This module is where you write your first Claude Skill. You'll leave with a working, reusable tool you can use on Monday morning.
+| Slide | Title | Time |
+|-------|-------|------|
+| 1 | Title | 2 min |
+| 2 | Quick Recap: Module 2 | 10 min |
+| 3 | The Prompt → Skill → Agent Spectrum | 5 min |
+| 4 | The RTCCO Framework | 15 min |
+| 5 | Prompt Quality Comparison | 10 min |
+| 6 | What Are Agent Skills? | 5 min |
+| 7 | Where Skills Live | 5 min |
+| 8 | Format A vs Format B | 5 min |
+| 9 | Skill Anatomy (RTCCO in Practice) | 5 min |
+| 10 | The $ARGUMENTS Variable | 3 min |
+| 11 | Workshop: Build Your First Skill | 25 min |
+| 12 | Common First-Round Fixes | 10 min |
+| 13 | Using Skills in VS Code & Cursor | 5 min |
+| 14 | Tips: Do & Don't | 5 min |
+| 15 | Level Up: `skill-creator` | 20 min |
+| 16 | Discussion | 10 min |
+| 17 | Before Module 4 (Homework) | 5 min |
+| 18 | Beginner Checkpoint | 5 min |
 
-### Beginner Learning Objectives
+**Learning objectives** (say on Slide 1, not on screen):
 
-By the end of Module 3, you will be able to:
+By the end of Module 3, participants will be able to:
 - Name the five elements of an effective prompt and apply each one
-- Explain the anatomy of a Claude Skill file
+- Explain where skills live and how scope (project, personal, global) affects sharing
 - Create a working skill from scratch using the RTCCO framework
 - Test and iterate on a skill until it produces consistent, useful output
+- Use `skill-creator` to scaffold or refine a skill
 
 ---
 
-## Recap and Homework Share (10 min)
+## Slide 1 — Title (2 min)
+
+**Audience sees:** Prompt Engineering · Module 3 of 8 · 🔵 Beginner · Skills Workshop
+
+**Facilitator notes:**
+
+**Beginner** means participants understand AI and MCP conceptually and are now ready to *build*. This module is where they write their first Agent Skill. They should leave with a working, reusable tool they can use on Monday morning.
+
+Open the slide deck. Confirm everyone can run Claude Code or Cursor with access to this repo.
+
+---
+
+## Slide 2 — Quick Recap: Module 2 (10 min)
+
+**Audience sees:** MCP recap bullets + homework prompt
+
+**Facilitator notes:**
 
 > "Show us the documentation task you picked. What does 'done well' look like for that task?"
 
-3–4 participants share. The class identifies which elements of the RTCCO framework are already present in their descriptions. (Most writers naturally include Role and Task. Few include Constraints or Output Format — yet.)
+3–4 participants share. As they describe their tasks, identify which RTCCO elements are already present. (Most writers naturally include Role and Task. Few include Constraints or Output Format — yet.)
+
+Bridge to today: that paragraph they wrote is the seed of the skill they'll build in Slide 11.
 
 ---
 
-## The Prompt-to-Skill-to-Agent Spectrum (10 min)
+## Slide 3 — The Prompt → Skill → Agent Spectrum (5 min)
 
-```
-Simple ──────────────────────────────────────────────── Complex
+**Audience sees:** Simple → Complex spectrum diagram
 
-One-off Prompt           Skill (Reusable)           Agent (Autonomous)
+**Facilitator notes:**
 
-"Fix this typo"          /check-api-doc             Full automation
-                         (your checklist,           (discovers + validates
-                          every time)                + fixes + publishes)
+Emphasize: **Your goal today is to move one concrete task from "one-off prompt" to a reusable skill.**
 
-Low effort               Medium effort              High capability
-Zero reuse               High reuse                 Needs oversight
-Inconsistent             Consistent                 Most powerful
-```
-
-**Your goal this module:** Move one concrete task from "one-off prompt" to a reusable skill.
+They are not building agents or MCP servers today — that's Modules 6–7. Skills are the sweet spot: low barrier, high reuse, leverages their documentation expertise.
 
 ---
 
-## Prompt Engineering Fundamentals (30 min)
+## Slide 4 — The RTCCO Framework (15 min)
 
-### The RTCCO Framework
+**Audience sees:** Five-element table (Role, Task, Context, Constraints, Output format)
 
-Every effective prompt for documentation work contains five elements:
+**Facilitator notes:**
+
+Walk through each element with documentation examples:
 
 | Element | What It Does | Weak Example | Strong Example |
 |---------|-------------|--------------|---------------|
@@ -61,7 +97,15 @@ Every effective prompt for documentation work contains five elements:
 | **C**onstraints | Boundaries and rules | *(missing)* | "Do NOT modify code samples. Flag issues in prose only." |
 | **O**utput format | How the result should look | *(missing)* | "Output a markdown table: Issue \| Location \| Severity \| Fix" |
 
-### Prompt Quality Comparison
+> **🔵 Beginner Tip:** Most beginners skip Context and Output Format. Those two elements are what make the difference between "interesting AI response" and "consistently useful AI output."
+
+---
+
+## Slide 5 — Prompt Quality Comparison (10 min)
+
+**Audience sees:** Weak → Partial → Strong prompt examples
+
+**Facilitator notes:**
 
 **Weak prompt (no RTCCO):**
 ```
@@ -102,25 +146,87 @@ Output format:
 |---------|--------|---------|----------------|
 ```
 
-> **🔵 Beginner Tip:** Most beginners skip Context and Output Format. Those two elements are what make the difference between "interesting AI response" and "consistently useful AI output."
+Ask: "Which version would you trust on a real doc review?"
 
 ---
 
-## Anatomy of a Claude Skill File (15 min)
+## Slide 6 — What Are Agent Skills? (5 min)
 
-A Claude Skill is a `.md` file stored in `.claude/commands/`. Here's the anatomy:
+**Audience sees:** Definition + 3-step how-it-works + skills vs MCP tools
+
+**Facilitator notes:**
+
+An **Agent Skill** (also called a custom slash command in Claude Code) is a reusable prompt template stored as a markdown file. When you run `/skill-name`, the skill's content is injected into the conversation as instructions — giving the AI a specialized persona and checklist for that task.
+
+Skills do **not** run code themselves. They guide the AI's behavior. The power comes from combining clear natural-language instructions with the AI's built-in tools (file read, search, etc.).
+
+Reinforce the rule on screen: **Use skills for AI judgment. Use MCP tools for deterministic logic.**
+
+---
+
+## Slide 7 — Where Skills Live (5 min)
+
+**Audience sees:** Scope table (Project, Agent Skill, Personal, Global) with Claude Code + Cursor paths
+
+**Facilitator notes:**
+
+| Scope | Claude Code path | Cursor path | Commit to Git? |
+|-------|-----------------|-------------|---------------|
+| **Project** (team-shared) | `.claude/commands/<name>.md` | `.cursor/skills/<name>/SKILL.md` | ✅ Yes |
+| **Agent Skill** (project) | `.claude/skills/<name>/SKILL.md` | — | ✅ Yes |
+| **Personal** (you only, one project) | `.claude/commands/user/<name>.md` | — | ❌ No |
+| **Global** (all projects) | `~/.claude/skills/<name>/SKILL.md` | `~/.cursor/skills/<name>/SKILL.md` | N/A |
+
+> **🔵 Beginner Tip:** Start with a **project skill** so the team can use it. Add `.claude/commands/user/` to `.gitignore` if using personal project skills in Claude Code.
+
+When skill names conflict in Claude Code, **project skills win** over global skills.
+
+Ask: "For the skill you're building today — project, personal, or global?"
+
+---
+
+## Slide 8 — Format A vs Format B (5 min)
+
+**Audience sees:** Comparison table + "Start with Format A today"
+
+**Facilitator notes:**
+
+**Format A — Quick project command** (fastest to write; great for first skill):
 
 ```
-.claude/
-  commands/
-    check-api-doc.md    ← This is your skill
+your-project/
+└── .claude/
+    └── commands/
+        └── check-api-doc.md    ← filename becomes the /command name
 ```
 
-### Skill File Structure
+No frontmatter required. The filename is the command.
+
+**Format B — Agent Skill folder** (recommended for sharing or auto-discovery):
+
+```
+your-project/
+└── .claude/
+    └── skills/
+        └── check-api-doc/
+            └── SKILL.md        ← name + description in frontmatter
+```
+
+Format B is the successor to Format A. Anthropic's `skill-creator` (Slide 15) produces Format B. Format A still works and is fine for quick one-file prompts.
+
+Global skills (Format B in `~/.claude/skills/` or `~/.cursor/skills/`) **require** `name` and `description` frontmatter.
+
+---
+
+## Slide 9 — Skill Anatomy (RTCCO in Practice) (5 min)
+
+**Audience sees:** Annotated RTCCO skeleton + pointers to templates and examples
+
+**Facilitator notes:**
+
+**Format A example** — `.claude/commands/check-api-doc.md`:
 
 ```markdown
-# check-api-doc.md
-
 You are a senior technical editor specializing in API documentation.        ← ROLE
 
 Review the API documentation file at: $ARGUMENTS                           ← TASK + INPUT
@@ -150,27 +256,60 @@ Output format:
 After the table, provide a one-sentence summary: "This document is [ready/needs minor work/needs major revision] because..."
 ```
 
-### The `$ARGUMENTS` Variable
+**Format B example** — `.claude/skills/check-api-doc/SKILL.md`:
 
-`$ARGUMENTS` is the magic placeholder. When you run `/check-api-doc path/to/my-api.md`, the filename becomes `$ARGUMENTS`. This makes your skill work on any file, every time.
+```markdown
+---
+name: check-api-doc
+description: Review API endpoint documentation for required sections and report gaps in a markdown table. Use when checking API doc completeness.
+---
+
+You are a senior technical editor specializing in API documentation.
+
+Review the API documentation file at: $ARGUMENTS
+
+Context:
+- Our audience is junior to mid-level developers
+- We follow the Google Developer Style Guide
+
+[... same checklist, constraints, and output format as above ...]
+```
+
+Point participants to [`resources/skill-templates.md`](../../resources/skill-templates.md) (six copy-paste templates) and `sample-project/.claude/commands/` (working examples).
 
 ---
 
-## Build Your First Skill: Live Workshop (40 min)
+## Slide 10 — The $ARGUMENTS Variable (3 min)
 
-### Step 1: Create the Skills Folder (5 min)
+**Audience sees:** `$ARGUMENTS` example + `/check-api-doc path/to/my-api.md`
 
-In your project directory (or any folder):
+**Facilitator notes:**
+
+`$ARGUMENTS` is the placeholder for whatever the user types after the command. When you run `/check-api-doc sample-project/test-docs/bad-api-doc.md`, the path becomes `$ARGUMENTS`. This makes the skill work on any file, every time.
+
+Without `$ARGUMENTS`, the skill is a one-trick pony. With it, the skill is reusable infrastructure.
+
+---
+
+## Slide 11 — Workshop: Build Your First Skill (25 min)
+
+**Audience sees:** Four-step workshop (mkdir → create → test → iterate)
+
+**Facilitator notes:**
+
+Follow [WORKSHOP.md](./WORKSHOP.md) for extended exercises. Run these steps live:
+
+**Step 1: Create the Skills Folder (5 min)**
 
 ```bash
 mkdir -p .claude/commands
 ```
 
-### Step 2: Create Your Skill File (15 min)
+Cursor users: `mkdir -p .cursor/skills/check-api-doc` and create `SKILL.md` inside.
 
-Create `.claude/commands/check-api-doc.md` using the RTCCO framework.
+**Step 2: Create Your Skill File (15 min)**
 
-Start with this template and fill in your details:
+Create `.claude/commands/check-api-doc.md` using RTCCO. Or copy **Template 1** from [`resources/skill-templates.md`](../../resources/skill-templates.md):
 
 ```markdown
 You are a [ROLE — be specific about expertise and domain].
@@ -196,73 +335,111 @@ Output:
 [Describe exactly what the output should look like — table, list, report, etc.]
 ```
 
-### Step 3: Test Your Skill (15 min)
+Circulate. Help participants adapt the template to the task they shared on Slide 2.
 
-In Claude Code, run:
+**Step 3: Test Your Skill (5 min)**
 
 ```
 /check-api-doc sample-project/test-docs/bad-api-doc.md
 ```
 
-Evaluate the output:
+Evaluate together:
 - Did it catch the issues you expected?
 - Did it generate false positives?
 - Is the output format usable?
 
-### Step 4: Iterate (5 min)
-
-Pick one thing that didn't work and fix it. Common first-round fixes:
-- Role was too vague → Make it more specific
-- Output was unstructured → Add an explicit output format
-- AI added too much commentary → Add "Output ONLY the table. No preamble."
+**Step 4:** Tell them iteration continues on Slide 12.
 
 ---
 
-## Level Up: The `skill-creator` Tool (20 min)
+## Slide 12 — Common First-Round Fixes (10 min)
 
-You just built a skill by hand — that's the foundation, and you should always understand what's happening underneath. Now meet the tool that automates the busywork: **`skill-creator`**, an official Claude skill from Anthropic.
+**Audience sees:** Problem → Fix table
 
-`skill-creator` is a skill that helps you *create other skills*. It interviews you about the task, scaffolds a well-structured skill file for you, and can also improve or test an existing skill (it even runs evals to measure how reliably your skill triggers and performs).
+**Facilitator notes:**
+
+Pick one thing that didn't work in Step 3 and fix it live. Common first-round fixes:
+
+| Problem | Fix |
+|---------|-----|
+| Role was too vague | Make it specific: "senior technical editor specializing in REST API documentation" |
+| Output was unstructured | Add an explicit table or list format |
+| AI added too much commentary | Add: "Output ONLY the table. No preamble." |
+| Criteria were ambiguous | Describe what PASS looks like, not just the criterion name |
+| False positives | Narrow the scope in Constraints |
+
+Give participants 5–7 minutes to apply one fix, then quick share: "What did you change and what improved?"
+
+---
+
+## Slide 13 — Using Skills in VS Code & Cursor (5 min)
+
+**Audience sees:** IDE invocation steps + auto-detection bullets
+
+**Facilitator notes:**
+
+| Environment | How to invoke |
+|-------------|--------------|
+| **Claude Code** (terminal or VS Code extension) | Type `/` to list skills, then `/check-api-doc path/to/file.md` |
+| **VS Code** | Open Claude Code panel (Cmd+Shift+P → "Claude Code: Open") → type `/` in chat |
+| **Cursor** | Skills in `.cursor/skills/` are available to the agent; with Claude Code in the integrated terminal, use `/` as above |
+
+Skills are picked up automatically when you add or remove files — no restart needed.
+
+Have everyone run `/` once to confirm their new skill appears in the list.
+
+---
+
+## Slide 14 — Tips: Do & Don't (5 min)
+
+**Audience sees:** Do / Don't table
+
+**Facilitator notes:**
+
+Reinforce before they leave the workshop portion:
+
+| ✅ Do | ❌ Don't |
+|-------|---------|
+| Be specific with Role | Write code inside skills — use MCP tools |
+| Set output format explicitly | Exceed ~500 words — split into multiple skills |
+| Use `$ARGUMENTS` for file input | Duplicate deterministic tool logic |
+| One skill = one task | Leave constraints open-ended |
+
+If a skill is getting long, that's a signal to break it into composable skills (e.g., `/check-api-doc` + `/style-check` chained in a workflow — Module 5 territory).
+
+---
+
+## Slide 15 — Level Up: `skill-creator` (20 min)
+
+**Audience sees:** Install command + `/skill-creator` + sous-chef quote
+
+**Facilitator notes:**
+
+You just built a skill by hand — that's the foundation. Now meet the tool that automates the busywork: **`skill-creator`**, an official Claude skill from Anthropic.
+
+`skill-creator` interviews you about the task, scaffolds a well-structured skill file, and can improve or test an existing skill (it even runs evals to measure how reliably your skill triggers and performs).
 
 > **🔵 Beginner Tip:** Think of RTCCO as learning to cook, and `skill-creator` as a sous-chef. You still decide the recipe — the tool handles the prep work and plating.
 
-### Step 1: Install it (one time)
-
-`skill-creator` ships in Anthropic's official plugin marketplace (`claude-plugins-official`), which Claude Code registers automatically. Install it in one command:
+**Install (one time):**
 
 ```
 /plugin install skill-creator@claude-plugins-official
 ```
 
-Or install it interactively:
+Or interactively: `/plugin` → Discover → search "skill-creator" → User or Project scope.
 
-```
-/plugin
-→ open the Discover tab
-→ search for "skill-creator"
-→ select it and press Enter
-→ choose User scope (available in all your projects) or Project scope (this repo only)
-```
+> If `/plugin` is missing, update Claude Code to the latest version.
 
-> If you don't see the `/plugin` command, update Claude Code to the latest version.
-
-### Step 2: Use it
-
-Run the skill and describe the documentation task you want to automate:
+**Use it:**
 
 ```
 /skill-creator
 ```
 
-Then answer its questions in plain language, for example:
+Example prompt: *"I want a skill that reviews an API endpoint doc for the six required sections and reports what's missing in a markdown table."*
 
-> "I want a skill that reviews an API endpoint doc for the six required sections and reports what's missing in a markdown table."
-
-`skill-creator` scaffolds the new skill for you, applying the same RTCCO structure you learned by hand.
-
-### Step 3: Know what it produces
-
-`skill-creator` writes an **Agent Skill** — a folder with a `SKILL.md` file inside:
+**What it produces** (Format B):
 
 ```
 .claude/
@@ -271,53 +448,66 @@ Then answer its questions in plain language, for example:
       SKILL.md        ← name + description frontmatter, then instructions
 ```
 
-This is slightly different from the single `.claude/commands/check-api-doc.md` file you wrote earlier:
-
-| | Slash-command skill | Agent Skill (`skill-creator` output) |
-|--|--------------------|--------------------------------------|
+| | Format A | Format B |
+|--|----------|----------|
 | **Location** | `.claude/commands/<name>.md` | `.claude/skills/<name>/SKILL.md` |
-| **Frontmatter** | Optional | `name` + `description` (so Claude knows when it applies) |
-| **How it runs** | You type `/<name>` | You type `/<name>` **or** Claude auto-invokes it when relevant |
-| **Extra files** | Single file | Can bundle helper files in the skill folder |
+| **Frontmatter** | Optional | `name` + `description` |
+| **How it runs** | You type `/<name>` | `/<name>` or auto-invoked |
+| **Extra files** | Single file | Can bundle helpers |
 
-Both create a `/<name>` command. `.claude/commands/` is the legacy format and still works, but Agent Skills (`.claude/skills/<name>/SKILL.md`) are the recommended successor — Anthropic is steering new work there. Use whichever fits: hand-write a quick `.claude/commands/*.md` for simple prompts; reach for `skill-creator` when you want structure, a description that auto-triggers, or built-in testing.
+**Refine with it:** Point `skill-creator` at a skill already built and ask it to tighten the description, add constraints, or run an eval.
 
-### Step 4: Refine with it
-
-You can point `skill-creator` at a skill you already built and ask it to tighten the description, add constraints, or run an eval. This is the fastest way to fix the "Common First-Round Fixes" problems above.
+Optional live demo if time allows.
 
 ---
 
-## Discussion and Wrap-Up (10 min)
+## Slide 16 — Discussion (10 min)
 
-### Reflection Questions
+**Audience sees:** Four reflection questions
+
+**Facilitator notes:**
 
 1. What was the hardest element of the RTCCO framework to write? (Usually: Constraints)
 2. What surprised you about the AI's interpretation of your prompt?
 3. How is writing a skill different from writing a procedure for a human reader?
+4. Would you commit your skill to Git for the team, or keep it personal? Why?
+
+Leave 2–3 minutes for open Q&A.
 
 ---
 
-## Homework (Before Module 4)
+## Slide 17 — Before Module 4 / Homework (5 min)
+
+**Audience sees:** Five homework items
+
+**Facilitator notes:**
 
 1. **Refine** your `/check-api-doc` skill until it consistently produces output you'd use at work
-2. **Build one more skill** from scratch — pick any task:
+2. **Build one more skill** from scratch — pick any task (templates in [`resources/skill-templates.md`](../../resources/skill-templates.md)):
    - `/style-check` — check a doc against your style guide rules
    - `/release-notes` — generate release notes from a changelog or git log
    - `/glossary-check` — flag terms that should be in a glossary
-3. **Install `skill-creator`** (`/plugin install skill-creator@claude-plugins-official`) and use it to build or refine one skill. Compare its output to the one you hand-wrote.
-4. Come to Module 4 with at least one skill ready — you'll bundle it into a plugin and publish it for the team to install
+3. **Install `skill-creator`** and use it to build or refine one skill. Compare its output to the one you hand-wrote.
+4. **Browse** the example skills in `sample-project/.claude/commands/` — run `/style-check` on `bad-api-doc.md` and compare output to your own skill
+5. Come to Module 4 with at least one skill ready — you'll bundle it into a plugin and publish it for the team to install
 
 ---
 
-## 🔵 Beginner Checklist
+## Slide 18 — Beginner Checkpoint (5 min)
 
-Before moving to Module 4, confirm you can:
+**Audience sees:** Checklist + "Next: Module 4 — Sharing Your Skills"
+
+**Facilitator notes:**
+
+Before moving to Module 4, confirm participants can:
 
 - [ ] Name the five RTCCO elements from memory
 - [ ] Explain why `$ARGUMENTS` makes a skill reusable
+- [ ] Choose the right skill scope (project, personal, or global) for a given use case
 - [ ] Build a skill file from a blank markdown file
 - [ ] Test a skill and iterate based on output quality
 - [ ] Identify which RTCCO element is weakest in a given prompt
 - [ ] Install `skill-creator` and use it to scaffold a skill
-- [ ] Explain the difference between a `.claude/commands/*.md` skill and a `.claude/skills/<name>/SKILL.md` Agent Skill
+- [ ] Explain the difference between Format A (`.claude/commands/*.md`) and Format B (`.claude/skills/<name>/SKILL.md`)
+
+Quick thumbs-up/thumbs-down on each item. Note any gaps for follow-up in Module 4 opening.
