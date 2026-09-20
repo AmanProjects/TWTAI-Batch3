@@ -1,0 +1,713 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module 4 Slides: Sharing Your Skills | Tech Writer's Tribe</title>
+  <style>
+    :root {
+      --bg: #f5f7fa;
+      --panel: #ffffff;
+      --ink: #1a2332;
+      --muted: #5a6a7e;
+      --accent: #1a56db;
+      --accent-light: #ebf5ff;
+      --accent-2: #0e9f6e;
+      --line: #e2e8f0;
+      --shadow: 0 4px 24px rgba(26, 35, 50, 0.10);
+      --shadow-lg: 0 8px 40px rgba(26, 35, 50, 0.16);
+      --level-bg: #fff8e1;
+      --level-text: #f57f17;
+      --level-border: #ffd54f;
+      --code-bg: #1e293b;
+      --code-text: #e2e8f0;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Inter", "Segoe UI", -apple-system, sans-serif;
+      color: var(--ink);
+      background: linear-gradient(135deg, #f0f4ff 0%, #f5f7fa 50%, #eef7f4 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* ── Header bar ── */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1.5rem;
+      background: var(--panel);
+      border-bottom: 1px solid var(--line);
+      flex-shrink: 0;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .brand {
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: var(--accent);
+      letter-spacing: -0.01em;
+    }
+
+    .header-title {
+      font-size: 0.9rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .level-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.22rem 0.65rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      background: var(--level-bg);
+      color: var(--level-text);
+      border: 1px solid var(--level-border);
+    }
+
+    /* ── Slide stage ── */
+    .stage {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem 1.5rem;
+      overflow: hidden;
+    }
+
+    .slide {
+      width: min(1100px, 96vw);
+      height: min(660px, calc(100vh - 130px));
+      background: var(--panel);
+      border-radius: 20px;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-lg);
+      padding: 2rem 2.5rem 1.5rem;
+      display: none;
+      flex-direction: column;
+      gap: 0.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide.active { display: flex; }
+
+    /* Decorative accent circle */
+    .slide::before {
+      content: "";
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      right: -180px;
+      top: -180px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(26,86,219,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .slide-number {
+      position: absolute;
+      top: 1rem;
+      right: 1.5rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    /* ── Slide body typography ── */
+    .slide-body {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .slide-body::-webkit-scrollbar { width: 4px; }
+    .slide-body::-webkit-scrollbar-thumb { background: var(--line); border-radius: 2px; }
+
+    .slide-body h1 {
+      font-size: clamp(1.6rem, 3.2vw, 2.6rem);
+      line-height: 1.15;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin-bottom: 0.1rem;
+    }
+
+    .slide-body h2 {
+      font-size: clamp(1.1rem, 2vw, 1.6rem);
+      font-weight: 600;
+      color: var(--accent);
+      margin-top: 0.5rem;
+    }
+
+    .slide-body h3 {
+      font-size: clamp(0.95rem, 1.5vw, 1.2rem);
+      font-weight: 600;
+      color: var(--muted);
+      margin-top: 0.3rem;
+    }
+
+    .slide-body h4 {
+      font-size: clamp(0.85rem, 1.3vw, 1.05rem);
+      font-weight: 600;
+      color: var(--ink);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-top: 0.5rem;
+    }
+
+    .slide-body p {
+      font-size: clamp(0.95rem, 1.4vw, 1.1rem);
+      line-height: 1.6;
+      color: var(--ink);
+    }
+
+    .slide-body strong { color: var(--ink); }
+
+    .slide-body blockquote {
+      border-left: 4px solid var(--accent);
+      padding: 0.7rem 1rem;
+      background: var(--accent-light);
+      border-radius: 0 10px 10px 0;
+      font-size: clamp(1rem, 1.6vw, 1.25rem);
+      font-style: italic;
+      color: var(--ink);
+      margin: 0.3rem 0;
+    }
+
+    .slide-body ul,
+    .slide-body ol {
+      padding-left: 1.4rem;
+      font-size: clamp(0.92rem, 1.35vw, 1.08rem);
+      line-height: 1.5;
+    }
+
+    .slide-body li { margin: 0.3rem 0; }
+
+    .slide-body ul.checklist { list-style: none; padding-left: 0.2rem; }
+    .slide-body ul.checklist li { display: flex; align-items: flex-start; gap: 0.5rem; }
+    .slide-body ul.checklist input { margin-top: 0.2rem; accent-color: var(--accent-2); }
+
+    .slide-body table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: clamp(0.8rem, 1.15vw, 0.96rem);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+    }
+
+    .slide-body th {
+      background: var(--accent-light);
+      color: var(--accent);
+      font-weight: 700;
+      padding: 0.5rem 0.7rem;
+      text-align: left;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .slide-body td {
+      padding: 0.45rem 0.7rem;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+
+    .slide-body tr:last-child td { border-bottom: none; }
+    .slide-body tr:nth-child(even) td { background: #f8fafc; }
+
+    .slide-body code {
+      background: #f1f5f9;
+      padding: 0.1em 0.35em;
+      border-radius: 4px;
+      font-family: "JetBrains Mono", "Fira Code", Menlo, monospace;
+      font-size: 0.9em;
+      color: #c7254e;
+      border: 1px solid #e2e8f0;
+    }
+
+    .slide-body pre.code-block {
+      background: var(--code-bg);
+      color: var(--code-text);
+      border-radius: 12px;
+      padding: 1rem 1.2rem;
+      font-family: "JetBrains Mono", "Fira Code", Menlo, monospace;
+      font-size: clamp(0.75rem, 1.05vw, 0.9rem);
+      line-height: 1.55;
+      overflow-x: auto;
+      margin: 0.3rem 0;
+      flex-shrink: 0;
+    }
+
+    .slide-body pre.code-block code {
+      background: none;
+      border: none;
+      color: inherit;
+      padding: 0;
+      font-size: inherit;
+    }
+
+    /* ── Controls ── */
+    .controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      padding: 0.75rem 1.5rem;
+      background: var(--panel);
+      border-top: 1px solid var(--line);
+      flex-shrink: 0;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 1.1rem;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--ink);
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .btn:hover { background: var(--accent-light); border-color: var(--accent); color: var(--accent); }
+    .btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    .btn-primary:hover { background: #1447b5; border-color: #1447b5; color: #fff; }
+
+    .progress-wrap {
+      flex: 1;
+      max-width: 400px;
+      background: var(--line);
+      border-radius: 999px;
+      height: 4px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      border-radius: 999px;
+      transition: width 0.25s ease;
+    }
+
+    .slide-counter {
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-weight: 500;
+      min-width: 60px;
+      text-align: center;
+    }
+
+    /* ── Keyboard hint ── */
+    .kbd-hint {
+      font-size: 0.73rem;
+      color: var(--muted);
+      opacity: 0.7;
+    }
+
+    kbd {
+      display: inline-block;
+      padding: 0.05em 0.35em;
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 0.85em;
+    }
+
+    /* ── Speaker notes overlay ── */
+    .notes-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 100;
+      align-items: flex-end;
+      padding: 2rem;
+    }
+
+    .notes-overlay.visible { display: flex; }
+
+    .notes-panel {
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--panel);
+      border-radius: 16px;
+      padding: 1.5rem;
+      max-height: 50vh;
+      overflow-y: auto;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .notes-panel h4 { color: var(--accent); margin-bottom: 0.5rem; }
+    .notes-panel p { font-size: 0.92rem; line-height: 1.55; }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      .slide { padding: 1.2rem 1.1rem; border-radius: 14px; }
+      .slide-body h1 { font-size: 1.4rem; }
+      .header-title { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-left">
+      <span class="brand">TWT</span>
+      <span class="header-title">Module 4 Slides: Sharing Your Skills</span>
+    </div>
+    <div class="level-badge">🟡 Intermediate</div>
+  </header>
+
+  <main class="stage" id="stage">
+    <section class="slide" id="slide-1">
+      <div class="slide-number">1 / 18</div>
+      <div class="slide-body"><h1>Sharing Your Skills</h1>
+<h3>Marketplaces & Plugins</h3>
+<h4>Module 4 of 8 | 🟡 Intermediate Level</h4>
+<p><strong>Tech Writer's Tribe</strong></p>
+<p>AI-Powered Documentation Mastery</p>
+</div>
+    </section>
+
+    <section class="slide" id="slide-2">
+      <div class="slide-number">2 / 18</div>
+      <div class="slide-body"><h1>Quick Recap: Module 3</h1>
+<ul>
+<li>The RTCCO framework: Role, Task, Context, Constraints, Output</li>
+<li>A skill = markdown file in <code>.claude/commands/</code></li>
+<li><code>$ARGUMENTS</code> = what makes a skill reusable</li>
+<li>You built working skills</li>
+</ul>
+<blockquote>"Show us your skill! Now — how would someone <strong>else</strong> run it?"</blockquote>
+</div>
+    </section>
+
+    <section class="slide" id="slide-3">
+      <div class="slide-number">3 / 18</div>
+      <div class="slide-body"><h1>A Skill on One Laptop Helps One Person</h1>
+<p>Right now your skill lives in <strong>your</strong> <code>.claude/</code> folder.</p>
+<p>A teammate wants it. What do you do — email the file? Paste it in Slack?</p>
+<table>
+<thead><tr><th>Without sharing</th><th>With sharing</th></tr></thead>
+<tbody>
+<tr><td>Everyone keeps a private copy</td><td>One source of truth</td></tr>
+<tr><td>Copies drift out of sync</td><td>Update once, everyone gets it</td></tr>
+<tr><td>"Which version is current?"</td><td>Versioned in Git</td></tr>
+<tr><td>Onboarding = "here's a zip"</td><td>Onboarding = two commands</td></tr>
+</tbody></table>
+<p><strong>This module: turn your skill into a team standard.</strong></p>
+</div>
+    </section>
+
+    <section class="slide" id="slide-4">
+      <div class="slide-number">4 / 18</div>
+      <div class="slide-body"><h1>The Hierarchy</h1>
+<pre class="code-block"><code>Marketplace          ← a catalog (one GitHub repo) listing plugins
+  └── Plugin         ← the shareable bundle you install
+        ├── Commands ← slash-command skills (/check-style)
+        ├── Skills   ← auto-invoked SKILL.md skills
+        ├── Agents   ← subagents with own prompt &amp; tools
+        ├── Hooks    ← event handlers
+        └── MCP servers</code></pre>
+<blockquote>A <strong>marketplace</strong> contains <strong>plugins</strong>. A <strong>plugin</strong> bundles <strong>commands, skills & agents</strong>.</blockquote>
+</div>
+    </section>
+
+    <section class="slide" id="slide-5">
+      <div class="slide-number">5 / 18</div>
+      <div class="slide-body"><h1>The Four Nouns</h1>
+<table>
+<thead><tr><th>Term</th><th>What it is</th><th>Analogy</th></tr></thead>
+<tbody>
+<tr><td><strong>Marketplace</strong></td><td>Catalog file (<code>marketplace.json</code>) in a Git repo</td><td>App store</td></tr>
+<tr><td><strong>Plugin</strong></td><td>Installable bundle (<code>plugin.json</code> + folders)</td><td>An app</td></tr>
+<tr><td><strong>Command</strong></td><td>Slash-command skill — <code>/name</code></td><td>A button</td></tr>
+<tr><td><strong>Agent</strong></td><td>Subagent with own prompt, tools, model</td><td>A specialist</td></tr>
+</tbody></table>
+<blockquote>Marketplace ≠ plugin. The catalog vs. the thing you install.</blockquote>
+</div>
+    </section>
+
+    <section class="slide" id="slide-6">
+      <div class="slide-number">6 / 18</div>
+      <div class="slide-body"><h1>Command vs. Skill vs. Agent vs. Hook</h1>
+<p>All four are "instructions Claude Code follows" — they differ in <strong>who triggers them</strong> and <strong>how much isolation they get</strong>.</p>
+<ul>
+<li><strong>Command</strong> — runs when <em>you</em> type <code>/name</code>. Everything you built in Module 3.</li>
+<li><strong>Skill</strong> — a <code>SKILL.md</code> with a <code>description</code>, so Claude can <strong>auto-invoke</strong> it too.</li>
+<li><strong>Agent</strong> — an isolated worker with its own tools & model, for <strong>delegated multi-step jobs</strong>.</li>
+<li><strong>Hook</strong> — a shell command that fires automatically on an event. No reasoning, never skipped.</li>
+</ul>
+<blockquote>We'll build one small example of each — using the same style-check task — so you can see all four side by side.</blockquote>
+</div>
+    </section>
+
+    <section class="slide" id="slide-7">
+      <div class="slide-number">7 / 18</div>
+      <div class="slide-body"><h1>Example: Command vs. Skill</h1>
+<p><strong>Command</strong> — <code>commands/check-style.md</code> — runs only when typed:</p>
+<pre class="code-block"><code>You are a technical editor. Review: $ARGUMENTS
+
+Check for active voice, sentences &lt;25 words,
+sentence-case headings.
+
+Output a table: Line | Issue | Fix</code></pre>
+<p>Usage: <code>/check-style docs/orders-api.md</code></p>
+<p><strong>Skill</strong> — <code>skills/doc-coverage/SKILL.md</code> — same idea, plus a <code>description</code> Claude reads to auto-invoke it:</p>
+<pre class="code-block"><code>---
+name: doc-coverage
+description: Use when a code change might need
+  matching documentation updates.
+---
+Compare the diff at $ARGUMENTS against docs/...</code></pre>
+</div>
+    </section>
+
+    <section class="slide" id="slide-8">
+      <div class="slide-number">8 / 18</div>
+      <div class="slide-body"><h1>Example: Agent vs. Hook</h1>
+<p><strong>Agent</strong> — <code>agents/doc-auditor.md</code> — its own context, tools & model, for multi-file jobs:</p>
+<pre class="code-block"><code>---
+name: doc-auditor
+description: Audits an entire docs set. Use for
+  multi-file jobs, not single-file checks.
+tools: Read, Grep, Glob
+model: sonnet
+---
+Read every file in the folder, apply style +
+completeness rules, return one ranked report.</code></pre>
+<p>Usage: <em>"Use the doc-auditor agent to review everything in docs/."</em> Only the final report returns to your conversation.</p>
+<p><strong>Hook</strong> — <code>hooks/hooks.json</code> — fires on every edit, no prompt involved:</p>
+<pre class="code-block"><code>{ "hooks": { "PostToolUse": [{ "matcher": "Edit|Write",
+  "hooks": [{ "type": "command",
+    "command": "echo 'Reminder: run /check-style'" }] }] } }</code></pre>
+</div>
+    </section>
+
+    <section class="slide" id="slide-9">
+      <div class="slide-number">9 / 18</div>
+      <div class="slide-body"><h1>How the Four Connect</h1>
+<table>
+<thead><tr><th></th><th>Triggered by</th><th>Isolation</th><th>Best for</th></tr></thead>
+<tbody>
+<tr><td><strong>Hook</strong></td><td>An event (edit, commit, session end)</td><td>None — just runs a command</td><td>Rules that must <em>always</em> fire</td></tr>
+<tr><td><strong>Command</strong></td><td>You, typing <code>/name</code></td><td>Your current conversation</td><td>A check you consciously run</td></tr>
+<tr><td><strong>Skill</strong></td><td>You, or Claude automatically</td><td>Your current conversation</td><td>"Whenever a request looks like X..."</td></tr>
+<tr><td><strong>Agent</strong></td><td>You, or Claude delegating</td><td>Its own context window</td><td>A multi-step job too big to run inline</td></tr>
+</tbody></table>
+<blockquote>Hook nudges you → Command/Skill checks one file → Agent handles the full sweep. All four ship inside one <strong>plugin</strong>, distributed by a <strong>marketplace</strong>.</blockquote>
+<p><strong>Namespacing</strong> prevents collisions — bundled in the <code>doc-skills</code> plugin, <code>check-style</code> runs as:</p>
+<pre class="code-block"><code>/doc-skills:check-style</code></pre>
+</div>
+    </section>
+
+    <section class="slide" id="slide-10">
+      <div class="slide-number">10 / 18</div>
+      <div class="slide-body"><h1>Installing — Step 1: Add the Marketplace</h1>
+<pre class="code-block"><code>/plugin marketplace add AmanProjects/twtai-skill</code></pre>
+<p>→ <code>Successfully added marketplace: twtai</code></p>
+<p>Also accepts:</p>
+<ul>
+<li><code>owner/repo@v1.0</code> (branch or tag)</li>
+<li>a git URL (GitLab, etc.)</li>
+<li><code>./local-folder</code></li>
+</ul>
+<blockquote>A marketplace is just a GitHub repo with a <code>marketplace.json</code> catalog.</blockquote>
+</div>
+    </section>
+
+    <section class="slide" id="slide-11">
+      <div class="slide-number">11 / 18</div>
+      <div class="slide-body"><h1>Installing — Step 2: Install the Plugin</h1>
+<pre class="code-block"><code>/plugin install doc-skills@twtai</code></pre>
+<blockquote><code>twtai</code> is the marketplace <strong>name</strong>, not the repo (<code>twtai-skill</code>).</blockquote>
+<p><strong>Step 3 — use it:</strong></p>
+<pre class="code-block"><code>/doc-skills:check-style sample-docs/orders-api.md</code></pre>
+<p>Or run <code>/plugin</code> → <strong>Discover</strong> tab → pick → scope (User / Project / Local).</p>
+<p>Manage: <code>/plugin list</code>, <code>/plugin disable</code>, <code>/plugin uninstall</code>.</p>
+</div>
+    </section>
+
+    <section class="slide" id="slide-12">
+      <div class="slide-number">12 / 18</div>
+      <div class="slide-body"><h1>A Real Repo: <code>AmanProjects/twtai-skill</code></h1>
+<pre class="code-block"><code>twtai-skill/                       ← marketplace repo (GitHub)
+├── .claude-plugin/marketplace.json ← the catalog (name: twtai)
+└── plugins/
+    └── doc-skills/                 ← a plugin
+        ├── .claude-plugin/plugin.json
+        ├── commands/               ← check-style.md, release-notes.md
+        ├── skills/doc-coverage/SKILL.md
+        ├── agents/doc-auditor.md
+        ├── hooks/hooks.json
+        └── .mcp.json               ← remote MCP servers</code></pre>
+<blockquote>Live example — clone it, copy the layout, swap in your skills.</blockquote>
+</div>
+    </section>
+
+    <section class="slide" id="slide-13">
+      <div class="slide-number">13 / 18</div>
+      <div class="slide-body"><h1>The Two Files That Make It Work</h1>
+<p><strong><code>marketplace.json</code></strong> (repo root, in <code>.claude-plugin/</code>) — the catalog:</p>
+<pre class="code-block"><code>{
+  "name": "twtai",
+  "owner": { "name": "Tech Writer's Tribe" },
+  "plugins": [
+    { "name": "doc-skills", "source": "./plugins/doc-skills",
+      "description": "Docs skills from the TWT program." }
+  ]
+}</code></pre>
+<p><strong><code>plugin.json</code></strong> (in the plugin's <code>.claude-plugin/</code>) — the manifest:</p>
+<pre class="code-block"><code>{ "name": "doc-skills", "version": "1.0.0",
+  "description": "Documentation skills." }</code></pre>
+<blockquote>Only these two go in <code>.claude-plugin/</code>. <code>commands/</code>, <code>skills/</code>, <code>agents/</code> sit at the plugin root.</blockquote>
+</div>
+    </section>
+
+    <section class="slide" id="slide-14">
+      <div class="slide-number">14 / 18</div>
+      <div class="slide-body"><h1>Workshop: Publish Your Own</h1>
+<p>Work in pairs — one publishes, one installs, then switch.</p>
+<p><strong>The 5-step loop:</strong></p>
+<ol>
+<li>Create a GitHub repo (<code>your-name/my-skills</code>)</li>
+<li>Add <code>.claude-plugin/marketplace.json</code> (pick a <code>name</code>)</li>
+<li>Add a plugin folder with <code>plugin.json</code> + your skill in <code>commands/</code></li>
+<li>Commit & push</li>
+<li>Share two lines:</li>
+</ol>
+<p>```</p>
+<p>/plugin marketplace add your-name/my-skills</p>
+<p>/plugin install my-plugin@my-marketplace</p>
+<p>```</p>
+<blockquote>Start from the <code>twtai-skill</code> template — don't build from a blank repo.</blockquote>
+</div>
+    </section>
+
+    <section class="slide" id="slide-15">
+      <div class="slide-number">15 / 18</div>
+      <div class="slide-body"><h1>When a Marketplace Is Overkill</h1>
+<table>
+<thead><tr><th>Situation</th><th>Lightweight option</th></tr></thead>
+<tbody>
+<tr><td>One skill, one person, once</td><td>Send the <code>.md</code>; they drop it in <code>.claude/commands/</code></td></tr>
+<tr><td>Your project team</td><td>Commit <code>.claude/commands/*.md</code> into the project repo</td></tr>
+<tr><td>Connect to a hosted tool</td><td>Commit a project <code>.mcp.json</code> with a remote URL</td></tr>
+</tbody></table>
+<p><strong>Use a marketplace</strong> for versioning, many skills, auto-updates, and one-command install at scale.</p>
+</div>
+    </section>
+
+    <section class="slide" id="slide-16">
+      <div class="slide-number">16 / 18</div>
+      <div class="slide-body"><h1>Discussion</h1>
+<ol>
+<li>What's one skill you'd publish first — and who's the audience?</li>
+</ol>
+<ol>
+<li>When is a full marketplace overkill, and a committed <code>.claude/commands/</code> file enough?</li>
+</ol>
+<ol>
+<li>What's the risk of a teammate auto-updating to your latest commit without review?</li>
+</ol>
+<blockquote>"A skill on your laptop is a habit. A skill in a marketplace is a standard."</blockquote>
+</div>
+    </section>
+
+    <section class="slide" id="slide-17">
+      <div class="slide-number">17 / 18</div>
+      <div class="slide-body"><h1>Before Module 5</h1>
+<ol>
+<li><strong>Publish</strong> a marketplace — use <code>AmanProjects/twtai-skill</code> as a template; one repo, one plugin, at least one of your skills</li>
+<li><strong>Get a teammate</strong> to add your marketplace and install your plugin — confirm it runs on their machine</li>
+<li><strong>Read</strong> <code>resources/peer-review-rubric.md</code> — you'll use it next session</li>
+</ol>
+</div>
+    </section>
+
+    <section class="slide" id="slide-18">
+      <div class="slide-number">18 / 18</div>
+      <div class="slide-body"><h1>🟡 Intermediate Checkpoint: Module 4</h1>
+<ul class="checklist">
+<li><input type="checkbox"  disabled> Explain the marketplace → plugin → command/agent hierarchy</li>
+<li><input type="checkbox"  disabled> State the difference between a marketplace and a plugin</li>
+<li><input type="checkbox"  disabled> Tell when to use a command vs. a skill vs. an agent vs. a hook</li>
+<li><input type="checkbox"  disabled> Explain why a hook fires deterministically while the other three involve Claude reasoning</li>
+<li><input type="checkbox"  disabled> Add a marketplace with <code>/plugin marketplace add</code></li>
+<li><input type="checkbox"  disabled> Install a plugin with <code>/plugin install <plugin>@<marketplace></code></li>
+<li><input type="checkbox"  disabled> Lay out a marketplace repo: <code>marketplace.json</code> + plugin + <code>plugin.json</code></li>
+<li><input type="checkbox"  disabled> Publish your own marketplace and have a teammate install it</li>
+</ul>
+<p><strong>Next: Module 5 — Advanced Skills & Team Workflows →</strong></p>
+</div>
+    </section>
+  </main>
+
+  <footer class="controls">
+    <button class="btn" id="btn-prev" onclick="prevSlide()" disabled>&#8592; Prev</button>
+    <div class="progress-wrap">
+      <div class="progress-bar" id="progress-bar" style="width: 5.6%"></div>
+    </div>
+    <span class="slide-counter" id="counter">1 / 18</span>
+    <button class="btn btn-primary" id="btn-next" onclick="nextSlide()">Next &#8594;</button>
+    <span class="kbd-hint"><kbd>←</kbd><kbd>→</kbd> navigate</span>
+  </footer>
+
+  <script>
+    let current = 0;
+    const total = 18;
+    const slides = document.querySelectorAll('.slide');
+
+    function show(n) {
+      slides.forEach(s => s.classList.remove('active'));
+      slides[n].classList.add('active');
+      current = n;
+      document.getElementById('counter').textContent = (n + 1) + ' / ' + total;
+      document.getElementById('progress-bar').style.width = ((n + 1) / total * 100).toFixed(1) + '%';
+      document.getElementById('btn-prev').disabled = n === 0;
+      document.getElementById('btn-next').disabled = n === total - 1;
+      document.getElementById('btn-next').textContent = n === total - 1 ? 'End ✓' : 'Next →';
+    }
+
+    function nextSlide() { if (current < total - 1) show(current + 1); }
+    function prevSlide() { if (current > 0) show(current - 1); }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); prevSlide(); }
+      if (e.key === 'Home') { e.preventDefault(); show(0); }
+      if (e.key === 'End') { e.preventDefault(); show(total - 1); }
+    });
+
+    show(0);
+  </script>
+</body>
+</html>

@@ -21,6 +21,9 @@ Constraints:
 - Do not add a preamble or commentary.
 
 Output format:
+
+Markdown file with the following table:
+
 | Section | Status | Finding | Fix |
 |---------|--------|---------|-----|
 
