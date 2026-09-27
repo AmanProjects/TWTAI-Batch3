@@ -1,0 +1,634 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module 6 Slides: Building MCP Tools | Tech Writer's Tribe</title>
+  <style>
+    :root {
+      --bg: #f5f7fa;
+      --panel: #ffffff;
+      --ink: #1a2332;
+      --muted: #5a6a7e;
+      --accent: #1a56db;
+      --accent-light: #ebf5ff;
+      --accent-2: #0e9f6e;
+      --line: #e2e8f0;
+      --shadow: 0 4px 24px rgba(26, 35, 50, 0.10);
+      --shadow-lg: 0 8px 40px rgba(26, 35, 50, 0.16);
+      --level-bg: #fff3e0;
+      --level-text: #e65100;
+      --level-border: #ffb74d;
+      --code-bg: #1e293b;
+      --code-text: #e2e8f0;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Inter", "Segoe UI", -apple-system, sans-serif;
+      color: var(--ink);
+      background: linear-gradient(135deg, #f0f4ff 0%, #f5f7fa 50%, #eef7f4 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* ── Header bar ── */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1.5rem;
+      background: var(--panel);
+      border-bottom: 1px solid var(--line);
+      flex-shrink: 0;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .brand {
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: var(--accent);
+      letter-spacing: -0.01em;
+    }
+
+    .header-title {
+      font-size: 0.9rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .level-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.22rem 0.65rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      background: var(--level-bg);
+      color: var(--level-text);
+      border: 1px solid var(--level-border);
+    }
+
+    /* ── Slide stage ── */
+    .stage {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem 1.5rem;
+      overflow: hidden;
+    }
+
+    .slide {
+      width: min(1100px, 96vw);
+      height: min(660px, calc(100vh - 130px));
+      background: var(--panel);
+      border-radius: 20px;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-lg);
+      padding: 2rem 2.5rem 1.5rem;
+      display: none;
+      flex-direction: column;
+      gap: 0.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide.active { display: flex; }
+
+    /* Decorative accent circle */
+    .slide::before {
+      content: "";
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      right: -180px;
+      top: -180px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(26,86,219,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .slide-number {
+      position: absolute;
+      top: 1rem;
+      right: 1.5rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    /* ── Slide body typography ── */
+    .slide-body {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .slide-body::-webkit-scrollbar { width: 4px; }
+    .slide-body::-webkit-scrollbar-thumb { background: var(--line); border-radius: 2px; }
+
+    .slide-body h1 {
+      font-size: clamp(1.6rem, 3.2vw, 2.6rem);
+      line-height: 1.15;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin-bottom: 0.1rem;
+    }
+
+    .slide-body h2 {
+      font-size: clamp(1.1rem, 2vw, 1.6rem);
+      font-weight: 600;
+      color: var(--accent);
+      margin-top: 0.5rem;
+    }
+
+    .slide-body h3 {
+      font-size: clamp(0.95rem, 1.5vw, 1.2rem);
+      font-weight: 600;
+      color: var(--muted);
+      margin-top: 0.3rem;
+    }
+
+    .slide-body h4 {
+      font-size: clamp(0.85rem, 1.3vw, 1.05rem);
+      font-weight: 600;
+      color: var(--ink);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-top: 0.5rem;
+    }
+
+    .slide-body p {
+      font-size: clamp(0.95rem, 1.4vw, 1.1rem);
+      line-height: 1.6;
+      color: var(--ink);
+    }
+
+    .slide-body strong { color: var(--ink); }
+
+    .slide-body blockquote {
+      border-left: 4px solid var(--accent);
+      padding: 0.7rem 1rem;
+      background: var(--accent-light);
+      border-radius: 0 10px 10px 0;
+      font-size: clamp(1rem, 1.6vw, 1.25rem);
+      font-style: italic;
+      color: var(--ink);
+      margin: 0.3rem 0;
+    }
+
+    .slide-body ul,
+    .slide-body ol {
+      padding-left: 1.4rem;
+      font-size: clamp(0.92rem, 1.35vw, 1.08rem);
+      line-height: 1.5;
+    }
+
+    .slide-body li { margin: 0.3rem 0; }
+
+    .slide-body ul.checklist { list-style: none; padding-left: 0.2rem; }
+    .slide-body ul.checklist li { display: flex; align-items: flex-start; gap: 0.5rem; }
+    .slide-body ul.checklist input { margin-top: 0.2rem; accent-color: var(--accent-2); }
+
+    .slide-body table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: clamp(0.8rem, 1.15vw, 0.96rem);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+    }
+
+    .slide-body th {
+      background: var(--accent-light);
+      color: var(--accent);
+      font-weight: 700;
+      padding: 0.5rem 0.7rem;
+      text-align: left;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .slide-body td {
+      padding: 0.45rem 0.7rem;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+
+    .slide-body tr:last-child td { border-bottom: none; }
+    .slide-body tr:nth-child(even) td { background: #f8fafc; }
+
+    .slide-body code {
+      background: #f1f5f9;
+      padding: 0.1em 0.35em;
+      border-radius: 4px;
+      font-family: "JetBrains Mono", "Fira Code", Menlo, monospace;
+      font-size: 0.9em;
+      color: #c7254e;
+      border: 1px solid #e2e8f0;
+    }
+
+    .slide-body pre.code-block {
+      background: var(--code-bg);
+      color: var(--code-text);
+      border-radius: 12px;
+      padding: 1rem 1.2rem;
+      font-family: "JetBrains Mono", "Fira Code", Menlo, monospace;
+      font-size: clamp(0.75rem, 1.05vw, 0.9rem);
+      line-height: 1.55;
+      overflow-x: auto;
+      margin: 0.3rem 0;
+      flex-shrink: 0;
+    }
+
+    .slide-body pre.code-block code {
+      background: none;
+      border: none;
+      color: inherit;
+      padding: 0;
+      font-size: inherit;
+    }
+
+    /* ── Controls ── */
+    .controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      padding: 0.75rem 1.5rem;
+      background: var(--panel);
+      border-top: 1px solid var(--line);
+      flex-shrink: 0;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 1.1rem;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--ink);
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .btn:hover { background: var(--accent-light); border-color: var(--accent); color: var(--accent); }
+    .btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    .btn-primary:hover { background: #1447b5; border-color: #1447b5; color: #fff; }
+
+    .progress-wrap {
+      flex: 1;
+      max-width: 400px;
+      background: var(--line);
+      border-radius: 999px;
+      height: 4px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      border-radius: 999px;
+      transition: width 0.25s ease;
+    }
+
+    .slide-counter {
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-weight: 500;
+      min-width: 60px;
+      text-align: center;
+    }
+
+    /* ── Keyboard hint ── */
+    .kbd-hint {
+      font-size: 0.73rem;
+      color: var(--muted);
+      opacity: 0.7;
+    }
+
+    kbd {
+      display: inline-block;
+      padding: 0.05em 0.35em;
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 0.85em;
+    }
+
+    /* ── Speaker notes overlay ── */
+    .notes-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 100;
+      align-items: flex-end;
+      padding: 2rem;
+    }
+
+    .notes-overlay.visible { display: flex; }
+
+    .notes-panel {
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--panel);
+      border-radius: 16px;
+      padding: 1.5rem;
+      max-height: 50vh;
+      overflow-y: auto;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .notes-panel h4 { color: var(--accent); margin-bottom: 0.5rem; }
+    .notes-panel p { font-size: 0.92rem; line-height: 1.55; }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      .slide { padding: 1.2rem 1.1rem; border-radius: 14px; }
+      .slide-body h1 { font-size: 1.4rem; }
+      .header-title { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-left">
+      <span class="brand">TWT</span>
+      <span class="header-title">Module 6 Slides: Building MCP Tools</span>
+    </div>
+    <div class="level-badge">🟠 Advanced</div>
+  </header>
+
+  <main class="stage" id="stage">
+    <section class="slide" id="slide-1">
+      <div class="slide-number">1 / 13</div>
+      <div class="slide-body"><h1>Building MCP Tools</h1>
+<h3>Extending a Real MCP Server</h3>
+<h4>Module 6 of 8 | 🟠 Advanced Level</h4>
+<p><strong>Tech Writer's Tribe</strong></p>
+<p>AI-Powered Documentation Mastery</p>
+</div>
+    </section>
+
+    <section class="slide" id="slide-2">
+      <div class="slide-number">2 / 13</div>
+      <div class="slide-body"><h1>Quick Recap: Module 5</h1>
+<ul>
+<li>Peer review teaches you quality faster than any lecture</li>
+<li>Multi-step skills orchestrate multiple review dimensions</li>
+<li>Team skill libraries need version control and maintenance rules</li>
+<li>You finalized your <code>/doc-review</code> skill</li>
+</ul>
+<blockquote>"Did you get the sample project set up? What broke?"</blockquote>
+</div>
+    </section>
+
+    <section class="slide" id="slide-3">
+      <div class="slide-number">3 / 13</div>
+      <div class="slide-body"><h1>What Changes at Advanced Level</h1>
+<table>
+<thead><tr><th>Before</th><th>After</th></tr></thead>
+<tbody>
+<tr><td>User of AI tools</td><td>Builder of AI tools</td></tr>
+<tr><td>Relies on developer support</td><td>Proposes and co-builds</td></tr>
+<tr><td>Reads skills</td><td>Reads server code</td></tr>
+<tr><td>Uses tools</td><td>Creates tools</td></tr>
+</tbody></table>
+<p><strong>You don't need to code from scratch.</strong></p>
+<p><strong>Think: editing a template document.</strong></p>
+</div>
+    </section>
+
+    <section class="slide" id="slide-4">
+      <div class="slide-number">4 / 13</div>
+      <div class="slide-body"><h1>What We're Building: doc-quality-checker</h1>
+<pre class="code-block"><code>+──────────────────────────────────────+
+│         doc-quality-checker          │
+│                                      │
+│  Tools (deterministic):              │
+│    check_doc_completeness            │
+│    extract_api_endpoints             │
+│    grade_readability                 │
+│                                      │
+│  Resource (readable data):           │
+│    style-guide                       │
+│                                      │
+│  Skill (AI-powered):                 │
+│    /doc-review → compiled report     │
++──────────────────────────────────────+</code></pre>
+</div>
+    </section>
+
+    <section class="slide" id="slide-5">
+      <div class="slide-number">5 / 13</div>
+      <div class="slide-body"><h1>The Sample Project</h1>
+<pre class="code-block"><code>sample-project/
+  package.json     ← dependencies and scripts
+  tsconfig.json    ← TypeScript configuration
+  src/
+    index.ts       ← the MCP server
+  test-docs/
+    good-api-doc.md
+    bad-api-doc.md
+    style-guide.md</code></pre>
+<p><strong><code>build</code> → compile TypeScript</strong></p>
+<p><strong><code>start</code> → run the server</strong></p>
+</div>
+    </section>
+
+    <section class="slide" id="slide-6">
+      <div class="slide-number">6 / 13</div>
+      <div class="slide-body"><h1>Don't Panic About TypeScript</h1>
+<p>You will:</p>
+<table>
+<thead><tr><th>What</th><th>How</th></tr></thead>
+<tbody>
+<tr><td><strong>Read</strong> existing code</td><td>With explanations in plain language</td></tr>
+<tr><td><strong>Copy</strong> new code</td><td>From this lesson</td></tr>
+<tr><td><strong>Understand</strong> each part</td><td>In documentation terms</td></tr>
+<tr><td><strong>Modify</strong> small parts</td><td>To customize for your needs</td></tr>
+</tbody></table>
+<p><strong>It's like editing a template document.</strong></p>
+<p>You change the content. Not the layout.</p>
+</div>
+    </section>
+
+    <section class="slide" id="slide-7">
+      <div class="slide-number">7 / 13</div>
+      <div class="slide-body"><h1>Reading the Server Code: Section by Section</h1>
+<pre class="code-block"><code>// 1. Imports — load the MCP library and file tools
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import * as fs from "fs";
+
+// 2. Create the server — name and version Claude will see
+const server = new McpServer({ name: "doc-quality-checker", version: "1.0.0" });
+
+// 3. Register a tool — function Claude can call
+server.tool("check_doc_completeness", "description", { filePath: ... }, async ({ filePath }) =&gt; {
+  // read file, run check, return structured result
+});
+
+// 4. Start the server
+const transport = new StdioServerTransport();
+await server.connect(transport);</code></pre>
+</div>
+    </section>
+
+    <section class="slide" id="slide-8">
+      <div class="slide-number">8 / 13</div>
+      <div class="slide-body"><h1>The Critical Distinction</h1>
+<pre class="code-block"><code>Tool (deterministic):                  Skill (AI-generated):
+
+check_doc_completeness("api.md")       /check-api-doc api.md
+
+→ Always: same input = same output     → Varies: same input ≈ similar output
+→ Counts sections mechanically         → Interprets sections intelligently
+→ No judgment                          → Uses judgment
+
+Best for: counting, computing,         Best for: reviewing, explaining,
+          extracting, validating                generating, analyzing</code></pre>
+</div>
+    </section>
+
+    <section class="slide" id="slide-9">
+      <div class="slide-number">9 / 13</div>
+      <div class="slide-body"><h1>Live Exercise: Add <code>grade_readability</code></h1>
+<p><strong>What it does:</strong> Reads a file, computes avg sentence length, returns a grade.</p>
+<ol>
+<li>Open <code>src/index.ts</code></li>
+<li>Copy the <code>grade_readability</code> tool code from the lesson</li>
+<li>Paste it after the existing tool</li>
+<li>Build:</li>
+</ol>
+<p>```bash</p>
+<p>cd sample-project && npm run build</p>
+<p>```</p>
+<ol>
+<li>If it compiles — you're ready to connect to Claude</li>
+</ol>
+</div>
+    </section>
+
+    <section class="slide" id="slide-10">
+      <div class="slide-number">10 / 13</div>
+      <div class="slide-body"><h1>Connect Your Server to Claude Code</h1>
+<pre class="code-block"><code>claude mcp add doc-quality-checker -- \
+  node /absolute/path/to/sample-project/dist/index.js</code></pre>
+<p>Verify:</p>
+<pre class="code-block"><code>/mcp</code></pre>
+<p>Test:</p>
+<pre class="code-block"><code>Use check_doc_completeness on sample-project/test-docs/bad-api-doc.md</code></pre>
+</div>
+    </section>
+
+    <section class="slide" id="slide-11">
+      <div class="slide-number">11 / 13</div>
+      <div class="slide-body"><h1>Discussion</h1>
+<ol>
+<li>What is the key difference between the <em>tool</em> checking completeness</li>
+</ol>
+<p>and a <em>skill</em> checking completeness?</p>
+<ol>
+<li>What tools would be most valuable for your team's workflow?</li>
+</ol>
+<ol>
+<li>How would you describe a tool requirement to a developer?</li>
+</ol>
+<p><em>(This is a real skill — practice now.)</em></p>
+</div>
+    </section>
+
+    <section class="slide" id="slide-12">
+      <div class="slide-number">12 / 13</div>
+      <div class="slide-body"><h1>Before Module 7</h1>
+<ol>
+<li><strong>Add</strong> the <code>extract_api_endpoints</code> tool (follow the same pattern)</li>
+<li><strong>Add</strong> your style guide as a Resource (Module 7 shows the pattern)</li>
+<li><strong>Verify</strong> all three tools work from Claude Code</li>
+</ol>
+</div>
+    </section>
+
+    <section class="slide" id="slide-13">
+      <div class="slide-number">13 / 13</div>
+      <div class="slide-body"><h1>🟠 Advanced Checkpoint: Module 6</h1>
+<ul class="checklist">
+<li><input type="checkbox"  disabled> Read a TypeScript MCP file and explain each section</li>
+<li><input type="checkbox"  disabled> Add a tool by copying and adapting existing code</li>
+<li><input type="checkbox"  disabled> Build and compile without errors</li>
+<li><input type="checkbox"  disabled> Connect the server to Claude Code and verify</li>
+<li><input type="checkbox"  disabled> Run a tool from Claude Code and interpret output</li>
+<li><input type="checkbox"  disabled> Explain deterministic tool output vs. AI skill output</li>
+</ul>
+<p><strong>Next: Module 7 — Expert Workflows →</strong></p>
+</div>
+    </section>
+  </main>
+
+  <footer class="controls">
+    <button class="btn" id="btn-prev" onclick="prevSlide()" disabled>&#8592; Prev</button>
+    <div class="progress-wrap">
+      <div class="progress-bar" id="progress-bar" style="width: 7.7%"></div>
+    </div>
+    <span class="slide-counter" id="counter">1 / 13</span>
+    <button class="btn btn-primary" id="btn-next" onclick="nextSlide()">Next &#8594;</button>
+    <span class="kbd-hint"><kbd>←</kbd><kbd>→</kbd> navigate</span>
+  </footer>
+
+  <script>
+    let current = 0;
+    const total = 13;
+    const slides = document.querySelectorAll('.slide');
+
+    function show(n) {
+      slides.forEach(s => s.classList.remove('active'));
+      slides[n].classList.add('active');
+      current = n;
+      document.getElementById('counter').textContent = (n + 1) + ' / ' + total;
+      document.getElementById('progress-bar').style.width = ((n + 1) / total * 100).toFixed(1) + '%';
+      document.getElementById('btn-prev').disabled = n === 0;
+      document.getElementById('btn-next').disabled = n === total - 1;
+      document.getElementById('btn-next').textContent = n === total - 1 ? 'End ✓' : 'Next →';
+    }
+
+    function nextSlide() { if (current < total - 1) show(current + 1); }
+    function prevSlide() { if (current > 0) show(current - 1); }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); prevSlide(); }
+      if (e.key === 'Home') { e.preventDefault(); show(0); }
+      if (e.key === 'End') { e.preventDefault(); show(total - 1); }
+    });
+
+    show(0);
+  </script>
+</body>
+</html>

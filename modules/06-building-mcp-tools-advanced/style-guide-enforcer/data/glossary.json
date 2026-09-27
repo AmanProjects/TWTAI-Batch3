@@ -1,0 +1,15 @@
+[
+  { "banned": "whitelist",  "approved": "allowlist",  "note": "Inclusive language standard" },
+  { "banned": "blacklist",  "approved": "blocklist",  "note": "Inclusive language standard" },
+  { "banned": "master",     "approved": "primary",    "note": "Inclusive language standard (Git context: use 'main')" },
+  { "banned": "slave",      "approved": "replica",    "note": "Inclusive language standard" },
+  { "banned": "abort",      "approved": "cancel",     "note": "Less alarming in user-facing copy" },
+  { "banned": "login",      "approved": "sign in",    "note": "Use 'login' only as a noun (the login page); use 'sign in' as a verb" },
+  { "banned": "execute",    "approved": "run",        "note": "Simpler verb for developer audiences" },
+  { "banned": "utilize",    "approved": "use",        "note": "Simpler — 'utilize' rarely adds meaning" },
+  { "banned": "leverage",   "approved": "use",        "note": "Business jargon — prefer plain language" },
+  { "banned": "simply",     "approved": "",           "note": "Avoid confidence-assuming words; delete or rephrase" },
+  { "banned": "just",       "approved": "",           "note": "Avoid confidence-assuming words; delete or rephrase" },
+  { "banned": "easy",       "approved": "",           "note": "Avoid confidence-assuming words; delete or rephrase" },
+  { "banned": "obviously",  "approved": "",           "note": "Condescending; delete" }
+]

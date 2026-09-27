@@ -1,0 +1,21 @@
+{
+  "name": "style-guide-enforcer",
+  "version": "1.0.0",
+  "description": "MCP server that checks technical documentation against a custom style guide and terminology glossary",
+  "bin": {
+    "style-guide-enforcer": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "@types/node": "^20.0.0"
+  },
+  "keywords": ["mcp", "technical-writing", "style-guide", "documentation", "linting"],
+  "license": "MIT"
+}

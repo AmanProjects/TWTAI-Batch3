@@ -1,0 +1,16 @@
+{
+  "name": "doc-quality-checker",
+  "version": "1.0.0",
+  "description": "MCP server for checking API documentation quality",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "@types/node": "^20.0.0"
+  }
+}

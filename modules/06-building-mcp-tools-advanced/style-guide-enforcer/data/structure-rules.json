@@ -1,0 +1,18 @@
+{
+  "how-to": {
+    "required": ["Overview", "Prerequisites", "Steps", "Result"],
+    "optional": ["Troubleshooting", "Next steps", "Related"]
+  },
+  "reference": {
+    "required": ["Description", "Parameters", "Response", "Errors"],
+    "optional": ["Authentication", "Example", "Notes"]
+  },
+  "tutorial": {
+    "required": ["Introduction", "Prerequisites", "Steps", "Summary"],
+    "optional": ["Next steps", "Resources"]
+  },
+  "release-note": {
+    "required": ["What's new", "Fixed"],
+    "optional": ["Known issues", "Deprecated", "Breaking changes", "Upgrade guide"]
+  }
+}
