@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# Anything in bin/ joins the Bash tool's PATH while the plugin is enabled.
+# Claude can run `doc-wordcount file.md` as a bare command — no path, no npx.
+
+set -euo pipefail
+
+if [ $# -eq 0 ]; then
+  echo "usage: doc-wordcount <file.md> [file.md ...]" >&2
+  exit 1
+fi
+
+for f in "$@"; do
+  printf '%s\t%s words\n' "$f" "$(wc -w < "$f" | tr -d ' ')"
+done

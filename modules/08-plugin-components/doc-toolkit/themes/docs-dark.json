@@ -1,0 +1,10 @@
+{
+  "name": "Docs Dark",
+  "base": "dark",
+  "overrides": {
+    "claude": "#7aa2f7",
+    "error": "#f7768e",
+    "success": "#9ece6a",
+    "warning": "#e0af68"
+  }
+}

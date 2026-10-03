@@ -1,0 +1,19 @@
+{
+  "name": "house-style",
+  "displayName": "House Style",
+  "version": "1.0.0",
+  "description": "Our team's writing standard, as a plugin. One skill, one reminder, one word-count tool.",
+  "author": { "name": "Your Name", "email": "you@example.com" },
+  "license": "MIT",
+  "keywords": ["documentation", "style-guide"],
+  "userConfig": {
+    "max_sentence_words": {
+      "type": "number",
+      "title": "Max sentence length",
+      "description": "Flag any sentence longer than this many words.",
+      "default": 25,
+      "min": 10,
+      "max": 60
+    }
+  }
+}

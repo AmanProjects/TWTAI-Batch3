@@ -1,0 +1,686 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module 7 Slides: Capstone Build — Portfolio From a Résumé | AI-Powered Documentation Mastery</title>
+  <style>
+    :root {
+      --bg: #f5f7fa;
+      --panel: #ffffff;
+      --ink: #1a2332;
+      --muted: #5a6a7e;
+      --accent: #1a56db;
+      --accent-light: #ebf5ff;
+      --accent-2: #0e9f6e;
+      --line: #e2e8f0;
+      --shadow: 0 4px 24px rgba(26, 35, 50, 0.10);
+      --shadow-lg: 0 8px 40px rgba(26, 35, 50, 0.16);
+      --level-bg: #fff3e0;
+      --level-text: #e65100;
+      --level-border: #ffb74d;
+      --code-bg: #1e293b;
+      --code-text: #e2e8f0;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Inter", "Segoe UI", -apple-system, sans-serif;
+      color: var(--ink);
+      background: linear-gradient(135deg, #f0f4ff 0%, #f5f7fa 50%, #eef7f4 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* ── Header bar ── */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1.5rem;
+      background: var(--panel);
+      border-bottom: 1px solid var(--line);
+      flex-shrink: 0;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .brand {
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: var(--accent);
+      letter-spacing: -0.01em;
+    }
+
+    .header-title {
+      font-size: 0.9rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .level-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.22rem 0.65rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      background: var(--level-bg);
+      color: var(--level-text);
+      border: 1px solid var(--level-border);
+    }
+
+    /* ── Slide stage ── */
+    .stage {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem 1.5rem;
+      overflow: hidden;
+    }
+
+    .slide {
+      width: min(1100px, 96vw);
+      height: min(660px, calc(100vh - 130px));
+      background: var(--panel);
+      border-radius: 20px;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-lg);
+      padding: 2rem 2.5rem 1.5rem;
+      display: none;
+      flex-direction: column;
+      gap: 0.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide.active { display: flex; }
+
+    /* Decorative accent circle */
+    .slide::before {
+      content: "";
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      right: -180px;
+      top: -180px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(26,86,219,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .slide-number {
+      position: absolute;
+      top: 1rem;
+      right: 1.5rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    /* ── Slide body typography ── */
+    .slide-body {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .slide-body::-webkit-scrollbar { width: 4px; }
+    .slide-body::-webkit-scrollbar-thumb { background: var(--line); border-radius: 2px; }
+
+    .slide-body h1 {
+      font-size: clamp(1.6rem, 3.2vw, 2.6rem);
+      line-height: 1.15;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin-bottom: 0.1rem;
+    }
+
+    .slide-body h2 {
+      font-size: clamp(1.1rem, 2vw, 1.6rem);
+      font-weight: 600;
+      color: var(--accent);
+      margin-top: 0.5rem;
+    }
+
+    .slide-body h3 {
+      font-size: clamp(0.95rem, 1.5vw, 1.2rem);
+      font-weight: 600;
+      color: var(--muted);
+      margin-top: 0.3rem;
+    }
+
+    .slide-body h4 {
+      font-size: clamp(0.85rem, 1.3vw, 1.05rem);
+      font-weight: 600;
+      color: var(--ink);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-top: 0.5rem;
+    }
+
+    .slide-body p {
+      font-size: clamp(0.95rem, 1.4vw, 1.1rem);
+      line-height: 1.6;
+      color: var(--ink);
+    }
+
+    .slide-body strong { color: var(--ink); }
+
+    .slide-body blockquote {
+      border-left: 4px solid var(--accent);
+      padding: 0.7rem 1rem;
+      background: var(--accent-light);
+      border-radius: 0 10px 10px 0;
+      font-size: clamp(1rem, 1.6vw, 1.25rem);
+      font-style: italic;
+      color: var(--ink);
+      margin: 0.3rem 0;
+    }
+
+    .slide-body ul,
+    .slide-body ol {
+      padding-left: 1.4rem;
+      font-size: clamp(0.92rem, 1.35vw, 1.08rem);
+      line-height: 1.5;
+    }
+
+    .slide-body li { margin: 0.3rem 0; }
+
+    .slide-body ul.checklist { list-style: none; padding-left: 0.2rem; }
+    .slide-body ul.checklist li { display: flex; align-items: flex-start; gap: 0.5rem; }
+    .slide-body ul.checklist input { margin-top: 0.2rem; accent-color: var(--accent-2); }
+
+    .slide-body table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: clamp(0.8rem, 1.15vw, 0.96rem);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+    }
+
+    .slide-body th {
+      background: var(--accent-light);
+      color: var(--accent);
+      font-weight: 700;
+      padding: 0.5rem 0.7rem;
+      text-align: left;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .slide-body td {
+      padding: 0.45rem 0.7rem;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+
+    .slide-body tr:last-child td { border-bottom: none; }
+    .slide-body tr:nth-child(even) td { background: #f8fafc; }
+
+    .slide-body code {
+      background: #f1f5f9;
+      padding: 0.1em 0.35em;
+      border-radius: 4px;
+      font-family: "JetBrains Mono", "Fira Code", Menlo, monospace;
+      font-size: 0.9em;
+      color: #c7254e;
+      border: 1px solid #e2e8f0;
+    }
+
+    .slide-body pre.code-block {
+      background: var(--code-bg);
+      color: var(--code-text);
+      border-radius: 12px;
+      padding: 1rem 1.2rem;
+      font-family: "JetBrains Mono", "Fira Code", Menlo, monospace;
+      font-size: clamp(0.75rem, 1.05vw, 0.9rem);
+      line-height: 1.55;
+      overflow-x: auto;
+      margin: 0.3rem 0;
+      flex-shrink: 0;
+    }
+
+    .slide-body pre.code-block code {
+      background: none;
+      border: none;
+      color: inherit;
+      padding: 0;
+      font-size: inherit;
+    }
+
+    /* ── Controls ── */
+    .controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      padding: 0.75rem 1.5rem;
+      background: var(--panel);
+      border-top: 1px solid var(--line);
+      flex-shrink: 0;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 1.1rem;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--ink);
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .btn:hover { background: var(--accent-light); border-color: var(--accent); color: var(--accent); }
+    .btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    .btn-primary:hover { background: #1447b5; border-color: #1447b5; color: #fff; }
+
+    .progress-wrap {
+      flex: 1;
+      max-width: 400px;
+      background: var(--line);
+      border-radius: 999px;
+      height: 4px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      border-radius: 999px;
+      transition: width 0.25s ease;
+    }
+
+    .slide-counter {
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-weight: 500;
+      min-width: 60px;
+      text-align: center;
+    }
+
+    /* ── Keyboard hint ── */
+    .kbd-hint {
+      font-size: 0.73rem;
+      color: var(--muted);
+      opacity: 0.7;
+    }
+
+    kbd {
+      display: inline-block;
+      padding: 0.05em 0.35em;
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 0.85em;
+    }
+
+    /* ── Speaker notes overlay ── */
+    .notes-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 100;
+      align-items: flex-end;
+      padding: 2rem;
+    }
+
+    .notes-overlay.visible { display: flex; }
+
+    .notes-panel {
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--panel);
+      border-radius: 16px;
+      padding: 1.5rem;
+      max-height: 50vh;
+      overflow-y: auto;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .notes-panel h4 { color: var(--accent); margin-bottom: 0.5rem; }
+    .notes-panel p { font-size: 0.92rem; line-height: 1.55; }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      .slide { padding: 1.2rem 1.1rem; border-radius: 14px; }
+      .slide-body h1 { font-size: 1.4rem; }
+      .header-title { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-left">
+      <span class="brand">AIDM</span>
+      <span class="header-title">Module 7 Slides: Capstone Build — Portfolio From a Résumé</span>
+    </div>
+    <div class="level-badge">🟠 Advanced</div>
+  </header>
+
+  <main class="stage" id="stage">
+    <section class="slide" id="slide-1">
+      <div class="slide-number">1 / 18</div>
+      <div class="slide-body"><h1>Build Your Portfolio Site</h1>
+<h3>From a Résumé to a Live URL</h3>
+<h4>Module 7 of 7 | 🟠 Advanced (Upper) Level</h4>
+<p>AI-Powered Documentation Mastery</p>
+</div>
+    </section>
+
+    <section class="slide" id="slide-2">
+      <div class="slide-number">2 / 18</div>
+      <div class="slide-body"><h1>Quick Recap: Module 6</h1>
+<ul>
+<li>You added a tool to a real MCP server</li>
+<li>You connected the server to Claude Code</li>
+<li>You understand deterministic tools vs. AI skills</li>
+</ul>
+<blockquote>"Today we stop practicing on sample files —</blockquote>
+<blockquote>and build something public that is <strong>yours</strong>."</blockquote>
+</div>
+    </section>
+
+    <section class="slide" id="slide-3">
+      <div class="slide-number">3 / 18</div>
+      <div class="slide-body"><h1>Today: Résumé → Live Portfolio</h1>
+<ol>
+<li>Lock down the <strong>mental model</strong>: skill vs. agent vs. plugin vs. MCP server</li>
+<li>Turn your résumé into <strong><code>resume.json</code></strong> (JSON Resume schema)</li>
+<li>Generate a <strong>static site</strong> that renders from your data</li>
+<li>Build a <strong><code>portfolio-builder</code> agent</strong></li>
+<li><strong>Connect LinkedIn</strong> + <strong>deploy to GitHub Pages</strong></li>
+</ol>
+<p><strong>End state:</strong> a real URL for your résumé.</p>
+</div>
+    </section>
+
+    <section class="slide" id="slide-4">
+      <div class="slide-number">4 / 18</div>
+      <div class="slide-body"><h1>Four Blocks, One System</h1>
+<table>
+<thead><tr><th>Block</th><th>What it changes</th><th>Invoked by</th></tr></thead>
+<tbody>
+<tr><td><strong>Skill</strong></td><td><em>How</em> the model thinks (a reusable prompt)</td><td>You / auto</td></tr>
+<tr><td><strong>Agent</strong></td><td><em>Who</em> does a big delegated job (own context)</td><td>The model</td></tr>
+<tr><td><strong>MCP server</strong></td><td><em>What</em> is newly possible (tools + data)</td><td>Tool calls</td></tr>
+<tr><td><strong>Plugin</strong></td><td><em>How you ship</em> all of it to your team</td><td>You install</td></tr>
+</tbody></table>
+<blockquote><strong>Skill</strong> = better instructions · <strong>MCP</strong> = new capability</blockquote>
+<blockquote><strong>Agent</strong> = delegated job · <strong>Plugin</strong> = distribution</blockquote>
+</div>
+    </section>
+
+    <section class="slide" id="slide-5">
+      <div class="slide-number">5 / 18</div>
+      <div class="slide-body"><h1>Your Portfolio Uses All Four</h1>
+<pre class="code-block"><code>Skill   → /parse-resume: résumé → resume.json
+Resource→ the JSON Resume schema (the contract)
+Agent   → portfolio-builder: resume.json → full site
+Plugin  → bundle skill + agent + schema → one install</code></pre>
+<p><strong><code>resume.json</code> = ground truth (never changes on its own).</strong></p>
+<p><strong>Skill/agent = generate the site around it.</strong></p>
+<p>Facts in data · judgment in prompts.</p>
+</div>
+    </section>
+
+    <section class="slide" id="slide-6">
+      <div class="slide-number">6 / 18</div>
+      <div class="slide-body"><h1>Résumé-as-Data</h1>
+<pre class="code-block"><code>portfolio/
+  index.html      ← shell + section containers
+  styles.css      ← all styling
+  app.js          ← fetches resume.json, renders sections
+  resume.json     ← YOUR data (single source of truth)
+  .claude/commands/parse-resume.md   ← skill
+  .claude/agents/portfolio-builder.md ← agent
+  CLAUDE.md</code></pre>
+<p><strong>You never hand-edit HTML. Update <code>resume.json</code> → the site re-renders.</strong></p>
+</div>
+    </section>
+
+    <section class="slide" id="slide-7">
+      <div class="slide-number">7 / 18</div>
+      <div class="slide-body"><h1>The <code>/parse-resume</code> Skill</h1>
+<pre class="code-block"><code>You convert a résumé into a valid JSON Resume file.
+
+## Input:  $ARGUMENTS  (.pdf/.docx/.md/.txt)
+## Task
+1. Read the résumé.
+2. Extract into JSON Resume: basics, work, education, skills.
+3. Write 2–4 achievement highlights per role (verb + number).
+4. Never invent facts — omit missing fields.
+
+## Output Contract
+Output ONLY valid JSON. No preamble, no fences.</code></pre>
+<pre class="code-block"><code>/parse-resume ~/Documents/my-resume.pdf &gt; resume.json</code></pre>
+<p><strong>Output contract = a skill a program can consume.</strong></p>
+</div>
+    </section>
+
+    <section class="slide" id="slide-8">
+      <div class="slide-number">8 / 18</div>
+      <div class="slide-body"><h1><code>app.js</code> — Fetch and Render</h1>
+<pre class="code-block"><code>const data = await (await fetch("resume.json")).json();
+
+document.getElementById("work-list").innerHTML =
+  (data.work || []).map(w =&gt; `
+    &lt;article class="entry"&gt;
+      &lt;h3&gt;${w.position} · ${w.name}&lt;/h3&gt;
+      &lt;span&gt;${w.startDate} – ${w.endDate || "Present"}&lt;/span&gt;
+      &lt;ul&gt;${(w.highlights||[]).map(h=&gt;`&lt;li&gt;${h}&lt;/li&gt;`).join("")}&lt;/ul&gt;
+    &lt;/article&gt;`).join("");</code></pre>
+<p>Preview: <code>python3 -m http.server 8000</code></p>
+<p><strong>Change resume.json → reload → done. No HTML touched.</strong></p>
+</div>
+    </section>
+
+    <section class="slide" id="slide-9">
+      <div class="slide-number">9 / 18</div>
+      <div class="slide-body"><h1><code>portfolio-builder</code> Agent</h1>
+<pre class="code-block"><code></code></pre>
+</div>
+    </section>
+
+    <section class="slide" id="slide-10">
+      <div class="slide-number">10 / 18</div>
+      <div class="slide-body"><h1>Two Mechanisms, Two Purposes</h1>
+<p><strong>A. Sign in with LinkedIn (OIDC)</strong> — live, but limited</p>
+<pre class="code-block"><code>Returns ONLY: sub · name · picture · email · locale
+NO positions, NO job history.</code></pre>
+<p><strong>B. Data export</strong> — how experience actually gets in</p>
+<pre class="code-block"><code>Settings → Get a copy of your data
+→ Positions.csv, Education.csv, Skills.csv
+→ /import-linkedin → resume.json</code></pre>
+<blockquote>⚠️ Token exchange needs a secret → a static site needs a tiny</blockquote>
+<blockquote>serverless function. Sign-in personalizes; export supplies data.</blockquote>
+</div>
+    </section>
+
+    <section class="slide" id="slide-11">
+      <div class="slide-number">11 / 18</div>
+      <div class="slide-body"><h1>Create a Repo & Ship to Pages</h1>
+<p><strong>1. Make it a repo (local):</strong></p>
+<pre class="code-block"><code>cd portfolio &amp;&amp; git init &amp;&amp; git add .
+git commit -m "Portfolio"</code></pre>
+<p><strong>2. Create the repo on GitHub</strong> — [github.com/new](https://github.com/new)</p>
+<p>→ name <code>portfolio</code> · <strong>Public</strong> · don't add README, then:</p>
+<pre class="code-block"><code>git remote add origin https://github.com/YOU/portfolio.git
+git branch -M main &amp;&amp; git push -u origin main</code></pre>
+<p><em>(auth: use a Personal Access Token, or <code>gh</code> / GitHub Desktop)</em></p>
+<p><strong>3. Enable Pages:</strong> Settings → Pages → branch <code>main</code> / root</p>
+<p>→ live at <code>https://YOU.github.io/portfolio/</code></p>
+<p><strong>Update later:</strong> edit <code>resume.json</code> → <code>git push</code> → auto-redeploys.</p>
+</div>
+    </section>
+
+    <section class="slide" id="slide-12">
+      <div class="slide-number">12 / 18</div>
+      <div class="slide-body"><h1>Make Your Résumé Queryable</h1>
+<p>A site is something people <strong>look at</strong>.</p>
+<p>An MCP server is something their <strong>AI can query</strong>.</p>
+<pre class="code-block"><code>cd about-me-mcp &amp;&amp; npm install &amp;&amp; npm run build
+claude mcp add about-me -- node "$(pwd)/dist/index.js"</code></pre>
+<pre class="code-block"><code>What is this person's experience with APIs?   → get_experience</code></pre>
+<table>
+<thead><tr><th>Tool</th><th>Returns</th></tr></thead>
+<tbody>
+<tr><td><code>get_summary</code> / <code>get_experience</code></td><td>Title, summary, filterable work history</td></tr>
+<tr><td><code>get_skills</code> / <code>get_education</code> / <code>get_contact</code></td><td>The rest</td></tr>
+</tbody></table>
+<p><strong>Publish it → a recruiter adds your server → asks Claude about you.</strong></p>
+</div>
+    </section>
+
+    <section class="slide" id="slide-13">
+      <div class="slide-number">13 / 18</div>
+      <div class="slide-body"><h1><code>CLAUDE.md</code> — Always-On Instructions</h1>
+<p>Loaded into <strong>every</strong> session. Put it in your repo:</p>
+<pre class="code-block"><code>## This project
+- Source of truth is resume.json. Never hand-edit index.html.
+- Never invent résumé facts; omit missing fields.
+## Style
+- Framework-free HTML/CSS/JS. Accessible by default.</code></pre>
+<p>Levels stack: <code>~/.claude/CLAUDE.md</code> → <code>./CLAUDE.md</code> → <code>./sub/CLAUDE.md</code></p>
+<p>Build with <code>/init</code>, then <strong>trim</strong> (every line costs tokens forever).</p>
+</div>
+    </section>
+
+    <section class="slide" id="slide-14">
+      <div class="slide-number">14 / 18</div>
+      <div class="slide-body"><h1>Cursor Rules + Cost Habits</h1>
+<p><strong>Cursor rules</strong> — same idea, scoped by file glob:</p>
+<pre class="code-block"><code></code></pre>
+</div>
+    </section>
+
+    <section class="slide" id="slide-15">
+      <div class="slide-number">15 / 18</div>
+      <div class="slide-body"><h1>Before You Call It Done</h1>
+<ol>
+<li><strong>Validate data</strong> — wrap <code>fetch</code> in try/catch; bad JSON shouldn't blank the page</li>
+<li><strong>Hide empty sections</strong> — no heading without content</li>
+<li><strong>Output contracts</strong> — skills emit ONLY JSON</li>
+<li><strong>Version your data</strong> — <code>resume.json</code> in Git = your history</li>
+<li><strong>No secrets in the repo</strong> — LinkedIn secret lives in the serverless env</li>
+</ol>
+</div>
+    </section>
+
+    <section class="slide" id="slide-16">
+      <div class="slide-number">16 / 18</div>
+      <div class="slide-body"><h1>Discussion</h1>
+<ol>
+<li>Which primitive did the most work in your build — skill, agent, or plain code?</li>
+</ol>
+<ol>
+<li>What trade-off did you accept using OIDC + a manual export instead of a live sync?</li>
+</ol>
+<ol>
+<li>What would you bundle into a plugin so a colleague builds theirs in one step?</li>
+</ol>
+</div>
+    </section>
+
+    <section class="slide" id="slide-17">
+      <div class="slide-number">17 / 18</div>
+      <div class="slide-body"><h1>Before the Showcase</h1>
+<table>
+<thead><tr><th>Item</th><th>Required</th></tr></thead>
+<tbody>
+<tr><td>Portfolio live on GitHub Pages (public URL)</td><td>✅</td></tr>
+<tr><td><code>resume.json</code> with your real experience</td><td>✅</td></tr>
+<tr><td><code>/parse-resume</code> skill</td><td>✅</td></tr>
+<tr><td><code>portfolio-builder</code> agent</td><td>✅</td></tr>
+<tr><td><code>CLAUDE.md</code> for the repo</td><td>✅</td></tr>
+<tr><td>5-min demo: change resume.json live</td><td>✅</td></tr>
+</tbody></table>
+</div>
+    </section>
+
+    <section class="slide" id="slide-18">
+      <div class="slide-number">18 / 18</div>
+      <div class="slide-body"><h1>🟠 Advanced Checkpoint: Module 7</h1>
+<ul class="checklist">
+<li><input type="checkbox"  disabled> Explain skill vs. agent vs. MCP server vs. plugin — and how they compose</li>
+<li><input type="checkbox"  disabled> Convert a résumé to <code>resume.json</code> with <code>/parse-resume</code></li>
+<li><input type="checkbox"  disabled> Render a static site from data — no framework, no build step</li>
+<li><input type="checkbox"  disabled> Build and run a <code>portfolio-builder</code> agent</li>
+<li><input type="checkbox"  disabled> Explain why LinkedIn sign-in returns only basic profile fields</li>
+<li><input type="checkbox"  disabled> Import experience from a LinkedIn data export</li>
+<li><input type="checkbox"  disabled> Deploy to GitHub Pages with a public URL</li>
+<li><input type="checkbox"  disabled> Write a <code>CLAUDE.md</code>; explain Cursor rules' glob scoping</li>
+</ul>
+<p><strong>Next: Showcase — present your portfolio and certify →</strong></p>
+</div>
+    </section>
+  </main>
+
+  <footer class="controls">
+    <button class="btn" id="btn-prev" onclick="prevSlide()" disabled>&#8592; Prev</button>
+    <div class="progress-wrap">
+      <div class="progress-bar" id="progress-bar" style="width: 5.6%"></div>
+    </div>
+    <span class="slide-counter" id="counter">1 / 18</span>
+    <button class="btn btn-primary" id="btn-next" onclick="nextSlide()">Next &#8594;</button>
+    <span class="kbd-hint"><kbd>←</kbd><kbd>→</kbd> navigate</span>
+  </footer>
+
+  <script>
+    let current = 0;
+    const total = 18;
+    const slides = document.querySelectorAll('.slide');
+
+    function show(n) {
+      slides.forEach(s => s.classList.remove('active'));
+      slides[n].classList.add('active');
+      current = n;
+      document.getElementById('counter').textContent = (n + 1) + ' / ' + total;
+      document.getElementById('progress-bar').style.width = ((n + 1) / total * 100).toFixed(1) + '%';
+      document.getElementById('btn-prev').disabled = n === 0;
+      document.getElementById('btn-next').disabled = n === total - 1;
+      document.getElementById('btn-next').textContent = n === total - 1 ? 'End ✓' : 'Next →';
+    }
+
+    function nextSlide() { if (current < total - 1) show(current + 1); }
+    function prevSlide() { if (current > 0) show(current - 1); }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); prevSlide(); }
+      if (e.key === 'Home') { e.preventDefault(); show(0); }
+      if (e.key === 'End') { e.preventDefault(); show(total - 1); }
+    });
+
+    show(0);
+  </script>
+</body>
+</html>

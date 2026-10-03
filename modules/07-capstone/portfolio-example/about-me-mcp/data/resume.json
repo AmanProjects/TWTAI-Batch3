@@ -1,0 +1,76 @@
+{
+  "meta": {
+    "note": "SAMPLE DATA — replace with your own. Run /parse-resume on your résumé, or /import-linkedin on a LinkedIn data export, to regenerate this file.",
+    "schema": "https://jsonresume.org/schema/"
+  },
+  "basics": {
+    "name": "Aman Talwar",
+    "label": "Technical Communication Leader",
+    "image": "profile.jpg",
+    "email": "you@example.com",
+    "phone": "+91 90000 00000",
+    "url": "https://amantalwar04.github.io/portfolio/",
+    "summary": "Technical communication leader with 20+ years of experience aligning technical strategy with business goals, streamlining documentation processes, and fostering cross-functional collaboration.",
+    "location": { "city": "Hyderabad", "region": "India", "countryCode": "IN" },
+    "profiles": [
+      { "network": "LinkedIn", "username": "your-handle", "url": "https://www.linkedin.com/in/your-handle" },
+      { "network": "GitHub", "username": "amantalwar04", "url": "https://github.com/amantalwar04" }
+    ]
+  },
+  "work": [
+    {
+      "name": "Autodesk",
+      "position": "Principal Technical Writer",
+      "startDate": "2018-04",
+      "endDate": "",
+      "summary": "Lead documentation strategy for platform services and developer-facing content.",
+      "highlights": [
+        "Cut release-documentation turnaround from 3 days to 4 hours by introducing an AI-assisted review workflow",
+        "Established a shared style guide and terminology glossary adopted across multiple product teams",
+        "Mentored writers on API documentation and docs-as-code practices"
+      ]
+    },
+    {
+      "name": "Previous Employer",
+      "position": "Senior Technical Writer",
+      "startDate": "2010-01",
+      "endDate": "2018-03",
+      "summary": "Owned end-to-end documentation for enterprise software products.",
+      "highlights": [
+        "REPLACE ME: add 2–4 achievement-focused highlights (start with a verb, include a number)"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Kakatiya University",
+      "studyType": "Master of Computer Applications (MCA)",
+      "area": "Computer Applications",
+      "startDate": "2000",
+      "endDate": "2003"
+    },
+    {
+      "institution": "Kakatiya University",
+      "studyType": "Bachelor of Science",
+      "area": "Chemistry",
+      "startDate": "1996",
+      "endDate": "1999"
+    }
+  ],
+  "skills": [
+    { "name": "Technical Writing", "level": "Expert", "keywords": ["API documentation", "DITA", "Markdown", "docs-as-code"] },
+    { "name": "AI Tooling", "level": "Advanced", "keywords": ["Claude Code", "MCP servers", "Prompt design", "Skills & agents"] },
+    { "name": "Leadership", "level": "Advanced", "keywords": ["Team mentoring", "Documentation strategy", "Cross-functional collaboration"] }
+  ],
+  "certificates": [
+    { "name": "AI Documentation Practitioner", "issuer": "AI-Powered Documentation Mastery", "date": "2026-07" }
+  ],
+  "projects": [
+    {
+      "name": "AI-Powered Portfolio",
+      "description": "A résumé-as-data static site generated from resume.json, with a companion MCP server so anyone's Claude can query my background.",
+      "url": "https://amantalwar04.github.io/portfolio/",
+      "keywords": ["Claude Code", "MCP", "GitHub Pages"]
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "mcpServers": {
+    "docstats": {
+      "type": "stdio",
+      "command": "node",
+      "args": ["${PLUGIN_ROOT}/mcp/docstats-server.js"],
+      "cwd": "${PLUGIN_ROOT}",
+      "env": {
+        "CACHE_DIR": "${PLUGIN_DATA}/cache"
+      }
+    },
+    "team-docs-api": {
+      "type": "streamable-http",
+      "url": "https://example.com/mcp",
+      "headers": {
+        "X-Client": "portable-doc-toolkit"
+      }
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "doc-toolkit",
+  "displayName": "Docs Toolkit",
+  "version": "1.0.0",
+  "description": "One plugin that demonstrates every Claude Code plugin component: skills, commands, agents, hooks, MCP, LSP, monitors, themes, output styles, workflows, bin, and settings.",
+  "author": {
+    "name": "Aman Talwar",
+    "email": "amandeep.talwar@gmail.com",
+    "url": "https://github.com/AmanProjects"
+  },
+  "homepage": "https://github.com/AmanProjects/twtai-skill",
+  "repository": "https://github.com/AmanProjects/twtai-skill",
+  "license": "MIT",
+  "keywords": ["documentation", "style-guide", "teaching"],
+  "metadata": {
+    "course": "AI-Powered Documentation Mastery",
+    "module": 8
+  },
+  "defaultEnabled": true,
+  "userConfig": {
+    "style_guide_url": {
+      "type": "string",
+      "title": "Style guide URL",
+      "description": "Where your team's style guide lives. Quoted in review output.",
+      "default": "https://example.com/style-guide"
+    },
+    "max_sentence_words": {
+      "type": "number",
+      "title": "Max sentence length",
+      "description": "Flag sentences longer than this many words.",
+      "default": 25,
+      "min": 10,
+      "max": 60
+    },
+    "docs_api_token": {
+      "type": "string",
+      "title": "Docs API token",
+      "description": "Token for your docs platform. Stored in the OS keychain, never in settings.json.",
+      "sensitive": true
+    }
+  }
+}

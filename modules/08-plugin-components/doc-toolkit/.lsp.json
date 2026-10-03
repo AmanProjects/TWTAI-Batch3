@@ -1,0 +1,16 @@
+{
+  "markdown-docs": {
+    "command": "node",
+    "args": ["${CLAUDE_PLUGIN_ROOT}/lsp/markdown-server.js"],
+    "extensionToLanguage": {
+      ".md": "markdown",
+      ".mdx": "markdown"
+    },
+    "transport": "stdio",
+    "startupTimeout": 5000,
+    "shutdownTimeout": 2000,
+    "restartOnCrash": true,
+    "maxRestarts": 3,
+    "diagnostics": true
+  }
+}

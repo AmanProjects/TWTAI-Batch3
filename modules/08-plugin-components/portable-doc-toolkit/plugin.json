@@ -1,0 +1,20 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "portable-doc-toolkit",
+  "version": "1.0.0",
+  "description": "The same readability skill and stats server, packaged to the vendor-neutral Agent Plugins v1.0.0 spec.",
+  "author": {
+    "name": "Aman Talwar",
+    "email": "amandeep.talwar@gmail.com",
+    "url": "https://github.com/AmanProjects"
+  },
+  "homepage": "https://agent-plugins.org",
+  "repository": "https://github.com/AmanProjects/twtai-skill",
+  "license": "MIT",
+  "keywords": ["documentation", "readability"],
+  "extensions": {
+    "com.anthropic.claude-code": {
+      "note": "Client-specific data lives here. Everything above is portable across ChatGPT, Codex, Cursor, Copilot, Kiro, and VS Code."
+    }
+  }
+}

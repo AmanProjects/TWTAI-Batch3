@@ -1,0 +1,977 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module 8 Slides: Plugin Anatomy — Every Component, End to End | AI-Powered Documentation Mastery</title>
+  <style>
+    :root {
+      --bg: #f5f7fa;
+      --panel: #ffffff;
+      --ink: #1a2332;
+      --muted: #5a6a7e;
+      --accent: #1a56db;
+      --accent-light: #ebf5ff;
+      --accent-2: #0e9f6e;
+      --line: #e2e8f0;
+      --shadow: 0 4px 24px rgba(26, 35, 50, 0.10);
+      --shadow-lg: 0 8px 40px rgba(26, 35, 50, 0.16);
+      --level-bg: #fff3e0;
+      --level-text: #e65100;
+      --level-border: #ffb74d;
+      --code-bg: #1e293b;
+      --code-text: #e2e8f0;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Inter", "Segoe UI", -apple-system, sans-serif;
+      color: var(--ink);
+      background: linear-gradient(135deg, #f0f4ff 0%, #f5f7fa 50%, #eef7f4 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* ── Header bar ── */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1.5rem;
+      background: var(--panel);
+      border-bottom: 1px solid var(--line);
+      flex-shrink: 0;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .brand {
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: var(--accent);
+      letter-spacing: -0.01em;
+    }
+
+    .header-title {
+      font-size: 0.9rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .level-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.22rem 0.65rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      background: var(--level-bg);
+      color: var(--level-text);
+      border: 1px solid var(--level-border);
+    }
+
+    /* ── Slide stage ── */
+    .stage {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem 1.5rem;
+      overflow: hidden;
+    }
+
+    .slide {
+      width: min(1100px, 96vw);
+      height: min(660px, calc(100vh - 130px));
+      background: var(--panel);
+      border-radius: 20px;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-lg);
+      padding: 2rem 2.5rem 1.5rem;
+      display: none;
+      flex-direction: column;
+      gap: 0.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide.active { display: flex; }
+
+    /* Decorative accent circle */
+    .slide::before {
+      content: "";
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      right: -180px;
+      top: -180px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(26,86,219,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .slide-number {
+      position: absolute;
+      top: 1rem;
+      right: 1.5rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    /* ── Slide body typography ── */
+    .slide-body {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .slide-body::-webkit-scrollbar { width: 4px; }
+    .slide-body::-webkit-scrollbar-thumb { background: var(--line); border-radius: 2px; }
+
+    .slide-body h1 {
+      font-size: clamp(1.6rem, 3.2vw, 2.6rem);
+      line-height: 1.15;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin-bottom: 0.1rem;
+    }
+
+    .slide-body h2 {
+      font-size: clamp(1.1rem, 2vw, 1.6rem);
+      font-weight: 600;
+      color: var(--accent);
+      margin-top: 0.5rem;
+    }
+
+    .slide-body h3 {
+      font-size: clamp(0.95rem, 1.5vw, 1.2rem);
+      font-weight: 600;
+      color: var(--muted);
+      margin-top: 0.3rem;
+    }
+
+    .slide-body h4 {
+      font-size: clamp(0.85rem, 1.3vw, 1.05rem);
+      font-weight: 600;
+      color: var(--ink);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-top: 0.5rem;
+    }
+
+    .slide-body p {
+      font-size: clamp(0.95rem, 1.4vw, 1.1rem);
+      line-height: 1.6;
+      color: var(--ink);
+    }
+
+    .slide-body strong { color: var(--ink); }
+
+    .slide-body blockquote {
+      border-left: 4px solid var(--accent);
+      padding: 0.7rem 1rem;
+      background: var(--accent-light);
+      border-radius: 0 10px 10px 0;
+      font-size: clamp(1rem, 1.6vw, 1.25rem);
+      font-style: italic;
+      color: var(--ink);
+      margin: 0.3rem 0;
+    }
+
+    .slide-body ul,
+    .slide-body ol {
+      padding-left: 1.4rem;
+      font-size: clamp(0.92rem, 1.35vw, 1.08rem);
+      line-height: 1.5;
+    }
+
+    .slide-body li { margin: 0.3rem 0; }
+
+    .slide-body ul.checklist { list-style: none; padding-left: 0.2rem; }
+    .slide-body ul.checklist li { display: flex; align-items: flex-start; gap: 0.5rem; }
+    .slide-body ul.checklist input { margin-top: 0.2rem; accent-color: var(--accent-2); }
+
+    .slide-body table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: clamp(0.8rem, 1.15vw, 0.96rem);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+    }
+
+    .slide-body th {
+      background: var(--accent-light);
+      color: var(--accent);
+      font-weight: 700;
+      padding: 0.5rem 0.7rem;
+      text-align: left;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .slide-body td {
+      padding: 0.45rem 0.7rem;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+
+    .slide-body tr:last-child td { border-bottom: none; }
+    .slide-body tr:nth-child(even) td { background: #f8fafc; }
+
+    .slide-body code {
+      background: #f1f5f9;
+      padding: 0.1em 0.35em;
+      border-radius: 4px;
+      font-family: "JetBrains Mono", "Fira Code", Menlo, monospace;
+      font-size: 0.9em;
+      color: #c7254e;
+      border: 1px solid #e2e8f0;
+    }
+
+    .slide-body pre.code-block {
+      background: var(--code-bg);
+      color: var(--code-text);
+      border-radius: 12px;
+      padding: 1rem 1.2rem;
+      font-family: "JetBrains Mono", "Fira Code", Menlo, monospace;
+      font-size: clamp(0.75rem, 1.05vw, 0.9rem);
+      line-height: 1.55;
+      overflow-x: auto;
+      margin: 0.3rem 0;
+      flex-shrink: 0;
+    }
+
+    .slide-body pre.code-block code {
+      background: none;
+      border: none;
+      color: inherit;
+      padding: 0;
+      font-size: inherit;
+    }
+
+    /* ── Controls ── */
+    .controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      padding: 0.75rem 1.5rem;
+      background: var(--panel);
+      border-top: 1px solid var(--line);
+      flex-shrink: 0;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 1.1rem;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--ink);
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .btn:hover { background: var(--accent-light); border-color: var(--accent); color: var(--accent); }
+    .btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    .btn-primary:hover { background: #1447b5; border-color: #1447b5; color: #fff; }
+
+    .progress-wrap {
+      flex: 1;
+      max-width: 400px;
+      background: var(--line);
+      border-radius: 999px;
+      height: 4px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      border-radius: 999px;
+      transition: width 0.25s ease;
+    }
+
+    .slide-counter {
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-weight: 500;
+      min-width: 60px;
+      text-align: center;
+    }
+
+    /* ── Keyboard hint ── */
+    .kbd-hint {
+      font-size: 0.73rem;
+      color: var(--muted);
+      opacity: 0.7;
+    }
+
+    kbd {
+      display: inline-block;
+      padding: 0.05em 0.35em;
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 0.85em;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      .slide { padding: 1.2rem 1.1rem; border-radius: 14px; }
+      .slide-body h1 { font-size: 1.4rem; }
+      .header-title { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-left">
+      <span class="brand">AIDM</span>
+      <span class="header-title">Module 8 Slides: Plugin Anatomy — Every Component, End to End</span>
+    </div>
+    <div class="level-badge">🟠 Advanced</div>
+  </header>
+
+  <main class="stage" id="stage">
+    <section class="slide" id="slide-1">
+      <div class="slide-number">1 / 32</div>
+      <div class="slide-body"><h1>Plugin Anatomy</h1>
+<h3>Every Component, End to End</h3>
+<h4>Module 8 of 8 | 🟠 Advanced Level</h4>
+<p>AI-Powered Documentation Mastery</p>
+<blockquote>Module 4 taught you to <em>publish</em> a plugin.</blockquote>
+<blockquote>Today: everything a plugin can actually contain.</blockquote>
+</div>
+    </section>
+
+    <section class="slide" id="slide-2">
+      <div class="slide-number">2 / 32</div>
+      <div class="slide-body"><h1>Where We Left Off</h1>
+<table>
+<thead><tr><th>Module</th><th>You learned</th></tr></thead>
+<tbody>
+<tr><td><strong>4</strong></td><td>Marketplace → plugin → command. You published one.</td></tr>
+<tr><td><strong>6</strong></td><td>You built an MCP server with tools and resources.</td></tr>
+<tr><td><strong>7</strong></td><td>You shipped a skill + agent + MCP server together.</td></tr>
+</tbody></table>
+<p>You know the <strong>shape</strong>. Today is the <strong>reference pass</strong>.</p>
+<blockquote>Then we look outward: a vendor-neutral standard landed in 2026.</blockquote>
+</div>
+    </section>
+
+    <section class="slide" id="slide-3">
+      <div class="slide-number">3 / 32</div>
+      <div class="slide-body"><h1>Today</h1>
+<ol>
+<li><strong>Thirteen components</strong> — what each is, when to reach for it (35 min)</li>
+<li><strong>The manifest</strong> — schema, <code>userConfig</code>, path rules, variables (20 min)</li>
+<li><strong>Loading &amp; the CLI</strong> — scopes, caching, versioning, debugging (20 min)</li>
+<li><strong>Agent Plugins v1.0.0</strong> — the portable standard (25 min)</li>
+<li><strong>Workshop</strong> — build a three-component plugin (25 min)</li>
+</ol>
+<p>Source: <code>code.claude.com/docs/en/plugins-reference</code></p>
+</div>
+    </section>
+
+    <section class="slide" id="slide-4">
+      <div class="slide-number">4 / 32</div>
+      <div class="slide-body"><h1>The Example: <code>doc-toolkit</code></h1>
+<pre class="code-block"><code>modules/08-plugin-components/
+├── .claude-plugin/marketplace.json
+├── doc-toolkit/                    ← uses ALL 13 components
+│   ├── .claude-plugin/plugin.json
+│   ├── skills/  commands/  agents/  hooks/
+│   ├── .mcp.json  .lsp.json  monitors/
+│   ├── workflows/  output-styles/  themes/
+│   ├── bin/  scripts/  settings.json
+├── portable-doc-toolkit/           ← Agent Plugins v1.0.0
+└── fixture/needs-work.md           ← a deliberately bad doc</code></pre>
+<blockquote>No sane production plugin ships thirteen components.</blockquote>
+<blockquote>This one does so you can read them side by side.</blockquote>
+</div>
+    </section>
+
+    <section class="slide" id="slide-5">
+      <div class="slide-number">5 / 32</div>
+      <div class="slide-body"><h1>Load It Right Now</h1>
+<pre class="code-block"><code>cd modules/08-plugin-components
+claude --plugin-dir ./doc-toolkit</code></pre>
+<p><code>--plugin-dir</code> loads a plugin for <strong>one session</strong> — no install, no marketplace.</p>
+<p>That is the development loop: <strong>edit → restart → test</strong>.</p>
+<pre class="code-block"><code>/plugin                            ← confirm doc-toolkit is listed
+/doc-toolkit:doc-status fixture/   ← run it</code></pre>
+<p>⚠️ This plugin prints on every edit, polls in the background, and pushes LSP diagnostics. Noisy on purpose.</p>
+</div>
+    </section>
+
+    <section class="slide" id="slide-6">
+      <div class="slide-number">6 / 32</div>
+      <div class="slide-body"><h1>The Thirteen Components</h1>
+<table>
+<thead><tr><th>Component</th><th>Location</th><th>Triggered by</th><th>Always-on cost</th></tr></thead>
+<tbody>
+<tr><td><strong>Skill</strong></td><td><code>skills/&lt;n&gt;/SKILL.md</code></td><td>You or Claude</td><td>Yes</td></tr>
+<tr><td><strong>Command</strong></td><td><code>commands/*.md</code></td><td>You (<code>/name</code>)</td><td>Yes</td></tr>
+<tr><td><strong>Agent</strong></td><td><code>agents/*.md</code></td><td>You or Claude</td><td>Yes</td></tr>
+<tr><td><strong>Hook</strong></td><td><code>hooks/hooks.json</code></td><td>An event</td><td>No</td></tr>
+<tr><td><strong>MCP server</strong></td><td><code>.mcp.json</code></td><td>A tool call</td><td>Yes</td></tr>
+<tr><td><strong>LSP server</strong></td><td><code>.lsp.json</code></td><td>File edits</td><td>No</td></tr>
+<tr><td><strong>Monitor</strong></td><td><code>monitors/monitors.json</code></td><td>Session / skill</td><td>No</td></tr>
+<tr><td><strong>Workflow</strong></td><td><code>workflows/*.js</code></td><td>Invocation</td><td>No</td></tr>
+<tr><td><strong>Output style</strong></td><td><code>output-styles/*.md</code></td><td>While enabled</td><td>Yes</td></tr>
+<tr><td><strong>Theme</strong></td><td><code>themes/*.json</code></td><td><code>/theme</code></td><td>No</td></tr>
+<tr><td><strong>Executable</strong></td><td><code>bin/*</code></td><td>Bare Bash command</td><td>No</td></tr>
+<tr><td><strong>Settings</strong></td><td><code>settings.json</code></td><td>On enable</td><td>No</td></tr>
+<tr><td><strong>Channel</strong></td><td><code>channels</code> in manifest</td><td>Inbound messages</td><td>No</td></tr>
+</tbody></table>
+</div>
+    </section>
+
+    <section class="slide" id="slide-7">
+      <div class="slide-number">7 / 32</div>
+      <div class="slide-body"><h1>The Column That Matters</h1>
+<blockquote>Every skill, command, and agent <strong>description</strong> loads into <em>every</em> session — whether or not it fires.</blockquote>
+<pre class="code-block"><code>$ claude plugin details doc-toolkit
+
+Component inventory
+  Skills (2)  readability-pass, doc-status
+  Agents (1)  doc-auditor
+  Hooks (4)   SessionStart, PostToolUse, PreToolUse, Stop
+  MCP servers (2)   LSP servers (1)
+
+Projected token cost
+  Always-on:   ~180 tok   added to every session</code></pre>
+<p><strong>Always-on</strong> = the listing text. <strong>On-invoke</strong> = paid per firing.</p>
+<p>A plugin with 30 skills is a tax on every conversation your team has.</p>
+</div>
+    </section>
+
+    <section class="slide" id="slide-8">
+      <div class="slide-number">8 / 32</div>
+      <div class="slide-body"><h1>1. Skills</h1>
+<pre class="code-block"><code>---
+name: readability-pass
+description: Use when a Markdown doc needs a readability review —
+  flags long sentences, passive voice, Title Case headings.
+  Trigger on "tighten this doc".
+---
+Read the file. Call word_stats. Output a table.
+
+A worked example lives at
+${CLAUDE_PLUGIN_ROOT}/skills/readability-pass/reference.md.
+Read it only when the user asks what "good" looks like.</code></pre>
+<p><strong>Progressive disclosure</strong> — <code>reference.md</code> costs nothing until read.</p>
+<p><strong>The description is a routing decision</strong>, not a summary. Write <em>when to use this</em>.</p>
+</div>
+    </section>
+
+    <section class="slide" id="slide-9">
+      <div class="slide-number">9 / 32</div>
+      <div class="slide-body"><h1>2. Commands — and the Name Trap</h1>
+<pre class="code-block"><code>---
+description: Print a health summary for a docs folder.
+argument-hint: &lt;folder&gt;
+disable-model-invocation: true
+---
+Produce a health summary for: $ARGUMENTS</code></pre>
+<p>Flat <code>.md</code>, no folder. <code>disable-model-invocation</code> = Claude never fires it alone.</p>
+<blockquote>⚠️ Single-skill plugin? Put <code>SKILL.md</code> at the root and <strong>set <code>name:</code> in frontmatter</strong>.</blockquote>
+<p>Without it, the name falls back to the install directory — which for marketplace installs is a <strong>version string that changes on every update</strong>.</p>
+</div>
+    </section>
+
+    <section class="slide" id="slide-10">
+      <div class="slide-number">10 / 32</div>
+      <div class="slide-body"><h1>3. Agents</h1>
+<pre class="code-block"><code>---
+name: doc-auditor
+description: Audits an entire documentation set. Multi-file sweeps.
+model: sonnet
+effort: medium
+maxTurns: 20
+tools: Read, Grep, Glob
+disallowedTools: Write, Edit
+skills: readability-pass
+memory: false
+background: false
+---</code></pre>
+<p>Also: <code>isolation</code> — the only valid value is <code>"worktree"</code>.</p>
+<blockquote>🔒 Plugin agents may <strong>not</strong> declare <code>hooks</code>, <code>mcpServers</code>, or <code>permissionMode</code>.</blockquote>
+<p>Invoke as <code>@doc-toolkit:doc-auditor</code>.</p>
+</div>
+    </section>
+
+    <section class="slide" id="slide-11">
+      <div class="slide-number">11 / 32</div>
+      <div class="slide-body"><h1>4. Hooks — Five Types</h1>
+<table>
+<thead><tr><th>Type</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>command</code></td><td>Runs a shell command or script</td></tr>
+<tr><td><code>http</code></td><td>POSTs the event JSON to a URL</td></tr>
+<tr><td><code>mcp_tool</code></td><td>Calls a tool on a configured MCP server</td></tr>
+<tr><td><code>prompt</code></td><td>Evaluates a prompt with an LLM (<code>$ARGUMENTS</code>)</td></tr>
+<tr><td><code>agent</code></td><td>Runs an agentic verifier with tools</td></tr>
+</tbody></table>
+<p>The only component that <strong>isn't</strong> "instructions Claude follows."</p>
+<blockquote>Deterministic. Unskippable. Use it for rules that must never be forgotten.</blockquote>
+</div>
+    </section>
+
+    <section class="slide" id="slide-12">
+      <div class="slide-number">12 / 32</div>
+      <div class="slide-body"><h1>4. Hooks — Events You'll Use</h1>
+<table>
+<thead><tr><th>Event</th><th>Fires</th></tr></thead>
+<tbody>
+<tr><td><code>SessionStart</code></td><td>Session begins or resumes</td></tr>
+<tr><td><code>UserPromptSubmit</code></td><td>You submit, before Claude sees it</td></tr>
+<tr><td><code>PreToolUse</code></td><td>Before a tool call — <strong>can block</strong></td></tr>
+<tr><td><code>PostToolUse</code> / <code>PostToolUseFailure</code></td><td>After success / failure</td></tr>
+<tr><td><code>SubagentStart</code> / <code>SubagentStop</code></td><td>A subagent spawns / finishes</td></tr>
+<tr><td><code>FileChanged</code></td><td>A watched file changes (<code>matcher</code> = filenames)</td></tr>
+<tr><td><code>PreCompact</code> / <code>PostCompact</code></td><td>Around context compaction</td></tr>
+<tr><td><code>Stop</code> / <code>SessionEnd</code></td><td>Turn ends / session terminates</td></tr>
+</tbody></table>
+<p>~30 exist in total, incl. <code>Setup</code>, <code>PermissionRequest</code>, <code>CwdChanged</code>, <code>WorktreeCreate</code>, <code>Elicitation</code>.</p>
+</div>
+    </section>
+
+    <section class="slide" id="slide-13">
+      <div class="slide-number">13 / 32</div>
+      <div class="slide-body"><h1>4. Hooks — The Scoped-Name Trap</h1>
+<p>To hook <strong>your own</strong> bundled MCP server, you must use the scoped name.</p>
+<pre class="code-block"><code>✅  "matcher": "mcp__plugin_doc-toolkit_docstats__word_stats"
+❌  "matcher": "docstats"        ← silently never fires</code></pre>
+<table>
+<thead><tr><th>Field</th><th>Format</th></tr></thead>
+<tbody>
+<tr><td>Tool matcher / <code>if</code></td><td><code>mcp__plugin_&lt;plugin&gt;_&lt;server&gt;__&lt;tool&gt;</code></td></tr>
+<tr><td><code>mcp_tool</code> hook's <code>server</code></td><td><code>plugin:&lt;plugin&gt;:&lt;server&gt;</code></td></tr>
+</tbody></table>
+<blockquote>A matcher against the bare server key never fires — and never errors.</blockquote>
+</div>
+    </section>
+
+    <section class="slide" id="slide-14">
+      <div class="slide-number">14 / 32</div>
+      <div class="slide-body"><h1>5. MCP Servers</h1>
+<pre class="code-block"><code>{
+  "mcpServers": {
+    "docstats": {
+      "command": "node",
+      "args": ["${CLAUDE_PLUGIN_ROOT}/mcp/docstats-server.js"],
+      "env": { "CACHE_DIR": "${CLAUDE_PLUGIN_DATA}/cache" }
+    },
+    "team-docs-api": {
+      "type": "http",
+      "url": "https://example.com/mcp"
+    }
+  }
+}</code></pre>
+<p>Our bundled server is <strong>dependency-free on purpose</strong> — raw JSON-RPC, no <code>npm install</code>.</p>
+<blockquote>Whatever you bundle must start on a teammate's machine the second they enable it.</blockquote>
+</div>
+    </section>
+
+    <section class="slide" id="slide-15">
+      <div class="slide-number">15 / 32</div>
+      <div class="slide-body"><h1>6. LSP Servers</h1>
+<pre class="code-block"><code>{
+  "markdown-docs": {
+    "command": "node",
+    "args": ["${CLAUDE_PLUGIN_ROOT}/lsp/markdown-server.js"],
+    "extensionToLanguage": { ".md": "markdown" },
+    "startupTimeout": 5000,
+    "restartOnCrash": true,
+    "diagnostics": true
+  }
+}</code></pre>
+<p><strong>Required:</strong> <code>command</code>, <code>extensionToLanguage</code>. Everything else optional.</p>
+<ol>
+<li><strong>You install the binary separately</strong> — the plugin only configures the connection</li>
+<li><strong>First registration wins</strong> per extension; the other server never starts</li>
+<li><strong>A bad config is skipped silently</strong> — <code>claude --debug</code> tells you why</li>
+</ol>
+</div>
+    </section>
+
+    <section class="slide" id="slide-16">
+      <div class="slide-number">16 / 32</div>
+      <div class="slide-body"><h1>7. Monitors &nbsp;·&nbsp; 8. Workflows</h1>
+<pre class="code-block"><code>[
+  { "name": "docs-build",
+    "command": "\"${CLAUDE_PLUGIN_ROOT}\"/scripts/poll-build.sh",
+    "description": "Docs site build status changes",
+    "when": "always" },
+  { "name": "audit-log",
+    "command": "tail -F ./logs/doc-audit.log",
+    "description": "Streams the doc audit log",
+    "when": "on-skill-invoke:readability-pass" }
+]</code></pre>
+<p>Every stdout line reaches Claude as a notification. Interactive CLI only · unsandboxed · <strong>no <code>${user_config.*}</code></strong> · not loaded for project-scope skills-dir plugins.</p>
+<p><strong>Workflows</strong> — deterministic multi-agent scripts. <code>pipeline()</code> by default; <code>parallel()</code> only when a stage needs <em>all</em> prior results.</p>
+</div>
+    </section>
+
+    <section class="slide" id="slide-17">
+      <div class="slide-number">17 / 32</div>
+      <div class="slide-body"><h1>9–13. The Small Five</h1>
+<table>
+<thead><tr><th>Component</th><th>One-liner</th></tr></thead>
+<tbody>
+<tr><td><strong>Output style</strong></td><td>Changes how Claude <em>writes</em> while enabled</td></tr>
+<tr><td><strong>Theme</strong></td><td><code>base</code> preset + sparse overrides; read-only, <kbd>Ctrl+E</kbd> copies it</td></tr>
+<tr><td><strong>Executable</strong></td><td><code>bin/*</code> joins the Bash <code>PATH</code> — bare command, no path</td></tr>
+<tr><td><strong>Settings</strong></td><td>Only <code>agent</code> and <code>subagentStatusLine</code> supported</td></tr>
+<tr><td><strong>Channel</strong></td><td>Message injection bound to one of the plugin's MCP servers</td></tr>
+</tbody></table>
+<pre class="code-block"><code>#!/usr/bin/env bash        # bin/doc-wordcount
+for f in "$@"; do printf '%s\t%s words\n' "$f" "$(wc -w &lt; "$f")"; done</code></pre>
+<blockquote>Claude can now just run <code>doc-wordcount fixture/needs-work.md</code>. Remember <code>chmod +x</code>.</blockquote>
+</div>
+    </section>
+
+    <section class="slide" id="slide-18">
+      <div class="slide-number">18 / 32</div>
+      <div class="slide-body"><h1>The Manifest Is Optional</h1>
+<p>Drop components in default folders → Claude Code finds them. Name = directory name.</p>
+<p>Write a <code>plugin.json</code> when you need <strong>metadata</strong>, <strong>custom paths</strong>, or <strong>user config</strong>.</p>
+<pre class="code-block"><code>{
+  "name": "doc-toolkit",              ← the ONLY required field
+  "displayName": "Docs Toolkit",
+  "version": "1.0.0",
+  "description": "…",
+  "author": { "name": "…", "email": "…", "url": "…" },
+  "homepage": "…", "repository": "…", "license": "MIT",
+  "keywords": ["documentation"],
+  "metadata": { "anything": "you want" },
+  "defaultEnabled": true,
+  "userConfig": { }, "channels": [ ], "dependencies": [ ]
+}</code></pre>
+<p><code>name</code> is kebab-case and namespaces everything: <code>doc-toolkit:doc-auditor</code>.</p>
+</div>
+    </section>
+
+    <section class="slide" id="slide-19">
+      <div class="slide-number">19 / 32</div>
+      <div class="slide-body"><h1>Three Manifest Surprises</h1>
+<p><strong>1. Unknown top-level fields are ignored, not fatal.</strong> Keep VS Code / npm / MCPB metadata in the same file. <code>validate</code> warns and suggests near-miss corrections.</p>
+<p><strong>2. Wrong <em>types</em> usually are fatal.</strong> <code>"keywords": "docs"</code> is a load error. Exceptions: <code>experimental</code> and <code>metadata</code> — ignored with a warning.</p>
+<p><strong>3. Path fields don't behave the same way:</strong></p>
+<table>
+<thead><tr><th>Behavior</th><th>Fields</th></tr></thead>
+<tbody>
+<tr><td><strong>Replaces</strong> the default folder</td><td><code>commands</code>, <code>agents</code>, <code>workflows</code>, <code>outputStyles</code>, <code>experimental.*</code></td></tr>
+<tr><td><strong>Adds to</strong> the default</td><td><code>skills</code> — <code>skills/</code> is always scanned</td></tr>
+<tr><td>Own merge rules</td><td><code>hooks</code>, <code>mcpServers</code>, <code>lspServers</code></td></tr>
+</tbody></table>
+<pre class="code-block"><code>"commands": ["./extras/"]                ← commands/ no longer scanned!
+"commands": ["./commands/", "./extras/"] ← keep both</code></pre>
+</div>
+    </section>
+
+    <section class="slide" id="slide-20">
+      <div class="slide-number">20 / 32</div>
+      <div class="slide-body"><h1><code>userConfig</code> — Ask, Don't Make Them Edit JSON</h1>
+<pre class="code-block"><code>"userConfig": {
+  "max_sentence_words": {
+    "type": "number", "title": "Max sentence length",
+    "description": "Flag sentences longer than this.",
+    "default": 25, "min": 10, "max": 60
+  },
+  "docs_api_token": {
+    "type": "string", "title": "Docs API token",
+    "description": "Stored in the OS keychain.",
+    "sensitive": true
+  }
+}</code></pre>
+<p>Types: <code>string</code> · <code>number</code> · <code>boolean</code> · <code>directory</code> · <code>file</code>.<br>
+Options: <code>sensitive</code> · <code>required</code> · <code>default</code> · <code>multiple</code> · <code>min</code>/<code>max</code>.</p>
+</div>
+    </section>
+
+    <section class="slide" id="slide-21">
+      <div class="slide-number">21 / 32</div>
+      <div class="slide-body"><h1>Where <code>userConfig</code> Values Appear</h1>
+<table>
+<thead><tr><th>Surface</th><th>How</th></tr></thead>
+<tbody>
+<tr><td>Skill &amp; agent content</td><td><code>${user_config.KEY}</code> — non-sensitive only</td></tr>
+<tr><td>MCP &amp; LSP configs</td><td><code>${user_config.KEY}</code></td></tr>
+<tr><td>Hook processes</td><td><code>CLAUDE_PLUGIN_OPTION_&lt;KEY&gt;</code> env var</td></tr>
+</tbody></table>
+<blockquote>Anything running through a <strong>shell rejects</strong> <code>${user_config.*}</code> — the shell would execute whatever the value contains.</blockquote>
+<p>Shell-form hooks → use exec form with <code>args</code>, or read the env var.<br>
+Monitor commands and MCP <code>headersHelper</code> → read a config file.</p>
+<p>Sensitive → OS Keychain (~2 KB shared). <strong>Project settings are ignored</strong> for <code>pluginConfigs</code> — a cloned repo must not feed your hooks.</p>
+</div>
+    </section>
+
+    <section class="slide" id="slide-22">
+      <div class="slide-number">22 / 32</div>
+      <div class="slide-body"><h1>The Three Path Variables</h1>
+<table>
+<thead><tr><th>Variable</th><th>Resolves to</th><th>Use for</th></tr></thead>
+<tbody>
+<tr><td><code>${CLAUDE_PLUGIN_ROOT}</code></td><td>The install directory</td><td>Bundled scripts, binaries, configs</td></tr>
+<tr><td><code>${CLAUDE_PLUGIN_DATA}</code></td><td><code>~/.claude/plugins/data/{id}/</code> — survives updates</td><td><code>node_modules</code>, venvs, caches</td></tr>
+<tr><td><code>${CLAUDE_PROJECT_DIR}</code></td><td>The project root</td><td>Project-local scripts</td></tr>
+</tbody></table>
+<blockquote>⚠️ <code>${CLAUDE_PLUGIN_ROOT}</code> <strong>changes on every update</strong>. Never write state there.</blockquote>
+<p>The old directory lingers ~14 days for running sessions, then vanishes.</p>
+<pre class="code-block"><code>SessionStart hook:
+diff -q "${CLAUDE_PLUGIN_ROOT}/package.json" \
+        "${CLAUDE_PLUGIN_DATA}/package.json" &gt;/dev/null 2&gt;&amp;1 \
+  || (cd "${CLAUDE_PLUGIN_DATA}" &amp;&amp; cp … &amp;&amp; npm install)</code></pre>
+</div>
+    </section>
+
+    <section class="slide" id="slide-23">
+      <div class="slide-number">23 / 32</div>
+      <div class="slide-body"><h1>Scopes &amp; Skills-Directory Plugins</h1>
+<table>
+<thead><tr><th>Scope</th><th>File</th><th>Use</th></tr></thead>
+<tbody>
+<tr><td><code>user</code></td><td><code>~/.claude/settings.json</code></td><td>Personal, all projects (default)</td></tr>
+<tr><td><code>project</code></td><td><code>.claude/settings.json</code></td><td>Team, via version control</td></tr>
+<tr><td><code>local</code></td><td><code>.claude/settings.local.json</code></td><td>This repo only, gitignored</td></tr>
+<tr><td><code>managed</code></td><td>Managed settings</td><td>Org policy, read-only</td></tr>
+</tbody></table>
+<pre class="code-block"><code>claude plugin init my-helper --with skills agents hooks mcp lsp
+# → ~/.claude/skills/my-helper/  loads as my-helper@skills-dir</code></pre>
+<p>No install, no copy — read in place, so editing is instant.</p>
+<p><strong>Live reload:</strong> <code>SKILL.md</code> edits, immediately. Everything else needs <code>/reload-plugins</code>.</p>
+</div>
+    </section>
+
+    <section class="slide" id="slide-24">
+      <div class="slide-number">24 / 32</div>
+      <div class="slide-body"><h1>CLI Reference</h1>
+<table>
+<thead><tr><th>Command</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>plugin init &lt;n&gt; --with …</code></td><td>Scaffold at <code>~/.claude/skills/&lt;n&gt;/</code></td></tr>
+<tr><td><code>plugin validate ./dir --strict</code></td><td><strong>Run before every publish</strong></td></tr>
+<tr><td><code>plugin install &lt;p&gt;@&lt;mkt&gt; -s scope</code></td><td>Install</td></tr>
+<tr><td><code>plugin uninstall --keep-data --prune</code></td><td>Remove; deletes data dir by default</td></tr>
+<tr><td><code>plugin prune --dry-run</code></td><td>Drop orphaned dependencies</td></tr>
+<tr><td><code>plugin enable</code> / <code>disable -a</code></td><td>Toggle without uninstalling</td></tr>
+<tr><td><code>plugin list --json --available</code></td><td>Versions and status</td></tr>
+<tr><td><code>plugin details &lt;n&gt;</code></td><td><strong>Inventory + token cost</strong></td></tr>
+<tr><td><code>plugin tag [path] --push</code></td><td>Create a release git tag</td></tr>
+</tbody></table>
+</div>
+    </section>
+
+    <section class="slide" id="slide-25">
+      <div class="slide-number">25 / 32</div>
+      <div class="slide-body"><h1>Caching, Versioning, Debugging</h1>
+<p>Marketplace plugins are <strong>copied</strong> to <code>~/.claude/plugins/cache</code>, one dir per version.</p>
+<p>→ <code>../shared-utils</code> <strong>will not work after install</strong>. Symlinks: inside the plugin are preserved, elsewhere in the marketplace are dereferenced, outside are skipped.</p>
+<table>
+<thead><tr><th>Versioning</th><th>Updates when</th><th>Best for</th></tr></thead>
+<tbody>
+<tr><td><strong>Explicit</strong> <code>version</code></td><td>You bump it</td><td>Published releases</td></tr>
+<tr><td><strong>Commit SHA</strong> (omit it)</td><td>Every commit</td><td>Internal, active dev</td></tr>
+<tr><td><strong>Digest</strong> (archive)</td><td>Zip bytes change</td><td>Zip distribution</td></tr>
+</tbody></table>
+<pre class="code-block"><code>claude plugin validate ./my-plugin    # manifest + frontmatter + hooks.json
+claude --debug                        # loading, registration, MCP init</code></pre>
+</div>
+    </section>
+
+    <section class="slide" id="slide-26">
+      <div class="slide-number">26 / 32</div>
+      <div class="slide-body"><h1>The One Structural Rule</h1>
+<blockquote>Only <code>plugin.json</code> goes in <code>.claude-plugin/</code>. Everything else lives at the plugin <strong>root</strong>.</blockquote>
+<table>
+<thead><tr><th>Symptom</th><th>Fix</th></tr></thead>
+<tbody>
+<tr><td>Plugin doesn't load</td><td><code>claude plugin validate ./my-plugin</code></td></tr>
+<tr><td>Skills missing</td><td><code>skills/</code> at the root, not in <code>.claude-plugin/</code></td></tr>
+<tr><td>Hooks don't fire</td><td><code>chmod +x script.sh</code></td></tr>
+<tr><td>Hooks don't fire on MCP tools</td><td>Use the scoped <code>mcp__plugin_…</code> name</td></tr>
+<tr><td>MCP server fails</td><td>Use <code>${CLAUDE_PLUGIN_ROOT}</code>, not a hardcoded path</td></tr>
+<tr><td>LSP not found in <code>$PATH</code></td><td>Install the language server binary</td></tr>
+</tbody></table>
+<p>A <code>CLAUDE.md</code> at the plugin root is <strong>not</strong> loaded as context — ship instructions as a skill.</p>
+</div>
+    </section>
+
+    <section class="slide" id="slide-27">
+      <div class="slide-number">27 / 32</div>
+      <div class="slide-body"><h1>2026: Agent Plugins v1.0.0</h1>
+<p>Every agent client grew its own plugin format. A skill written for one didn't load in another.</p>
+<blockquote>"A portable package format for Agent Skills and MCP servers."</blockquote>
+<p>Drafted by <strong>Vercel</strong>, refined by a working group with <strong>AWS, Cursor, Microsoft, OpenAI</strong>.</p>
+<p><strong>Launch clients:</strong> ChatGPT · Codex · Cursor · GitHub Copilot · Kiro · VS Code</p>
+<p>Spec CC-BY-4.0 · code Apache-2.0 · Technical Steering Committee</p>
+<blockquote>MCP standardized <em>tools</em>. Agent Skills standardized <code>SKILL.md</code>.<br>Agent Plugins standardizes <em>the package that carries them</em>.</blockquote>
+</div>
+    </section>
+
+    <section class="slide" id="slide-28">
+      <div class="slide-number">28 / 32</div>
+      <div class="slide-body"><h1>Two Component Types. That's It.</h1>
+<table>
+<thead><tr><th>Component</th><th>Fixed location</th><th>Pattern</th></tr></thead>
+<tbody>
+<tr><td>Skills</td><td><code>skills/</code></td><td>Immediate subdirs containing <code>SKILL.md</code></td></tr>
+<tr><td>MCP servers</td><td><code>mcp.json</code></td><td>JSON configuration</td></tr>
+</tbody></table>
+<p>Commands, hooks, agents, rules, LSP servers were all considered and <strong>deliberately excluded</strong> — the spec calls them "too client-specific for a stable portable contract."</p>
+<p>Skills and MCP made the cut because both already had independent specs and real cross-client adoption.</p>
+<blockquote>Locations are <strong>fixed and cannot be overridden</strong>. No custom paths, no inline MCP config.</blockquote>
+<p>⚠️ Anthropic is not on the maintainer list. Two formats today — learn both.</p>
+</div>
+    </section>
+
+    <section class="slide" id="slide-29">
+      <div class="slide-number">29 / 32</div>
+      <div class="slide-body"><h1>The Portable Manifest — Closed Schema</h1>
+<pre class="code-block"><code>{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "portable-doc-toolkit",
+  "version": "1.0.0",
+  "description": "…", "author": { }, "homepage": "…",
+  "repository": "…", "license": "MIT", "keywords": [ ],
+  "extensions": { "com.anthropic.claude-code": { } }
+}</code></pre>
+<p><strong>Exactly ten fields are permitted</strong> — the inverse of Claude Code, where unknown fields are simply ignored.</p>
+<p><code>$schema</code> and <code>name</code> required. Clients <strong>must not fetch</strong> the schema at load time.</p>
+<p><code>name</code>: 1–64 chars, <code>a-z 0-9 - .</code>, alphanumeric ends, no <code>--</code> or <code>..</code></p>
+<blockquote>Broken manifest = fatal. Broken component = never fatal.</blockquote>
+</div>
+    </section>
+
+    <section class="slide" id="slide-30">
+      <div class="slide-number">30 / 32</div>
+      <div class="slide-body"><h1><code>mcp.json</code> — Explicit Transports</h1>
+<pre class="code-block"><code>{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "mcpServers": {
+    "docstats": {
+      "type": "stdio",
+      "command": "node",
+      "args": ["${PLUGIN_ROOT}/mcp/docstats-server.js"],
+      "cwd": "${PLUGIN_ROOT}",
+      "env": { "CACHE_DIR": "${PLUGIN_DATA}/cache" }
+    }
+  }
+}</code></pre>
+<ul>
+<li><code>command</code> is <strong>one executable token</strong>, never a shell string — no expansion</li>
+<li>Only <code>${PLUGIN_ROOT}</code> / <code>${PLUGIN_DATA}</code> expand, in <code>args</code>, <code>env</code>, <code>cwd</code></li>
+<li>Paths start <code>./</code> and must stay inside the plugin root</li>
+<li>Remote <code>url</code>: absolute HTTPS (loopback may use HTTP) · <strong>no secrets in <code>headers</code> or <code>env</code></strong></li>
+</ul>
+</div>
+    </section>
+
+    <section class="slide" id="slide-31">
+      <div class="slide-number">31 / 32</div>
+      <div class="slide-body"><h1>Translation Table</h1>
+<table>
+<thead><tr><th>Claude Code</th><th>Agent Plugins v1.0.0</th></tr></thead>
+<tbody>
+<tr><td><code>.claude-plugin/plugin.json</code></td><td><code>plugin.json</code> at the root</td></tr>
+<tr><td><code>$schema</code> optional</td><td><code>$schema</code> <strong>required</strong>, exact value</td></tr>
+<tr><td>Unknown fields ignored</td><td>Closed schema — 10 fields</td></tr>
+<tr><td><code>.mcp.json</code></td><td><code>mcp.json</code></td></tr>
+<tr><td>Transport inferred</td><td><code>type</code> required</td></tr>
+<tr><td><code>${CLAUDE_PLUGIN_ROOT}</code></td><td><code>${PLUGIN_ROOT}</code></td></tr>
+<tr><td><code>${CLAUDE_PLUGIN_DATA}</code></td><td><code>${PLUGIN_DATA}</code></td></tr>
+<tr><td>Commands, agents, hooks, LSP, themes</td><td>Move to <code>com.&lt;vendor&gt;.&lt;client&gt;/</code></td></tr>
+<tr><td><code>userConfig</code>, <code>channels</code>, <code>dependencies</code></td><td>Not in v1</td></tr>
+</tbody></table>
+<pre class="code-block"><code>diff -r doc-toolkit/skills portable-doc-toolkit/skills</code></pre>
+</div>
+    </section>
+
+    <section class="slide" id="slide-32">
+      <div class="slide-number">32 / 32</div>
+      <div class="slide-body"><h1>🟠 Workshop &amp; Checkpoint</h1>
+<p><strong>Build a three-component plugin</strong> — one skill, one hook, one tool. Nothing else.</p>
+<pre class="code-block"><code>claude plugin init &lt;you&gt;-toolkit --with skills hooks mcp
+claude plugin validate ~/.claude/skills/&lt;you&gt;-toolkit --strict
+claude plugin details &lt;you&gt;-toolkit</code></pre>
+<ul class="checklist">
+<li><input type="checkbox" disabled> Name all thirteen components and their default locations</li>
+<li><input type="checkbox" disabled> Say which cost tokens in every session — and check it</li>
+<li><input type="checkbox" disabled> Write a hook matcher that fires on a bundled MCP tool</li>
+<li><input type="checkbox" disabled> Choose between <code>PLUGIN_ROOT</code> and <code>PLUGIN_DATA</code> correctly</li>
+<li><input type="checkbox" disabled> Say which path fields replace the default folder</li>
+<li><input type="checkbox" disabled> Port a plugin to Agent Plugins v1.0.0 without breaking it</li>
+</ul>
+<blockquote>"A plugin is a budget, not a bucket. Every component is a tax on every session — ship the three that earn it."</blockquote>
+</div>
+    </section>
+  </main>
+
+  <footer class="controls">
+    <button class="btn" id="btn-prev" onclick="prevSlide()" disabled>&#8592; Prev</button>
+    <div class="progress-wrap">
+      <div class="progress-bar" id="progress-bar" style="width: 3.1%"></div>
+    </div>
+    <span class="slide-counter" id="counter">1 / 32</span>
+    <button class="btn btn-primary" id="btn-next" onclick="nextSlide()">Next &#8594;</button>
+    <span class="kbd-hint"><kbd>←</kbd><kbd>→</kbd> navigate</span>
+  </footer>
+
+  <script>
+    let current = 0;
+    const total = 32;
+    const slides = document.querySelectorAll('.slide');
+
+    function show(n) {
+      slides.forEach(s => s.classList.remove('active'));
+      slides[n].classList.add('active');
+      current = n;
+      document.getElementById('counter').textContent = (n + 1) + ' / ' + total;
+      document.getElementById('progress-bar').style.width = ((n + 1) / total * 100).toFixed(1) + '%';
+      document.getElementById('btn-prev').disabled = n === 0;
+      document.getElementById('btn-next').disabled = n === total - 1;
+      document.getElementById('btn-next').textContent = n === total - 1 ? 'End ✓' : 'Next →';
+    }
+
+    function nextSlide() { if (current < total - 1) show(current + 1); }
+    function prevSlide() { if (current > 0) show(current - 1); }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); prevSlide(); }
+      if (e.key === 'Home') { e.preventDefault(); show(0); }
+      if (e.key === 'End') { e.preventDefault(); show(total - 1); }
+    });
+
+    show(0);
+  </script>
+</body>
+</html>

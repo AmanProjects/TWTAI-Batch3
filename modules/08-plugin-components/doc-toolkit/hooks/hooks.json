@@ -1,0 +1,46 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PLUGIN_ROOT}\"/scripts/session-banner.sh"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PLUGIN_ROOT}\"/scripts/remind-style.sh"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "mcp__plugin_doc-toolkit_docstats__word_stats",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'doc-toolkit: measuring readability…'"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "Did this turn edit a Markdown file without running a readability check? Answer in one short sentence, or reply NO-OP.\n\n$ARGUMENTS"
+          }
+        ]
+      }
+    ]
+  }
+}

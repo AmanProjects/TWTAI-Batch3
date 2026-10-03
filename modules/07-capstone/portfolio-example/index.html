@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio</title>
+  <meta name="description" content="Professional portfolio generated from resume.json" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header id="hero"></header>
+
+  <main>
+    <section id="summary-section" hidden>
+      <h2>Summary</h2>
+      <p id="summary"></p>
+    </section>
+
+    <section id="experience-section" hidden>
+      <h2>Career Timeline</h2>
+      <div id="work-list"></div>
+    </section>
+
+    <section id="projects-section" hidden>
+      <h2>Projects</h2>
+      <div id="project-list"></div>
+    </section>
+
+    <section id="skills-section" hidden>
+      <h2>Skills</h2>
+      <div id="skill-list"></div>
+    </section>
+
+    <section id="education-section" hidden>
+      <h2>Education</h2>
+      <div id="edu-list"></div>
+    </section>
+
+    <section id="certificates-section" hidden>
+      <h2>Certifications</h2>
+      <div id="cert-list"></div>
+    </section>
+
+    <section id="contact-section" hidden>
+      <h2>Get In Touch</h2>
+      <a id="contact-btn" class="btn">Email me</a>
+    </section>
+  </main>
+
+  <footer>
+    <p>Built from <code>resume.json</code> · <a href="https://jsonresume.org/schema/">JSON Resume schema</a></p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

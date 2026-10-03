@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# Prints the longest sentence in each file you give it.
+#
+# Anything in bin/ becomes a command Claude can run by name while this plugin
+# is enabled. No install, no path — just `longest-sentence guide.md`.
+#
+# Why this exists: Claude estimating "that sentence looks long" is a guess.
+# Counting words is a fact. Give the model facts.
+
+set -euo pipefail
+
+if [ $# -eq 0 ]; then
+  echo "usage: longest-sentence <file.md> [file.md ...]" >&2
+  exit 1
+fi
+
+for f in "$@"; do
+  awk -v file="$f" '
+    { gsub(/^[[:space:]]*#+.*/, ""); text = text " " $0 }
+    END {
+      n = split(text, parts, /[.!?]+[[:space:]]/)
+      best = 0; bestText = ""
+      for (i = 1; i <= n; i++) {
+        words = split(parts[i], w, /[[:space:]]+/)
+        if (words > best) { best = words; bestText = parts[i] }
+      }
+      printf "%s\t%d words\t%.90s\n", file, best, bestText
+    }
+  ' "$f"
+done

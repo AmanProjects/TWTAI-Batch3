@@ -1,0 +1,18 @@
+{
+  "name": "twtai-m8",
+  "owner": { "name": "Aman Talwar", "email": "amandeep.talwar@gmail.com" },
+  "metadata": {
+    "description": "Module 8 teaching marketplace: one plugin demonstrating every component.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "doc-toolkit",
+      "source": "./doc-toolkit",
+      "description": "Every plugin component in one bundle: skill, command, agent, hooks, MCP, LSP, monitors, theme, output style, workflow, bin.",
+      "version": "1.0.0",
+      "category": "documentation",
+      "keywords": ["documentation", "teaching"]
+    }
+  ]
+}

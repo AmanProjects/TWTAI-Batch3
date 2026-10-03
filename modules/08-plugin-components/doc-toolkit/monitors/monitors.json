@@ -1,0 +1,14 @@
+[
+  {
+    "name": "docs-build",
+    "command": "\"${CLAUDE_PLUGIN_ROOT}\"/scripts/poll-build.sh",
+    "description": "Docs site build status changes",
+    "when": "always"
+  },
+  {
+    "name": "audit-log",
+    "command": "tail -F ./logs/doc-audit.log",
+    "description": "Streams the doc audit log",
+    "when": "on-skill-invoke:readability-pass"
+  }
+]
