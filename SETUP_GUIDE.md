@@ -119,9 +119,11 @@ If you don't already have one: sign up at [github.com](https://github.com) and v
 This is needed for the Atlassian MCP server exercise in Module 5, where Claude connects to Jira and Confluence.
 
 1. Go to [id.atlassian.com](https://id.atlassian.com/) and sign up or sign in
-2. If you already use Jira/Confluence at work, use that Atlassian account
+2. If you already have an Atlassian account, use it. If not, create a personal Atlassian account that you can access during the workshop
 3. If needed, create or join a Jira project and Confluence space for the workshop exercises
 4. Keep your login ready — Claude Code will prompt you to authorize access when the Atlassian MCP server is configured
+
+> Use an account you control personally. Do not rely on a work-only account if your employer restricts third-party access or app authorization.
 
 > If you are not using the Atlassian exercise in Module 5, you can skip this for now. It is still recommended for the full workshop experience.
 
@@ -247,6 +249,7 @@ gh auth login
 - Sign in to the correct Atlassian account used by your Jira/Confluence workspace
 - Confirm your Atlassian user has access to the target Jira project or Confluence space
 - Re-run `claude` and complete the browser authorization flow again
+- If your organization blocks external app access, switch to a personal Atlassian account or a sandbox/test workspace you can access
 
 ### Cursor's AI keeps suggesting things while I'm trying to focus
 Toggle Cursor AI off with `Cmd+L` / `Ctrl+L` (chat) or in **Settings → Cursor Tab** to disable inline suggestions. Cursor AI is independent of Claude Code CLI — turning it off does not affect Claude Code.
@@ -267,7 +270,7 @@ Toggle Cursor AI off with `Cmd+L` / `Ctrl+L` (chat) or in **Settings → Cursor 
 
 ```
 TOOL          VERIFY WITH                                 EXPECTED
-────────────────────────────────────────────────────────────────────────
+───────────────────────────────────────────────────────────────────
 Cursor        open the app                                window opens
 Node.js       node --version                              v18+ (v20+ preferred)
 npm           npm --version                               9+
