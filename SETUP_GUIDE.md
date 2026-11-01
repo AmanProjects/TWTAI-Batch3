@@ -15,8 +15,8 @@ Before beginning the workshop, install and confirm the following tools and accou
 | 2 | Node.js 18+ (LTS recommended) | Required to build and run the sample project and MCP server exercises |
 | 3 | Git | Required to clone the training repository and manage your work |
 | 4 | GitHub account | Needed to access the course repo and publish work when required |
-| 5 | Claude Code CLI | The CLI used throughout the workshop for skills, plugins, and agent workflows |
-| 6 | Anthropic API key | Required to authenticate Claude Code |
+| 5 | Atlassian account | Required for the Atlassian MCP exercise in Module 5 (Jira/Confluence access) |
+| 6 | Claude Code CLI | The CLI used throughout the workshop for skills, plugins, and agent workflows |
 | 7 | Course training repo | The workshop materials, sample project, and starter exercise files |
 
 > You need both Cursor and Claude Code CLI. They are separate tools. Cursor is for editing files; Claude Code is the command-line AI shell used in the course.
@@ -114,15 +114,16 @@ If you don't already have one: sign up at [github.com](https://github.com) and v
 
 ---
 
-## Step 5 — Get Your Anthropic API Key
+## Step 5 — Create an Atlassian Account
 
-1. Sign in at [console.anthropic.com](https://console.anthropic.com)
-2. Go to **API Keys** → **Create Key**
-3. Name it "TWT Training"
-4. **Copy the key immediately** — you cannot view it again
-5. Store it in a password manager
+This is needed for the Atlassian MCP server exercise in Module 5, where Claude connects to Jira and Confluence.
 
-> Never paste your API key into a chat, email, or shared document.
+1. Go to [id.atlassian.com](https://id.atlassian.com/) and sign up or sign in
+2. If you already use Jira/Confluence at work, use that Atlassian account
+3. If needed, create or join a Jira project and Confluence space for the workshop exercises
+4. Keep your login ready — Claude Code will prompt you to authorize access when the Atlassian MCP server is configured
+
+> If you are not using the Atlassian exercise in Module 5, you can skip this for now. It is still recommended for the full workshop experience.
 
 ---
 
@@ -144,21 +145,12 @@ claude --version
 
 If `claude` is not found, close and reopen your terminal.
 
-### Authenticate
+### Sign in / Authenticate
 ```bash
 claude
 ```
 
-On first launch, follow the prompts to connect your API key.
-
-**Using your own key?** Set the environment variable first, then re-run `claude`:
-```bash
-# macOS / Linux
-export ANTHROPIC_API_KEY="sk-ant-..."
-
-# Windows (PowerShell)
-$env:ANTHROPIC_API_KEY = "sk-ant-..."
-```
+On first launch, follow the prompts to sign in to your Claude/Anthropic account. If your environment requires a direct API key, follow the prompt shown by the CLI.
 
 ---
 
@@ -243,11 +235,6 @@ npm config get prefix
 # Add the printed-path/bin to your PATH and re-source your shell config
 ```
 
-### API key rejected
-- No leading/trailing spaces in the key
-- Key must start with `sk-ant-`
-- If TWT issued it, confirm with the coordinator that it hasn't expired
-
 ### `git clone` authentication error
 Install and authenticate the GitHub CLI:
 ```bash
@@ -255,6 +242,11 @@ brew install gh        # macOS
 winget install gh      # Windows
 gh auth login
 ```
+
+### Atlassian MCP authorization fails
+- Sign in to the correct Atlassian account used by your Jira/Confluence workspace
+- Confirm your Atlassian user has access to the target Jira project or Confluence space
+- Re-run `claude` and complete the browser authorization flow again
 
 ### Cursor's AI keeps suggesting things while I'm trying to focus
 Toggle Cursor AI off with `Cmd+L` / `Ctrl+L` (chat) or in **Settings → Cursor Tab** to disable inline suggestions. Cursor AI is independent of Claude Code CLI — turning it off does not affect Claude Code.
@@ -265,7 +257,7 @@ Toggle Cursor AI off with `Cmd+L` / `Ctrl+L` (chat) or in **Settings → Cursor 
 
 1. Post in the TWT community channel — include the exact error and command
 2. Attend the setup help session before the workshop begins
-3. Email the course coordinator for API key or access problems
+3. Email the course coordinator for access problems or environment setup issues
 
 > Don't arrive at the workshop without a working environment. Setup is the only thing you need to solve before class begins.
 
@@ -282,10 +274,11 @@ npm           npm --version                               9+
 Git           git --version                               2.x
 Claude Code   claude --version                            any version
 GitHub        github.com account                           active account
+Atlassian     id.atlassian.com account                    active Jira/Confluence access
 Repo          cd ~/Documents/TWTAI-Batch4 && ls           lists folders
 Sample proj   cd sample-project && npm run build           no errors
 ```
 
 ---
 
-*Tech Writer's Tribe | AI-Powered Documentation Mastery | Setup Guide v1.2 (Cursor)*
+*Tech Writer's Tribe | AI-Powered Documentation Mastery | Setup Guide v1.3 (Cursor)*
