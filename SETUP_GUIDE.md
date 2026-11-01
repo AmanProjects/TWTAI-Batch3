@@ -5,25 +5,27 @@
 
 ---
 
-## What You'll Install
+## Before You Start: Required Prerequisites
 
-| # | Tool | Purpose |
-|---|------|---------|
-| 1 | Cursor IDE | Your editor for writing skills and reading MCP server code |
-| 2 | Node.js 18+ | Runs the MCP server you'll build in Modules 6–7 |
-| 3 | Git | Clones the training repo and shares your work |
-| 4 | Claude Code CLI | The AI shell where you'll run your skills |
-| 5 | Anthropic API key | Authenticates Claude Code |
-| 6 | Training repo | Course files, sample project, and starter skills |
+Before beginning the workshop, install and confirm the following tools and accounts:
 
-> **Cursor AI vs. Claude Code CLI — they are different.**
-> Cursor's built-in AI helps you edit files inside the editor. Claude Code CLI is a separate command-line tool the course uses for skills and slash commands. You need **both**.
+| # | Requirement | Why it's required |
+|---|-------------|------------------|
+| 1 | Cursor IDE | Your editor for writing, reading project files, and working with MCP-related projects |
+| 2 | Node.js 18+ (LTS recommended) | Required to build and run the sample project and MCP server exercises |
+| 3 | Git | Required to clone the training repository and manage your work |
+| 4 | GitHub account | Needed to access the course repo and publish work when required |
+| 5 | Claude Code CLI | The CLI used throughout the workshop for skills, plugins, and agent workflows |
+| 6 | Anthropic API key | Required to authenticate Claude Code |
+| 7 | Course training repo | The workshop materials, sample project, and starter exercise files |
+
+> You need both Cursor and Claude Code CLI. They are separate tools. Cursor is for editing files; Claude Code is the command-line AI shell used in the course.
 
 ---
 
 ## System Requirements
 
-| | Minimum | Recommended |
+| Requirement | Minimum | Recommended |
 |---|---|---|
 | OS | macOS 12+, Windows 10+, Ubuntu 20.04+ | macOS 14+ or Ubuntu 22.04+ |
 | RAM | 8 GB | 16 GB |
@@ -38,7 +40,7 @@
 
 1. Go to [cursor.com](https://cursor.com)
 2. Download the installer for your OS and run it (accept defaults)
-3. Launch Cursor; sign in with GitHub or Google (free tier is fine)
+3. Launch Cursor and sign in with GitHub or Google (free tier is fine)
 
 **Recommended extensions** (open the Extensions panel: `Cmd+Shift+X` / `Ctrl+Shift+X`):
 - **Markdown All in One** — better markdown editing
@@ -47,7 +49,7 @@
 
 **Verify:** Cursor opens and you can create a new file (`Cmd+N` / `Ctrl+N`). Done.
 
-> **Why Cursor for this course?** Cursor supports the Model Context Protocol natively via `.cursor/mcp.json`. In Modules 6–7 you'll plug the MCP server you build into Cursor itself and watch it work end-to-end — no extra tooling required.
+> **Why Cursor for this course?** Cursor supports the Model Context Protocol natively via `.cursor/mcp.json`, which is used in the later workshop modules.
 
 ---
 
@@ -59,7 +61,7 @@
 
 ### Windows
 1. Download the **LTS Windows Installer (.msi)** from [nodejs.org](https://nodejs.org)
-2. Run it — check "Automatically install necessary tools" when prompted
+2. Run it — check **"Automatically install necessary tools"** when prompted
 3. Close and reopen your terminal afterward
 
 ### Linux (Ubuntu/Debian)
@@ -162,19 +164,21 @@ $env:ANTHROPIC_API_KEY = "sk-ant-..."
 
 ## Step 7 — Clone the Training Repo
 
+Clone the workshop repo from the official course repository:
+
 ```bash
 cd ~/Documents
-git clone <URL-from-welcome-email> TWT_MCP_Training
-cd TWT_MCP_Training
+git clone https://github.com/AmanProjects/TWTAI-Batch4.git
+cd TWTAI-Batch4
 ```
 
-Open the folder in Cursor: **File → Open Folder…** and select `TWT_MCP_Training`.
+Open the folder in Cursor: **File → Open Folder…** and select `TWTAI-Batch4`.
 
 ---
 
 ## Step 8 — Build the Sample Project
 
-The sample project is the MCP server you'll extend in Modules 6–7. Build it once now:
+The sample project is the MCP server you'll extend in the later workshop modules. Build it once now:
 
 ```bash
 cd sample-project
@@ -195,19 +199,18 @@ Press `Ctrl+C` to stop. If it started without errors, you're done.
 
 ## Step 9 — Full Environment Check
 
-Run all six. Every one must pass before Module 1.
+Run all six. Every one must pass before the workshop begins.
 
 ```bash
 node --version                                          # v18+
 npm --version                                           # 9+
 git --version                                           # 2.x
 claude --version                                        # any version
-cd ~/Documents/TWT_MCP_Training/sample-project && npm run build   # no errors
+cd ~/Documents/TWTAI-Batch4/sample-project && npm run build   # no errors
 claude                                                  # launches; Ctrl+C to exit
 ```
 
 All six green? You're ready.
-
 
 ---
 
@@ -254,34 +257,35 @@ gh auth login
 ```
 
 ### Cursor's AI keeps suggesting things while I'm trying to focus
-Toggle Cursor AI off with `Cmd+L` / `Ctrl+L` (chat) or in **Settings → Cursor Tab** to disable inline suggestions. Cursor AI is independent of Claude Code CLI — turning it off does not affect the course.
+Toggle Cursor AI off with `Cmd+L` / `Ctrl+L` (chat) or in **Settings → Cursor Tab** to disable inline suggestions. Cursor AI is independent of Claude Code CLI — turning it off does not affect Claude Code.
 
 ---
 
-## Getting Help Before Module 1
+## Getting Help Before the Workshop
 
 1. Post in the TWT community channel — include the exact error and command
-2. Attend the setup help session (weekend before Module 1)
+2. Attend the setup help session before the workshop begins
 3. Email the course coordinator for API key or access problems
 
-> Don't arrive at Module 1 without a working environment. Setup is the only thing you need to solve before class begins.
+> Don't arrive at the workshop without a working environment. Setup is the only thing you need to solve before class begins.
 
 ---
 
 ## Quick Reference Card
 
 ```
-TOOL          VERIFY WITH           EXPECTED
-──────────────────────────────────────────────────────
-Cursor        open the app          window opens
-Node.js       node --version        v18+ (v20+ preferred)
-npm           npm --version         9+
-Git           git --version         2.x
-Claude Code   claude --version      any version
-Repo          ls ~/Documents/TWT_MCP_Training        lists folders
-Sample proj   cd sample-project && npm run build     no errors
+TOOL          VERIFY WITH                                 EXPECTED
+────────────────────────────────────────────────────────────────────────
+Cursor        open the app                                window opens
+Node.js       node --version                              v18+ (v20+ preferred)
+npm           npm --version                               9+
+Git           git --version                               2.x
+Claude Code   claude --version                            any version
+GitHub        github.com account                           active account
+Repo          cd ~/Documents/TWTAI-Batch4 && ls           lists folders
+Sample proj   cd sample-project && npm run build           no errors
 ```
 
 ---
 
-*Tech Writer's Tribe | AI-Powered Documentation Mastery | Setup Guide v1.1 (Cursor)*
+*Tech Writer's Tribe | AI-Powered Documentation Mastery | Setup Guide v1.2 (Cursor)*
