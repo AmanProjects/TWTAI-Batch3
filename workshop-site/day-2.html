@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 2—Introduction to MCP</title>
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">AI</span>
+      <span>AI-powered documentation mastery<small>Tech Writer's Tribe training program</small></span>
+    </a>
+    <nav class="nav">
+      <a href="index.html">Overview</a>
+      <a href="lessons.html">Lessons</a>
+      <a href="lesson-plan.html">Lesson plan</a>
+      <a href="claude-web-guide.html">Claude.ai web</a>
+      <a href="playbook.html">Playbook</a>
+    </nav>
+  </div>
+</header>
+
+<section class="subhero">
+  <div class="subhero-inner">
+    <div class="crumb"><a href="index.html">Overview</a> &nbsp;/&nbsp; Day 2</div>
+    <h1>Day 2—Introduction to MCP, the universal adapter for AI</h1>
+    <div class="metatags">
+      <span class="badge novice">Novice</span>
+      <span class="pill">Module 2</span>
+      <span class="pill">2 hours</span>
+      <span class="pill">Builds on day 1</span>
+      <span class="pill">Web-friendly</span>
+    </div>
+  </div>
+</section>
+
+<main>
+
+  <div class="callout web">
+    <div class="callout-title">Full lesson</div>
+    <p>This page is the workshop summary and agenda. For the complete lesson text, open <a href="lessons/module-2.html">the Module 2 lesson</a>.</p>
+  </div>
+
+  <section>
+    <p class="section-label">Overview</p>
+    <h2>The vocabulary that unlocks everything after it</h2>
+    <p class="lead-text">Day 2 introduces the Model Context Protocol—the open standard that lets AI connect to tools and data—and the idea of an Agent Skill, which is the single most useful thing a technical writer can build. You will leave able to look at your own workflow and spot which tasks should become skills and which need tools.</p>
+    <div class="callout web">
+      <div class="callout-title">Concepts today, building later</div>
+      <p>This day is about understanding, not installation. It works fully in the Claude.ai web interface. The place MCP shows up in the browser is Connectors—covered in the <a href="claude-web-guide.html">web guide</a>.</p>
+    </div>
+  </section>
+
+  <section>
+    <p class="section-label">Learning objectives</p>
+    <h2>By the end of this day you can</h2>
+    <ul class="objectives">
+      <li>Explain MCP in plain language using the USB analogy.</li>
+      <li>Distinguish between tools, resources, and prompts in MCP.</li>
+      <li>Explain what an Agent Skill is and why technical writers are natural skill creators.</li>
+      <li>Identify three tasks in your own workflow that could become skills or tools.</li>
+    </ul>
+  </section>
+
+  <section>
+    <p class="section-label">Agenda</p>
+    <h2>Two-hour flow</h2>
+    <ul class="agenda">
+      <li><div class="time">0:00–0:10</div><div class="what">Recap and homework share</div><div class="detail">The three repeated tasks you brought from day 1.</div></li>
+      <li><div class="time">0:10–0:40</div><div class="what">What MCP is—the USB analogy</div><div class="detail">The problem MCP solves, and its three parts: tools, resources, and prompts.</div></li>
+      <li><div class="time">0:40–1:10</div><div class="what">Agent Skills, the writer's superpower</div><div class="detail">The prompt → skill → agent spectrum, where skills live, and why writers are natural skill authors.</div></li>
+      <li><div class="time">1:10–1:40</div><div class="what">Skills vs. tools—when to use which</div><div class="detail">The hybrid approach, and the skill-candidate identification activity.</div></li>
+      <li><div class="time">1:40–2:00</div><div class="what">Discussion and homework</div><div class="detail">Reflection questions and selecting your first skill to build in day 3.</div></li>
+    </ul>
+  </section>
+
+  <section>
+    <p class="section-label">Activity</p>
+    <h2>Skill or tool identifier worksheet</h2>
+    <p>Classify eight documentation tasks as <b>skill</b>, <b>tool</b>, <b>both</b>, or <b>neither</b>, then pick the one that would make the best first skill to build.</p>
+    <div class="table-wrap" style="margin-top:14px">
+      <table>
+        <thead><tr><th>If the task is...</th><th>It is probably a...</th></tr></thead>
+        <tbody>
+          <tr><td>A repeatable judgement you make with instructions in your head</td><td><span class="badge beginner" style="text-transform:none">Skill</span></td></tr>
+          <tr><td>A connection to live data or an external system (a tracker, a repo, an API)</td><td><span class="badge advanced" style="text-transform:none">Tool</span></td></tr>
+          <tr><td>A judgement that also needs live data to do its job</td><td><span class="badge intermediate" style="text-transform:none">Both</span></td></tr>
+          <tr><td>A one-off that you will never repeat</td><td><span class="pill">Neither</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <p class="section-label">Doing it on the web</p>
+    <h2>Claude.ai web alternatives</h2>
+    <div class="compare">
+      <div class="col cli">
+        <h4>Claude Code (as written)</h4>
+        <p class="small">Skills live as <code>.claude/commands/*.md</code> files in your project or <code>~/.claude/skills/</code>. MCP servers are added with <code>claude mcp add</code>.</p>
+      </div>
+      <div class="col web">
+        <h4>Claude.ai web interface</h4>
+        <p class="small">A skill becomes a custom Skill created under <b>Customize → Skills</b>, or a Project's custom instructions. An MCP server becomes a <b>Connector</b> you enable in settings. Same three parts—tools, resources, prompts—surfaced through the browser instead of a config file.</p>
+      </div>
+    </div>
+    <div class="callout tip">
+      <div class="callout-title">Keep this straight</div>
+      <p>"Where skills live" differs by tool, but what a skill <em>is</em>—a reusable instruction set Claude can load on demand—is identical everywhere. The day-3 build teaches the concept; the web guide shows where to click.</p>
+    </div>
+  </section>
+
+  <section>
+    <p class="section-label">Homework</p>
+    <h2>Before day 3</h2>
+    <ul>
+      <li>Choose the one task from your worksheet that will become your first skill.</li>
+      <li>Write, in two or three sentences, exactly what a good output for that task looks like.</li>
+    </ul>
+  </section>
+
+  <section>
+    <p class="section-label">Checklist</p>
+    <h2>Novice checklist</h2>
+    <ul class="objectives">
+      <li>I can explain MCP with the USB analogy.</li>
+      <li>I can tell a skill from a tool.</li>
+      <li>I have chosen my first skill to build.</li>
+    </ul>
+  </section>
+
+  <nav class="card-grid" style="grid-template-columns:1fr 1fr;margin-top:10px">
+    <a class="card" href="day-1.html"><span class="card-foot">← Day 1—AI literacy</span></a>
+    <a class="card" href="day-3.html" style="text-align:right"><span class="card-foot">Day 3—Prompt engineering →</span></a>
+  </nav>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div>Tech Writer's Tribe · AI-powered documentation mastery</div>
+      <p class="footer-tagline">Tech Writer's platform for certification and corporate training, networking, IT services, jobs, and documentation.</p>
+      <p class="footer-social">Connect with us: <a href="https://www.linkedin.com/company/tech-writers-tribe">LinkedIn</a> · <a href="https://www.facebook.com/techwriters.tribe">Facebook</a> · <a href="https://twitter.com/Techwriterstri1">X</a> · <a href="https://t.me/joinchat/PgbbIhRd6Hpmf7YMrc5BnQ">Telegram</a> · <a href="https://www.youtube.com/TechWriterstribe">YouTube</a> · <a href="https://www.instagram.com/tech_writers_tribe">Instagram</a> · <a href="https://whatsapp.com/channel/0029VamjDen2kNFtScCixH36">WhatsApp channel</a></p>
+      <p class="footer-author">Created by <a href="https://www.linkedin.com/in/amantalwar/">Amandeep Singh Talwar</a></p>
+    </div>
+    <div class="footer-links">
+      <a href="index.html">Overview</a>
+      <a href="lessons.html">Lessons</a>
+      <a href="lesson-plan.html">Lesson plan</a>
+      <a href="claude-web-guide.html">Claude.ai web</a>
+      <a href="playbook.html">Playbook</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

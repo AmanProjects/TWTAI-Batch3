@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 7—Capstone: your portfolio site</title>
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">AI</span>
+      <span>AI-powered documentation mastery<small>Tech Writer's Tribe training program</small></span>
+    </a>
+    <nav class="nav">
+      <a href="index.html">Overview</a>
+      <a href="lessons.html">Lessons</a>
+      <a href="lesson-plan.html">Lesson plan</a>
+      <a href="claude-web-guide.html">Claude.ai web</a>
+      <a href="playbook.html">Playbook</a>
+    </nav>
+  </div>
+</header>
+
+<section class="subhero">
+  <div class="subhero-inner">
+    <div class="crumb"><a href="index.html">Overview</a> &nbsp;/&nbsp; Day 7</div>
+    <h1>Day 7—Capstone: your portfolio site from a résumé</h1>
+    <div class="metatags">
+      <span class="badge advanced">Advanced · upper</span>
+      <span class="pill">Module 7</span>
+      <span class="pill">2 hours</span>
+      <span class="pill">Two tracks</span>
+      <span class="pill">Publishes to the web</span>
+    </div>
+  </div>
+</section>
+
+<main>
+
+  <div class="callout web">
+    <div class="callout-title">Full lesson</div>
+    <p>This page is the workshop summary and agenda. For the complete lesson text, open the <a href="lessons/module-7.html">engineering track lesson</a> or the <a href="lessons/module-7-writers.html">writers' track lesson</a>.</p>
+  </div>
+
+  <section>
+    <p class="section-label">Overview</p>
+    <h2>Put every piece together into something public</h2>
+    <p class="lead-text">The capstone assembles the whole mental model—skill, agent, plugin, MCP server—into one project. You will turn your résumé into structured data, direct an agent to build a portfolio site from it, review the result like an editor, and deploy it to a public URL. This day runs as two parallel tracks so non-coders ship the same site without writing HTML.</p>
+  </section>
+
+  <section>
+    <p class="section-label">Choose your track</p>
+    <h2>Writers' track and engineering track</h2>
+    <div class="grid-2">
+      <div class="card">
+        <span class="badge track-writers">Writers' track · primary</span>
+        <h3 style="margin-top:14px">Single-sourced, no code</h3>
+        <p>You will not write HTML, CSS, JavaScript, or a language server. You turn your résumé into <code>resume.json</code>, brief the <code>portfolio-builder</code> agent, review its work, and publish through the browser—updating the whole site later by changing one file.</p>
+      </div>
+      <div class="card">
+        <span class="badge track-eng">Engineering track · optional depth</span>
+        <h3 style="margin-top:14px">Full build</h3>
+        <p>You write the static site by hand, build the agent, add an <code>about-me</code> MCP server others can install, and build a documentation language server—the fifth extension mechanism and the only one that is not Claude-specific.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <p class="section-label">Learning objectives</p>
+    <h2>By the end of this day you can</h2>
+    <ul class="objectives">
+      <li>Explain the complete mental model—when to reach for a skill, an agent, a plugin, or an MCP server, and how they compose.</li>
+      <li>Turn a résumé into structured <code>resume.json</code> using the JSON Resume schema.</li>
+      <li>Direct an agent to build a complete portfolio site from that data, reviewing its work rather than writing it.</li>
+      <li>Deploy to the web and get a public URL.</li>
+      <li>Update the site later by changing one file.</li>
+      <li>Write a <code>CLAUDE.md</code> so Claude follows your conventions in every session.</li>
+    </ul>
+  </section>
+
+  <section>
+    <p class="section-label">Agenda</p>
+    <h2>Two-hour flow</h2>
+    <ul class="agenda">
+      <li><div class="time">0:00–0:15</div><div class="what">The five building blocks</div><div class="detail">The complete mental model and the decision that trips everyone up.</div></li>
+      <li><div class="time">0:15–0:40</div><div class="what">Your résumé becomes data</div><div class="detail">Create the <code>/parse-resume</code> skill, then do the part only you can do—edit the data for truth and emphasis.</div></li>
+      <li><div class="time">0:40–1:15</div><div class="what">Direct the agent to build the site</div><div class="detail">Create <code>portfolio-builder</code>, run it, preview, and review it like an editor.</div></li>
+      <li><div class="time">1:15–1:45</div><div class="what">Publish</div><div class="detail">Browser-only route, or let Claude do it; turn on GitHub Pages.</div></li>
+      <li><div class="time">1:45–2:00</div><div class="what">CLAUDE.md and wrap-up</div><div class="detail">Capture your conventions; optional LSP and about-me tracks for engineers.</div></li>
+    </ul>
+  </section>
+
+  <section>
+    <p class="section-label">Doing it on the web</p>
+    <h2>Claude.ai web alternatives</h2>
+    <div class="compare">
+      <div class="col cli">
+        <h4>Claude Code (as written)</h4>
+        <p class="small">Preview with <code>python3 -m http.server</code>, deploy with <code>git</code> or the <code>gh</code> CLI, and optionally add an <code>about-me</code> MCP server and a <code>docs-lsp</code> language server.</p>
+      </div>
+      <div class="col web">
+        <h4>Claude.ai web interface</h4>
+        <p class="small">Generate the site as an Artifact in a chat and preview it right there. Parse the résumé with a Skill. Publish using the <b>browser-only route</b> the writers' track already uses: create the GitHub repo and turn on Pages entirely in the browser—no command line. The LSP and about-me MCP server remain engineering-track, local-environment work.</p>
+      </div>
+    </div>
+    <div class="callout tip">
+      <div class="callout-title">The writers' publish route is already web-native</div>
+      <p>Route A in the lesson is browser-only by design. If you have been on the web interface the whole course, this is the day it pays off—you ship a live site without ever opening a terminal.</p>
+    </div>
+  </section>
+
+  <section>
+    <p class="section-label">Homework</p>
+    <h2>Before day 8</h2>
+    <ul>
+      <li>Polish your live site and share the URL with a peer for feedback.</li>
+      <li>Run the <code>docs-lsp</code> link checker on a real set of your docs and fix what it finds (both tracks).</li>
+    </ul>
+  </section>
+
+  <section>
+    <p class="section-label">Checklist</p>
+    <h2>Advanced checklist</h2>
+    <ul class="objectives">
+      <li>My portfolio site is live at a public URL.</li>
+      <li>I can update it by editing one data file.</li>
+      <li>I wrote a <code>CLAUDE.md</code> that captures my conventions.</li>
+    </ul>
+  </section>
+
+  <nav class="card-grid" style="grid-template-columns:1fr 1fr;margin-top:10px">
+    <a class="card" href="day-6.html"><span class="card-foot">← Day 6—Building MCP tools</span></a>
+    <a class="card" href="day-8.html" style="text-align:right"><span class="card-foot">Day 8—Plugin anatomy →</span></a>
+  </nav>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div>Tech Writer's Tribe · AI-powered documentation mastery</div>
+      <p class="footer-tagline">Tech Writer's platform for certification and corporate training, networking, IT services, jobs, and documentation.</p>
+      <p class="footer-social">Connect with us: <a href="https://www.linkedin.com/company/tech-writers-tribe">LinkedIn</a> · <a href="https://www.facebook.com/techwriters.tribe">Facebook</a> · <a href="https://twitter.com/Techwriterstri1">X</a> · <a href="https://t.me/joinchat/PgbbIhRd6Hpmf7YMrc5BnQ">Telegram</a> · <a href="https://www.youtube.com/TechWriterstribe">YouTube</a> · <a href="https://www.instagram.com/tech_writers_tribe">Instagram</a> · <a href="https://whatsapp.com/channel/0029VamjDen2kNFtScCixH36">WhatsApp channel</a></p>
+      <p class="footer-author">Created by <a href="https://www.linkedin.com/in/amantalwar/">Amandeep Singh Talwar</a></p>
+    </div>
+    <div class="footer-links">
+      <a href="index.html">Overview</a>
+      <a href="lessons.html">Lessons</a>
+      <a href="lesson-plan.html">Lesson plan</a>
+      <a href="claude-web-guide.html">Claude.ai web</a>
+      <a href="playbook.html">Playbook</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

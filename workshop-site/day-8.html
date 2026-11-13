@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 8—Plugin anatomy, end to end</title>
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">AI</span>
+      <span>AI-powered documentation mastery<small>Tech Writer's Tribe training program</small></span>
+    </a>
+    <nav class="nav">
+      <a href="index.html">Overview</a>
+      <a href="lessons.html">Lessons</a>
+      <a href="lesson-plan.html">Lesson plan</a>
+      <a href="claude-web-guide.html">Claude.ai web</a>
+      <a href="playbook.html">Playbook</a>
+    </nav>
+  </div>
+</header>
+
+<section class="subhero">
+  <div class="subhero-inner">
+    <div class="crumb"><a href="index.html">Overview</a> &nbsp;/&nbsp; Day 8</div>
+    <h1>Day 8—Plugin anatomy: every component, end to end</h1>
+    <div class="metatags">
+      <span class="badge expert">Expert</span>
+      <span class="pill">Module 8</span>
+      <span class="pill">2 hours</span>
+      <span class="pill">Two tracks</span>
+      <span class="pill">Claude Code</span>
+    </div>
+  </div>
+</section>
+
+<main>
+
+  <div class="callout web">
+    <div class="callout-title">Full lesson</div>
+    <p>This page is the workshop summary and agenda. For the complete lesson text, open the <a href="lessons/module-8.html">engineering track lesson</a> or the <a href="lessons/module-8-writers.html">writers' track lesson</a>.</p>
+  </div>
+
+  <section>
+    <p class="section-label">Overview</p>
+    <h2>Ship your team's standard as a plugin</h2>
+    <p class="lead-text">The final day is the deepest. You will see every plugin component type, read a real <code>plugin.json</code> manifest, understand loading, scopes, and the command-line interface, and build a working multi-component plugin. The writers' track focuses on packaging a house style standard; the engineering track covers the full thirteen-component anatomy and the Agent Plugins portability spec.</p>
+    <div class="callout clionly">
+      <div class="callout-title">Plugins are a Claude Code feature</div>
+      <p>Building, validating, and installing plugins happens in Claude Code. There is no browser equivalent for authoring a plugin. The writers' track keeps the code to a minimum, but a local environment is required for this day.</p>
+    </div>
+  </section>
+
+  <section>
+    <p class="section-label">Choose your track</p>
+    <h2>Writers' track and engineering track</h2>
+    <div class="grid-2">
+      <div class="card">
+        <span class="badge track-writers">Writers' track · primary</span>
+        <h3 style="margin-top:14px">Ship your standard</h3>
+        <p>Read the <code>house-style</code> plugin, then build your own three-piece plugin—a skill, a hook, and a small helper—add a value teammates are <em>asked</em> for on install instead of hand-editing files, and publish it so a colleague can run it cold.</p>
+      </div>
+      <div class="card">
+        <span class="badge track-eng">Engineering track · optional depth</span>
+        <h3 style="margin-top:14px">Full anatomy</h3>
+        <p>Walk all thirteen component types, the complete manifest schema including <code>userConfig</code> and dependencies, the three path variables, caching and versioning, and port your plugin to the Agent Plugins v1.0.0 cross-client spec.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <p class="section-label">Learning objectives</p>
+    <h2>By the end of this day you can</h2>
+    <ul class="objectives">
+      <li>Explain what a plugin is and what belongs inside one, in plain language.</li>
+      <li>Pick the right piece for a job: skill, command, agent, hook, or tool.</li>
+      <li>Say why every extra piece costs your team tokens in every conversation.</li>
+      <li>Build, validate, and test a three-piece plugin.</li>
+      <li>Publish it and get a teammate running it.</li>
+      <li>Set up a value teammates are asked for on install, instead of hand-editing files.</li>
+    </ul>
+  </section>
+
+  <section>
+    <p class="section-label">Agenda</p>
+    <h2>Two-hour flow</h2>
+    <ul class="agenda">
+      <li><div class="time">0:00–0:20</div><div class="what">What is actually in the box</div><div class="detail">The four pieces to tell apart, and the token budget nobody mentions.</div></li>
+      <li><div class="time">0:20–0:45</div><div class="what">Read a real plugin</div><div class="detail">The four files that matter in <code>house-style</code>, and the manifest.</div></li>
+      <li><div class="time">0:45–1:30</div><div class="what">Build your own</div><div class="detail">A three-piece plugin, step by step, with a <code>userConfig</code> value.</div></li>
+      <li><div class="time">1:30–1:50</div><div class="what">Ship it</div><div class="detail">Three ways to distribute, the rules that bite, and testing cold on a partner's machine.</div></li>
+      <li><div class="time">1:50–2:00</div><div class="what">Why this is becoming a standard</div><div class="detail">Cross-client portability and what it means for your work.</div></li>
+    </ul>
+  </section>
+
+  <section>
+    <p class="section-label">A warning worth repeating</p>
+    <h2>Every component costs tokens, always</h2>
+    <div class="callout warn">
+      <div class="callout-title">The budget nobody tells you about</div>
+      <p>Each piece a plugin adds is loaded into context in every conversation, whether or not it is used. A lean plugin that does one thing well beats a kitchen-sink plugin that slows every session. Add a component only when it earns its place.</p>
+    </div>
+  </section>
+
+  <section>
+    <p class="section-label">Doing it on the web</p>
+    <h2>Claude.ai web alternatives</h2>
+    <div class="compare">
+      <div class="col cli">
+        <h4>Claude Code (as written)</h4>
+        <p class="small">Load a plugin with <code>claude --plugin-dir</code>, inspect with <code>claude plugin details</code>, scaffold with <code>claude plugin init ... --with skills hooks</code>, then validate and install.</p>
+      </div>
+      <div class="col web">
+        <h4>Claude.ai web interface</h4>
+        <p class="small">There is no plugin authoring in the browser. The closest web equivalent to "ship your standard to the team" is an <b>organization-provisioned Skill</b>: a Team or Enterprise admin publishes a Skill once and everyone gets it, with a value requested at setup. You lose hooks and commands, but you keep the core—a shared standard, centrally distributed.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <p class="section-label">Homework and next steps</p>
+    <h2>After the program</h2>
+    <ul>
+      <li>Publish your plugin or your org Skill and get your whole team onto it.</li>
+      <li>Write your personal AI integration plan—see the <a href="playbook.html">playbook</a>.</li>
+      <li>Keep one skill under active maintenance and review it monthly.</li>
+    </ul>
+  </section>
+
+  <section>
+    <p class="section-label">Checklist</p>
+    <h2>Expert checklist</h2>
+    <ul class="objectives">
+      <li>I built and published a working multi-piece plugin or org Skill.</li>
+      <li>A teammate ran it cold on their own machine.</li>
+      <li>I can justify every component it contains.</li>
+    </ul>
+  </section>
+
+  <nav class="card-grid" style="grid-template-columns:1fr 1fr;margin-top:10px">
+    <a class="card" href="day-7.html"><span class="card-foot">← Day 7—Capstone portfolio</span></a>
+    <a class="card" href="playbook.html" style="text-align:right"><span class="card-foot">The participant playbook →</span></a>
+  </nav>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div>Tech Writer's Tribe · AI-powered documentation mastery</div>
+      <p class="footer-tagline">Tech Writer's platform for certification and corporate training, networking, IT services, jobs, and documentation.</p>
+      <p class="footer-social">Connect with us: <a href="https://www.linkedin.com/company/tech-writers-tribe">LinkedIn</a> · <a href="https://www.facebook.com/techwriters.tribe">Facebook</a> · <a href="https://twitter.com/Techwriterstri1">X</a> · <a href="https://t.me/joinchat/PgbbIhRd6Hpmf7YMrc5BnQ">Telegram</a> · <a href="https://www.youtube.com/TechWriterstribe">YouTube</a> · <a href="https://www.instagram.com/tech_writers_tribe">Instagram</a> · <a href="https://whatsapp.com/channel/0029VamjDen2kNFtScCixH36">WhatsApp channel</a></p>
+      <p class="footer-author">Created by <a href="https://www.linkedin.com/in/amantalwar/">Amandeep Singh Talwar</a></p>
+    </div>
+    <div class="footer-links">
+      <a href="index.html">Overview</a>
+      <a href="lessons.html">Lessons</a>
+      <a href="lesson-plan.html">Lesson plan</a>
+      <a href="claude-web-guide.html">Claude.ai web</a>
+      <a href="playbook.html">Playbook</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Participant playbook</title>
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">AI</span>
+      <span>AI-powered documentation mastery<small>Tech Writer's Tribe training program</small></span>
+    </a>
+    <nav class="nav">
+      <a href="index.html">Overview</a>
+      <a href="lessons.html">Lessons</a>
+      <a href="lesson-plan.html">Lesson plan</a>
+      <a href="claude-web-guide.html">Claude.ai web</a>
+      <a href="playbook.html" class="active">Playbook</a>
+    </nav>
+  </div>
+</header>
+
+<section class="subhero">
+  <div class="subhero-inner">
+    <div class="crumb"><a href="index.html">Overview</a> &nbsp;/&nbsp; Playbook</div>
+    <h1>Participant playbook</h1>
+    <div class="metatags">
+      <span class="pill">Use during the workshop</span>
+      <span class="pill">Keep after it</span>
+    </div>
+  </div>
+</section>
+
+<main>
+
+  <section>
+    <p class="section-label">What this is</p>
+    <h2>Your quick reference, during and after</h2>
+    <p class="lead-text">Keep this open during every session and come back to it when you are putting these tools to work on your own. It collects the frameworks, templates, decisions, and habits from all eight days into one place, with the browser and command-line paths side by side.</p>
+  </section>
+
+  <section>
+    <p class="section-label">Reach for the right thing</p>
+    <h2>Skill, tool, agent, plugin, or MCP server?</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>If you want to...</th><th>Reach for a...</th></tr></thead>
+        <tbody>
+          <tr><td>Repeat a judgement you make with instructions in your head</td><td><b>Skill</b></td></tr>
+          <tr><td>Let Claude read from or act in a live system—tracker, repo, API</td><td><b>MCP server / Connector</b> (a tool)</td></tr>
+          <tr><td>Run a longer, multi-step job that coordinates several skills</td><td><b>Agent</b></td></tr>
+          <tr><td>Hand a bundle of the above to your whole team in one install</td><td><b>Plugin</b> (Claude Code) or org Skill (web)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <p class="section-label">Write a better prompt</p>
+    <h2>RTCCO in one line each</h2>
+    <div class="table-wrap">
+      <table>
+        <tbody>
+          <tr><td><b>Role</b></td><td>Who Claude should be—"a senior API documentation editor".</td></tr>
+          <tr><td><b>Task</b></td><td>The single thing to do—"review against the six required sections".</td></tr>
+          <tr><td><b>Context</b></td><td>Who it is for and why—"third-party developers integrating our API".</td></tr>
+          <tr><td><b>Constraints</b></td><td>The guardrails—"flag only; do not rewrite".</td></tr>
+          <tr><td><b>Output format</b></td><td>The exact shape—"a table: section, status, finding, fix".</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <p class="section-label">Copy-paste starters</p>
+    <h2>The skill library you leave with</h2>
+    <p>These live in <code>resources/skill-templates.md</code>. Build each as a Claude Code command or a web Skill.</p>
+    <div class="card-grid">
+      <div class="card"><h3><code>/check-api-doc</code></h3><p>Review an API reference against a completeness checklist and report gaps.</p></div>
+      <div class="card"><h3><code>/style-check</code></h3><p>Enforce your team's style guide and return a scored table of findings.</p></div>
+      <div class="card"><h3><code>/release-notes</code></h3><p>Turn a change list into clean release notes grouped by type.</p></div>
+      <div class="card"><h3><code>/doc-coverage</code></h3><p>Surface undocumented areas and under-documented parameters.</p></div>
+      <div class="card"><h3><code>/simplify</code></h3><p>Transform expert prose into plain language for a broader audience.</p></div>
+      <div class="card"><h3><code>/doc-review</code></h3><p>A multi-step audit that composes several of the above into one pass.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <p class="section-label">Two paths, one goal</p>
+    <h2>Browser or command line</h2>
+    <div class="compare">
+      <div class="col web">
+        <h4>If you work in the browser</h4>
+        <ul>
+          <li>Build skills under <b>Customize → Skills</b>.</li>
+          <li>Keep your style guide and examples in a <b>Project</b>.</li>
+          <li>Connect live systems as <b>Connectors</b>.</li>
+          <li>Publish your day-7 site through <b>GitHub Pages</b> in the browser.</li>
+        </ul>
+        <p class="small"><a href="claude-web-guide.html">Full web guide →</a></p>
+      </div>
+      <div class="col cli">
+        <h4>If you work in Claude Code</h4>
+        <ul>
+          <li>Save skills as <code>.claude/commands/*.md</code>.</li>
+          <li>Add servers with <code>claude mcp add</code>.</li>
+          <li>Bundle and ship with <code>/plugin</code> and marketplaces.</li>
+          <li>Capture conventions in a <code>CLAUDE.md</code>.</li>
+        </ul>
+        <p class="small">See <code>resources/cheat-sheet.md</code>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <p class="section-label">Make it stick</p>
+    <h2>Your 30-day adoption plan</h2>
+    <ol class="steps">
+      <li><h4 class="mt0">Week 1—pick one task</h4><p>Choose the single documentation task you repeat most. Build one skill for it and use it every day this week.</p></li>
+      <li><h4 class="mt0">Week 2—add your context</h4><p>Put your real style guide and a known-good example into a Project or as a resource, so the skill reflects your house standard.</p></li>
+      <li><h4 class="mt0">Week 3—share one thing</h4><p>Hand one skill to one teammate and watch them run it cold. Fix whatever confused them.</p></li>
+      <li><h4 class="mt0">Week 4—write it down</h4><p>Draft your personal AI integration plan: which tasks are automated, which stay manual, and what you will tackle next quarter.</p></li>
+    </ol>
+  </section>
+
+  <section>
+    <p class="section-label">Keep it healthy</p>
+    <h2>Skill maintenance habits</h2>
+    <ul>
+      <li>Review each shared skill monthly; delete any no one runs.</li>
+      <li>Keep a known-good and a known-bad test document for every skill, and re-run both after any change.</li>
+      <li>Treat a skill like docs: give it an owner, a changelog, and a clear description.</li>
+      <li>Remember the token budget—every component a plugin carries is loaded in every conversation, so keep bundles lean.</li>
+    </ul>
+  </section>
+
+  <section>
+    <p class="section-label">When something breaks</p>
+    <h2>Quick troubleshooting</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Symptom</th><th>Try this</th></tr></thead>
+        <tbody>
+          <tr><td>The skill gives different answers each run</td><td>Tighten the constraints and output format; add a worked example.</td></tr>
+          <tr><td>Claude ignores the skill in the browser</td><td>Sharpen the Skill description so it clearly matches the request; confirm custom Skills are enabled on your plan.</td></tr>
+          <tr><td>A Connector will not appear</td><td>Check the plan limit—Free allows one custom connector—and whether a local server needs Claude Desktop.</td></tr>
+          <tr><td><code>claude: command not found</code></td><td>Reopen the terminal; the npm global bin folder may not be on your PATH. See the setup guide.</td></tr>
+          <tr><td>A teammate cannot install your plugin</td><td>Have them test cold on their own machine; confirm the marketplace repo is public and the manifest validates.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <p class="section-label">Where to go next</p>
+    <h2>After the program</h2>
+    <p>Keep one skill under active maintenance, publish your standard to your team, and check Anthropic's documentation at docs.claude.com for new features. Bring your wins back to the Tech Writer's Tribe community so the next cohort starts further ahead.</p>
+  </section>
+
+  <nav class="card-grid" style="grid-template-columns:1fr 1fr;margin-top:10px">
+    <a class="card" href="claude-web-guide.html"><span class="card-foot">← Claude.ai web guide</span></a>
+    <a class="card" href="index.html" style="text-align:right"><span class="card-foot">Back to overview →</span></a>
+  </nav>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div>Tech Writer's Tribe · AI-powered documentation mastery</div>
+      <p class="footer-tagline">Tech Writer's platform for certification and corporate training, networking, IT services, jobs, and documentation.</p>
+      <p class="footer-social">Connect with us: <a href="https://www.linkedin.com/company/tech-writers-tribe">LinkedIn</a> · <a href="https://www.facebook.com/techwriters.tribe">Facebook</a> · <a href="https://twitter.com/Techwriterstri1">X</a> · <a href="https://t.me/joinchat/PgbbIhRd6Hpmf7YMrc5BnQ">Telegram</a> · <a href="https://www.youtube.com/TechWriterstribe">YouTube</a> · <a href="https://www.instagram.com/tech_writers_tribe">Instagram</a> · <a href="https://whatsapp.com/channel/0029VamjDen2kNFtScCixH36">WhatsApp channel</a></p>
+      <p class="footer-author">Created by <a href="https://www.linkedin.com/in/amantalwar/">Amandeep Singh Talwar</a></p>
+    </div>
+    <div class="footer-links">
+      <a href="index.html">Overview</a>
+      <a href="lessons.html">Lessons</a>
+      <a href="lesson-plan.html">Lesson plan</a>
+      <a href="claude-web-guide.html">Claude.ai web</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

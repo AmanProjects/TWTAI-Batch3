@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 5—Advanced skills and team workflows</title>
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">AI</span>
+      <span>AI-powered documentation mastery<small>Tech Writer's Tribe training program</small></span>
+    </a>
+    <nav class="nav">
+      <a href="index.html">Overview</a>
+      <a href="lessons.html">Lessons</a>
+      <a href="lesson-plan.html">Lesson plan</a>
+      <a href="claude-web-guide.html">Claude.ai web</a>
+      <a href="playbook.html">Playbook</a>
+    </nav>
+  </div>
+</header>
+
+<section class="subhero">
+  <div class="subhero-inner">
+    <div class="crumb"><a href="index.html">Overview</a> &nbsp;/&nbsp; Day 5</div>
+    <h1>Day 5—Advanced skills and team workflows</h1>
+    <div class="metatags">
+      <span class="badge intermediate">Intermediate · upper</span>
+      <span class="pill">Module 5</span>
+      <span class="pill">2 hours</span>
+      <span class="pill">Peer review</span>
+      <span class="pill">Partly web-friendly</span>
+    </div>
+  </div>
+</section>
+
+<main>
+
+  <div class="callout web">
+    <div class="callout-title">Full lesson</div>
+    <p>This page is the workshop summary and agenda. For the complete lesson text, open <a href="lessons/module-5.html">the Module 5 lesson</a>.</p>
+  </div>
+
+  <div class="callout warn">
+    <div class="callout-title">Do this before the session — Confluence and Jira</div>
+    <p>Module 5 connects Claude to a live Atlassian site. Create your free Confluence and Jira site and connect the Atlassian MCP server beforehand. Step-by-step: <a href="docs/setup-guide.html">setup guide → Atlassian prerequisites</a>. Use a throwaway personal account, never a work account.</p>
+  </div>
+
+  <section>
+    <p class="section-label">Overview</p>
+    <h2>Connect to real data and work as a team</h2>
+    <p class="lead-text">Day 5 adds two capabilities. First, connecting standard MCP servers—Git, Atlassian, and Microsoft Learn—so skills can reach live data. Second, the team practices that make a skill library durable: structured peer review, multi-step skill composition, and maintenance rules that keep a shared library from rotting.</p>
+  </section>
+
+  <section>
+    <p class="section-label">Learning objectives</p>
+    <h2>By the end of this day you can</h2>
+    <ul class="objectives">
+      <li>Compose multiple skills into a coordinated multi-step workflow.</li>
+      <li>Explain what MCP servers are and why they matter for documentation automation.</li>
+      <li>Configure standard MCP servers—Git, Atlassian, Microsoft Learn.</li>
+      <li>Conduct a structured peer review of another writer's skill.</li>
+      <li>Design a team skill library that multiple people can use and maintain.</li>
+      <li>Identify the boundary between what skills can do and what requires an MCP tool.</li>
+    </ul>
+  </section>
+
+  <section>
+    <p class="section-label">Agenda</p>
+    <h2>Two-hour flow</h2>
+    <ul class="agenda">
+      <li><div class="time">0:00–0:25</div><div class="what">What MCP servers are and where to find them</div><div class="detail">The three types you will use and why they matter.</div></li>
+      <li><div class="time">0:25–1:00</div><div class="what">Hands-on: configure three servers</div><div class="detail">Git, Atlassian, and Microsoft Learn, with a verification checklist.</div></li>
+      <li><div class="time">1:00–1:30</div><div class="what">Peer review session</div><div class="detail">Groups of three, scoring skills with the shared rubric.</div></li>
+      <li><div class="time">1:30–1:50</div><div class="what">Multi-step workflows and team libraries</div><div class="detail">When composition beats a single skill, and how to structure a shared repo.</div></li>
+      <li><div class="time">1:50–2:00</div><div class="what">Wrap-up and homework</div></li>
+    </ul>
+  </section>
+
+  <section>
+    <p class="section-label">Peer review</p>
+    <h2>Score with the shared rubric</h2>
+    <p>In groups of three, review each other's skills against seven criteria—clarity, role definition, checklist or rules, output format, boundaries, flexibility, and testability—on a one-to-three scale. A skill scoring 15 of 21 or higher is considered team-ready.</p>
+    <p class="small muted">The full rubric lives in <code>resources/peer-review-rubric.md</code>.</p>
+  </section>
+
+  <section>
+    <p class="section-label">Doing it on the web</p>
+    <h2>Claude.ai web alternatives</h2>
+    <div class="compare">
+      <div class="col cli">
+        <h4>Claude Code (as written)</h4>
+        <p class="small">Add servers with <code>claude mcp add</code>—Git locally, Atlassian over remote HTTP, Microsoft Learn via a plugin. There is no GUI settings panel in Claude Code.</p>
+      </div>
+      <div class="col web">
+        <h4>Claude.ai web interface</h4>
+        <p class="small">MCP servers appear as <b>Connectors</b>. Enable remote connectors (such as Atlassian) in settings in the browser; local servers like Git run through <b>Claude Desktop</b> instead. Remote connectors are available across plans, with Free limited to one custom connector.</p>
+      </div>
+    </div>
+    <div class="callout warn">
+      <div class="callout-title">Where the web stops</div>
+      <p>Connecting ready-made servers works on the web. Running a <em>local</em> server you built yourself needs Claude Desktop or Claude Code—that is the subject of day 6.</p>
+    </div>
+  </section>
+
+  <section>
+    <p class="section-label">Homework</p>
+    <h2>Before day 6</h2>
+    <ul>
+      <li>Apply your peer reviewers' feedback and re-score your skill.</li>
+      <li>Compose a two-step workflow from two of your skills and run it end to end.</li>
+    </ul>
+  </section>
+
+  <section>
+    <p class="section-label">Checklist</p>
+    <h2>Intermediate checklist</h2>
+    <ul class="objectives">
+      <li>I connected at least one MCP server or Connector and used it in a skill.</li>
+      <li>I gave and received a structured peer review.</li>
+      <li>I can describe the structure of a maintainable team skill library.</li>
+    </ul>
+  </section>
+
+  <nav class="card-grid" style="grid-template-columns:1fr 1fr;margin-top:10px">
+    <a class="card" href="day-4.html"><span class="card-foot">← Day 4—Sharing your skills</span></a>
+    <a class="card" href="day-6.html" style="text-align:right"><span class="card-foot">Day 6—Building MCP tools →</span></a>
+  </nav>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div>Tech Writer's Tribe · AI-powered documentation mastery</div>
+      <p class="footer-tagline">Tech Writer's platform for certification and corporate training, networking, IT services, jobs, and documentation.</p>
+      <p class="footer-social">Connect with us: <a href="https://www.linkedin.com/company/tech-writers-tribe">LinkedIn</a> · <a href="https://www.facebook.com/techwriters.tribe">Facebook</a> · <a href="https://twitter.com/Techwriterstri1">X</a> · <a href="https://t.me/joinchat/PgbbIhRd6Hpmf7YMrc5BnQ">Telegram</a> · <a href="https://www.youtube.com/TechWriterstribe">YouTube</a> · <a href="https://www.instagram.com/tech_writers_tribe">Instagram</a> · <a href="https://whatsapp.com/channel/0029VamjDen2kNFtScCixH36">WhatsApp channel</a></p>
+      <p class="footer-author">Created by <a href="https://www.linkedin.com/in/amantalwar/">Amandeep Singh Talwar</a></p>
+    </div>
+    <div class="footer-links">
+      <a href="index.html">Overview</a>
+      <a href="lessons.html">Lessons</a>
+      <a href="lesson-plan.html">Lesson plan</a>
+      <a href="claude-web-guide.html">Claude.ai web</a>
+      <a href="playbook.html">Playbook</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 3—Prompt engineering and your first skill</title>
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">AI</span>
+      <span>AI-powered documentation mastery<small>Tech Writer's Tribe training program</small></span>
+    </a>
+    <nav class="nav">
+      <a href="index.html">Overview</a>
+      <a href="lessons.html">Lessons</a>
+      <a href="lesson-plan.html">Lesson plan</a>
+      <a href="claude-web-guide.html">Claude.ai web</a>
+      <a href="playbook.html">Playbook</a>
+    </nav>
+  </div>
+</header>
+
+<section class="subhero">
+  <div class="subhero-inner">
+    <div class="crumb"><a href="index.html">Overview</a> &nbsp;/&nbsp; Day 3</div>
+    <h1>Day 3—Prompt engineering and your first skill</h1>
+    <div class="metatags">
+      <span class="badge beginner">Beginner</span>
+      <span class="pill">Module 3</span>
+      <span class="pill">2 hours</span>
+      <span class="pill">Companion: WORKSHOP.md</span>
+      <span class="pill">Web-friendly</span>
+    </div>
+  </div>
+</section>
+
+<main>
+
+  <div class="callout web">
+    <div class="callout-title">Full lesson</div>
+    <p>This page is the workshop summary and agenda. For the complete lesson text, open <a href="lessons/module-3.html">the Module 3 lesson</a> and the <a href="lessons/module-3-workshop.html">hands-on workshop</a>.</p>
+  </div>
+
+  <section>
+    <p class="section-label">Overview</p>
+    <h2>Turn a good prompt into a reusable skill</h2>
+    <p class="lead-text">Day 3 is where you stop prompting ad hoc and start building. You will learn the five elements of an effective prompt through the RTCCO framework, then package that prompt into a working skill you can run again and again—your first <code>/check-api-doc</code>—and iterate on it until the output is consistent.</p>
+  </section>
+
+  <section>
+    <p class="section-label">Learning objectives</p>
+    <h2>By the end of this day you can</h2>
+    <ul class="objectives">
+      <li>Name the five elements of an effective prompt and apply each one.</li>
+      <li>Explain where skills live and how scope—project, personal, global—affects sharing.</li>
+      <li>Create a working skill from scratch using the RTCCO framework.</li>
+      <li>Test and iterate on a skill until it produces consistent, useful output.</li>
+      <li>Use <code>skill-creator</code> to scaffold or refine a skill.</li>
+    </ul>
+  </section>
+
+  <section>
+    <p class="section-label">The framework</p>
+    <h2>RTCCO—five elements of a strong prompt</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Letter</th><th>Element</th><th>In a documentation skill</th></tr></thead>
+        <tbody>
+          <tr><td><b>R</b></td><td>Role</td><td>"You are a senior API documentation editor."</td></tr>
+          <tr><td><b>T</b></td><td>Task</td><td>"Review this document against the six required sections."</td></tr>
+          <tr><td><b>C</b></td><td>Context</td><td>"Our audience is third-party developers integrating our REST API."</td></tr>
+          <tr><td><b>C</b></td><td>Constraints</td><td>"Only flag what is missing or incomplete. Do not rewrite."</td></tr>
+          <tr><td><b>O</b></td><td>Output format</td><td>"Return a table: section, status, finding, fix."</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <p class="section-label">Agenda</p>
+    <h2>Two-hour flow</h2>
+    <ul class="agenda">
+      <li><div class="time">0:00–0:15</div><div class="what">Recap and the prompt → skill → agent spectrum</div><div class="detail">Where a saved prompt ends and a skill begins.</div></li>
+      <li><div class="time">0:15–0:40</div><div class="what">RTCCO and prompt quality</div><div class="detail">Side-by-side comparison of a weak and a strong prompt.</div></li>
+      <li><div class="time">0:40–1:00</div><div class="what">Skill anatomy</div><div class="detail">The two skill formats, where skills live, and the <code>$ARGUMENTS</code> variable.</div></li>
+      <li><div class="time">1:00–1:40</div><div class="what">Build your first skill—workshop</div><div class="detail">Build <code>/check-api-doc</code> by hand, test it against <code>bad-api-doc.md</code>, and apply common first-round fixes.</div></li>
+      <li><div class="time">1:40–2:00</div><div class="what">Level up with skill-creator, then wrap up</div><div class="detail">Use the <code>skill-creator</code> tool to refine, then reflection and homework.</div></li>
+    </ul>
+  </section>
+
+  <section>
+    <p class="section-label">Workshop</p>
+    <h2>Build <code>/check-api-doc</code></h2>
+    <ol class="steps">
+      <li><h4 class="mt0">Draft the prompt with RTCCO</h4><p>Write out all five elements for an API-doc completeness reviewer.</p></li>
+      <li><h4 class="mt0">Save it as a skill</h4><p>Store the prompt where Claude can load it on demand and invoke it by name.</p></li>
+      <li><h4 class="mt0">Test against a known-bad document</h4><p>Run it on <code>sample-project/test-docs/bad-api-doc.md</code> and check whether every gap is caught.</p></li>
+      <li><h4 class="mt0">Iterate</h4><p>Tighten constraints and output format until two runs on the same input agree.</p></li>
+    </ol>
+  </section>
+
+  <section>
+    <p class="section-label">Doing it on the web</p>
+    <h2>Claude.ai web alternatives</h2>
+    <p>This is the first day where the "where skills live" difference matters, so here is the full mapping.</p>
+    <div class="compare">
+      <div class="col cli">
+        <h4>Claude Code (as written)</h4>
+        <p class="small">Create <code>.claude/commands/check-api-doc.md</code> containing the RTCCO prompt, then invoke it with <code>/check-api-doc</code>. Install the scaffolder with <code>/plugin install skill-creator@claude-plugins-official</code>.</p>
+      </div>
+      <div class="col web">
+        <h4>Claude.ai web interface</h4>
+        <p class="small">Go to <b>Customize → Skills → Add</b>. Either paste the instructions, upload a <code>SKILL.md</code>, or choose <b>Create with Claude</b> and describe the task—Claude writes the skill for you. Claude then loads it automatically when relevant, or you can name it. Custom Skills need code execution and file creation enabled, on Pro, Max, Team, or Enterprise.</p>
+      </div>
+    </div>
+    <div class="callout warn">
+      <div class="callout-title">Scope still matters on the web</div>
+      <p>Personal Skills are yours; organization Skills are provisioned by a Team or Enterprise admin for everyone. The project / personal / global idea maps onto Project knowledge, your personal Skills, and org-provisioned Skills respectively.</p>
+    </div>
+  </section>
+
+  <section>
+    <p class="section-label">Homework</p>
+    <h2>Before day 4</h2>
+    <ul>
+      <li>Build a second skill for one of the other repeated tasks from your worksheet.</li>
+      <li>Run both skills on real work and note where they still need tightening.</li>
+    </ul>
+  </section>
+
+  <section>
+    <p class="section-label">Checklist</p>
+    <h2>Beginner checklist</h2>
+    <ul class="objectives">
+      <li>I have a working skill that produces consistent output.</li>
+      <li>I can explain each letter of RTCCO.</li>
+      <li>I know where my skills live and who can see them.</li>
+    </ul>
+  </section>
+
+  <nav class="card-grid" style="grid-template-columns:1fr 1fr;margin-top:10px">
+    <a class="card" href="day-2.html"><span class="card-foot">← Day 2—Introduction to MCP</span></a>
+    <a class="card" href="day-4.html" style="text-align:right"><span class="card-foot">Day 4—Sharing your skills →</span></a>
+  </nav>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div>Tech Writer's Tribe · AI-powered documentation mastery</div>
+      <p class="footer-tagline">Tech Writer's platform for certification and corporate training, networking, IT services, jobs, and documentation.</p>
+      <p class="footer-social">Connect with us: <a href="https://www.linkedin.com/company/tech-writers-tribe">LinkedIn</a> · <a href="https://www.facebook.com/techwriters.tribe">Facebook</a> · <a href="https://twitter.com/Techwriterstri1">X</a> · <a href="https://t.me/joinchat/PgbbIhRd6Hpmf7YMrc5BnQ">Telegram</a> · <a href="https://www.youtube.com/TechWriterstribe">YouTube</a> · <a href="https://www.instagram.com/tech_writers_tribe">Instagram</a> · <a href="https://whatsapp.com/channel/0029VamjDen2kNFtScCixH36">WhatsApp channel</a></p>
+      <p class="footer-author">Created by <a href="https://www.linkedin.com/in/amantalwar/">Amandeep Singh Talwar</a></p>
+    </div>
+    <div class="footer-links">
+      <a href="index.html">Overview</a>
+      <a href="lessons.html">Lessons</a>
+      <a href="lesson-plan.html">Lesson plan</a>
+      <a href="claude-web-guide.html">Claude.ai web</a>
+      <a href="playbook.html">Playbook</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

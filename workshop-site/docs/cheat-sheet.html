@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TWT Quick Reference Cheat Sheet</title>
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../index.html">
+      <span class="brand-mark">AI</span>
+      <span>AI-powered documentation mastery<small>Tech Writer's Tribe training program</small></span>
+    </a>
+    <nav class="nav">
+      <a href="../index.html">Overview</a>
+      <a href="../lessons.html" class="active">Lessons</a>
+      <a href="../lesson-plan.html">Lesson plan</a>
+      <a href="../claude-web-guide.html">Claude.ai web</a>
+      <a href="../playbook.html">Playbook</a>
+    </nav>
+  </div>
+</header>
+<section class="subhero">
+  <div class="subhero-inner">
+    <div class="crumb"><a href="../index.html">Overview</a> / <a href="../lessons.html">Reference</a> / Cheat sheet</div>
+    <h1>TWT Quick Reference Cheat Sheet</h1>
+    <div class="metatags"><span class="pill">Reference</span></div>
+  </div>
+</section>
+<main>
+  <div class="doc" id="doc">Loading…</div>
+</main>
+<textarea id="md" hidden># TWT Quick Reference Cheat Sheet
+## AI-Powered Documentation Mastery | Tech Writer's Tribe
+
+---
+
+## Skill Level Ladder
+
+| Level | You Can Do |
+|-------|-----------|
+| 🟢 Novice | Explain AI and MCP; identify skill candidates |
+| 🔵 Beginner | Build skills using RTCCO; test and iterate |
+| 🟡 Intermediate | Share skills via marketplaces & plugins; build multi-step workflows; peer review |
+| 🟠 Advanced | Extend MCP servers; build end-to-end automation |
+| 🔴 Expert | Ship production tools; certify; mentor others |
+
+---
+
+## Skill File Locations
+
+| Scope | Claude Code path | Cursor path | Commit to Git? |
+|-------|-----------------|-------------|---------------|
+| **Project** (team-shared) | `.claude/commands/<name>.md` | `.cursor/skills/<name>/SKILL.md` | ✅ Yes |
+| **Project** (Agent Skill folder) | `.claude/skills/<name>/SKILL.md` | — | ✅ Yes |
+| **Personal** (you only, one project) | `.claude/commands/user/<name>.md` | — | ❌ No |
+| **Global** (all projects) | `~/.claude/skills/<name>/SKILL.md` | `~/.cursor/skills/<name>/SKILL.md` | N/A |
+
+**Priority (Claude Code):** project skills override global skills when names conflict.
+
+### Format A vs Format B
+
+| | Format A (quick command) | Format B (Agent Skill) |
+|--|--------------------------|------------------------|
+| **Path** | `.claude/commands/<name>.md` | `.claude/skills/<name>/SKILL.md` |
+| **Frontmatter** | Optional | `name` + `description` required for global |
+| **How it runs** | You type `/<name>` | `/<name>` or auto-invoked when relevant |
+| **Best for** | Quick one-file prompts | Shared skills, auto-discovery, bundled helpers |
+
+---
+
+## The RTCCO Framework
+
+| Element | What It Does | Common Mistake |
+|---------|-------------|---------------|
+| **R**ole | Sets AI perspective and expertise | Too vague: "You are an editor" |
+| **T**ask | What the AI should do | Missing: assumes AI knows |
+| **C**ontext | Background the AI needs | Skipped entirely |
+| **C**onstraints | Boundaries and rules | "Do NOT..." is often missing |
+| **O**utput format | How the result should look | Left open-ended |
+
+---
+
+## Sharing Skills: Marketplaces & Plugins
+
+| Term | What it is |
+|------|-----------|
+| **Marketplace** | A catalog (`.claude-plugin/marketplace.json`) in a Git repo that lists plugins |
+| **Plugin** | An installable bundle (`.claude-plugin/plugin.json` + `commands/`, `skills/`, `agents/`, `hooks/`, `.mcp.json`) |
+| **Command** | A slash-command skill — run with `/plugin-name:command` |
+| **Agent** | A subagent with its own prompt, tools, and model |
+
+**Install (two commands):**
+```
+/plugin marketplace add owner/repo        # add the catalog
+/plugin install <plugin>@<marketplace>    # install the plugin
+```
+> The `@name` is the marketplace's `name` field, not the repo name. Live example: `/plugin marketplace add AmanProjects/twtai-skill` then `/plugin install doc-skills@twtai`.
+
+**Publish your own:** create a repo → add `marketplace.json` → add a plugin folder with `plugin.json` + your `commands/` → commit & push → share the two install lines.
+
+---
+
+## Minimal Skill Template
+
+```markdown
+You are a [specific role and expertise].
+
+[Task verb] the [content type] at: $ARGUMENTS
+
+Context:
+- [Audience description]
+- [Style guide or standards reference]
+
+[Checklist / Rules]:
+1. [Criterion — describe what PASS looks like]
+2. [Criterion — describe what PASS looks like]
+
+Constraints:
+- Do NOT [most important limitation]
+- [Additional boundary]
+
+Output:
+[Exact format: table | list | report | JSON]
+[Include column names or section names]
+No preamble. Begin with the first line of content.
+```
+
+---
+
+## MCP Server Quick Reference
+
+### Server Anatomy
+
+```typescript
+// 1. Create server
+const server = new McpServer({ name: "doc-quality-checker", version: "1.0.0" });
+
+// 2. Register tool (deterministic)
+server.tool(
+  "tool_name",          // name AI uses to call it
+  "What it does",       // helps AI decide WHEN to call it
+  { filePath: { type: "string", description: "..." } },
+  async ({ filePath }) => {
+    return { content: [{ type: "text", text: "result" }] };
+  }
+);
+
+// 3. Register resource (readable data)
+server.resource("style-guide", "file://style-guide", async (uri) => ({
+  contents: [{ uri: uri.href, mimeType: "text/markdown", text: content }],
+}));
+
+// 4. Start
+await server.connect(new StdioServerTransport());
+```
+
+### Common CLI Commands
+
+```bash
+# Build TypeScript server
+npm run build
+
+# Add server to Claude Code
+claude mcp add <server-name> -- node /absolute/path/to/dist/index.js
+
+# Verify connection
+/mcp
+
+# Run a skill
+/skill-name path/to/file.md
+```
+
+---
+
+## Tool vs. Skill: Decision Guide
+
+| Question | Answer | Use |
+|----------|--------|-----|
+| Does the task require reading/computing from files or APIs? | Yes | **Tool** |
+| Does the task require AI judgment or interpretation? | Yes | **Skill** |
+| Do you need consistent, identical output every time? | Yes | **Tool** |
+| Do you want the AI to synthesize or explain? | Yes | **Skill** |
+| Does the output feed an automated system (CI, Slack, JIRA)? | Yes | **Tool** (for data) + **Skill** (for narrative) |
+
+---
+
+## Production Hardening Checklist
+
+Before shipping a skill or tool to your team:
+
+- [ ] Skill has a comment header (name, version, author, tested-with model, date)
+- [ ] `$ARGUMENTS` used — not a hardcoded file path
+- [ ] Output format explicitly specified
+- [ ] "Do NOT" constraints are written
+- [ ] Tool has input validation (file exists check)
+- [ ] Test suite created (known-good + known-bad documents)
+- [ ] Tested on at least 3 different real documents
+- [ ] Breaking changes documented in CHANGELOG
+
+---
+
+## Skill Writing Tips
+
+| ✅ Do | ❌ Don't |
+|-------|---------|
+| Set a specific, expert role | Use vague roles ("You are an editor") |
+| Constrain the output format explicitly | Leave output format open-ended |
+| Write "Do NOT..." boundaries | Assume AI knows your limits |
+| Use `$ARGUMENTS` for any file input | Hardcode file paths |
+| Keep skills under 600 words | Write a novel |
+| Test on `bad-api-doc.md` first | Only test on perfect documents |
+| Version skills when output format changes | Update silently |
+
+---
+
+## The Hybrid Automation Model
+
+```
+Your Expertise    Claude Skill      Claude AI        MCP Tools       Report
+(what to check) → (instructions) → (reasoning)  → (precision)  → (synthesis)
+                                                    ↑ deterministic
+                       ↑ you write this             ↑ you or dev writes this
+```
+
+**Deterministic where you can. AI where you must.**
+
+---
+
+*Tech Writer's Tribe | AI-Powered Documentation Mastery*</textarea>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script>
+  document.getElementById('doc').innerHTML = marked.parse(document.getElementById('md').value);
+</script>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-links">
+      <a href="../index.html">Overview</a>
+      <a href="../lessons.html">Lessons</a>
+      <a href="../lesson-plan.html">Lesson plan</a>
+      <a href="../claude-web-guide.html">Claude.ai web</a>
+      <a href="../playbook.html">Playbook</a>
+    </div>
+    <div class="footer-brand">
+      <div>Tech Writer's Tribe · AI-powered documentation mastery</div>
+      <p class="footer-tagline">Tech Writer's platform for certification and corporate training, networking, IT services, jobs, and documentation.</p>
+      <p class="footer-social">Connect with us: <a href="https://www.linkedin.com/company/tech-writers-tribe">LinkedIn</a> · <a href="https://www.facebook.com/techwriters.tribe">Facebook</a> · <a href="https://twitter.com/Techwriterstri1">X</a> · <a href="https://t.me/joinchat/PgbbIhRd6Hpmf7YMrc5BnQ">Telegram</a> · <a href="https://www.youtube.com/TechWriterstribe">YouTube</a> · <a href="https://www.instagram.com/tech_writers_tribe">Instagram</a> · <a href="https://whatsapp.com/channel/0029VamjDen2kNFtScCixH36">WhatsApp channel</a></p>
+      <p class="footer-author">Created by <a href="https://www.linkedin.com/in/amantalwar/">Amandeep Singh Talwar</a></p>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

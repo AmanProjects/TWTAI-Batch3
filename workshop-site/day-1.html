@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 1—AI literacy for technical writers</title>
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">AI</span>
+      <span>AI-powered documentation mastery<small>Tech Writer's Tribe training program</small></span>
+    </a>
+    <nav class="nav">
+      <a href="index.html">Overview</a>
+      <a href="lessons.html">Lessons</a>
+      <a href="lesson-plan.html">Lesson plan</a>
+      <a href="claude-web-guide.html">Claude.ai web</a>
+      <a href="playbook.html">Playbook</a>
+    </nav>
+  </div>
+</header>
+
+<section class="subhero">
+  <div class="subhero-inner">
+    <div class="crumb"><a href="index.html">Overview</a> &nbsp;/&nbsp; Day 1</div>
+    <h1>Day 1—AI literacy for technical writers</h1>
+    <div class="metatags">
+      <span class="badge novice">Novice</span>
+      <span class="pill">Module 1</span>
+      <span class="pill">2 hours</span>
+      <span class="pill">No prerequisites</span>
+      <span class="pill">Web-friendly</span>
+    </div>
+  </div>
+</section>
+
+<main>
+
+  <div class="callout web">
+    <div class="callout-title">Full lesson</div>
+    <p>This page is the workshop summary and agenda. For the complete lesson text, open <a href="lessons/module-1.html">the Module 1 lesson</a>.</p>
+  </div>
+
+  <section>
+    <p class="section-label">Overview</p>
+    <h2>Build confidence before building anything</h2>
+    <p class="lead-text">The first session removes the mystery. You will learn how large language models work using a plain analogy, see clearly what AI does well and where it needs your judgment, and complete real documentation tasks with Claude so that by the end you have already done the thing that felt intimidating an hour earlier.</p>
+    <div class="callout web">
+      <div class="callout-title">You can do this whole day in the browser</div>
+      <p>Everything in day 1 works in the Claude.ai web interface. Sign in, start a chat or a Project, and you are ready—no installation, no API key.</p>
+    </div>
+  </section>
+
+  <section>
+    <p class="section-label">Learning objectives</p>
+    <h2>By the end of this day you can</h2>
+    <ul class="objectives">
+      <li>Explain how LLMs work using a simple analogy, no math required.</li>
+      <li>Name three things AI does well and three things it needs human judgment for.</li>
+      <li>Describe the human + AI partnership model in your own words.</li>
+      <li>Complete at least one real documentation task using Claude.</li>
+    </ul>
+  </section>
+
+  <section>
+    <p class="section-label">Agenda</p>
+    <h2>Two-hour flow</h2>
+    <ul class="agenda">
+      <li><div class="time">0:00–0:15</div><div class="what">Welcome and framing</div><div class="detail">The five skill tiers, how the two tracks work, and what you will leave with.</div></li>
+      <li><div class="time">0:15–0:45</div><div class="what">How LLMs work—the library analogy</div><div class="detail">Prediction, context, and key vocabulary—tokens, context window, hallucination—in writer's terms.</div></li>
+      <li><div class="time">0:45–1:05</div><div class="what">Strengths, limits, and the partnership model</div><div class="detail">What AI is good at, what it needs you for, and the amplification model.</div></li>
+      <li><div class="time">1:05–1:45</div><div class="what">Three live exercises</div><div class="detail">Ask Claude about your work, give it a real documentation task, and run the quality safety net.</div></li>
+      <li><div class="time">1:45–2:00</div><div class="what">Discussion, takeaway, and homework</div><div class="detail">Reflection questions and the one key idea to carry forward.</div></li>
+    </ul>
+  </section>
+
+  <section>
+    <p class="section-label">Activities</p>
+    <h2>Three confidence builders</h2>
+    <ol class="steps">
+      <li><h4 class="mt0">Ask Claude about your work</h4><p>Open Claude and ask it to find the structural problems in a sample API document. You are evaluating its reasoning, not trusting it blindly.</p></li>
+      <li><h4 class="mt0">Give Claude a documentation task</h4><p>Paste one of your own documents and ask for structured feedback: what works, what is unclear, and three specific improvements.</p></li>
+      <li><h4 class="mt0">Run the quality safety net</h4><p>Run a six-point completeness check against <code>sample-project/test-docs/bad-api-doc.md</code> and read the gaps it surfaces.</p></li>
+    </ol>
+  </section>
+
+  <section>
+    <p class="section-label">Doing it on the web</p>
+    <h2>Claude.ai web alternatives</h2>
+    <p>The lesson references opening "claude.ai or Claude Code." Here is the mapping for this day.</p>
+    <div class="compare">
+      <div class="col cli">
+        <h4>Claude Code (as written)</h4>
+        <p class="small">Launch <code>claude</code> in a terminal inside the repo and paste the prompt, referencing files by path such as <code>sample-project/test-docs/bad-api-doc.md</code>.</p>
+      </div>
+      <div class="col web">
+        <h4>Claude.ai web interface</h4>
+        <p class="small">Start a new chat, drag the sample document into the message (or upload it), and paste the same prompt. For the completeness check, keep it in a Project so the six-point checklist lives in the custom instructions and applies to every chat.</p>
+      </div>
+    </div>
+    <div class="callout tip">
+      <div class="callout-title">Tip</div>
+      <p>Save the completeness-check prompt as a Project custom instruction now. In day 3 you will turn it into a reusable Skill—this is the same idea, one step earlier.</p>
+    </div>
+  </section>
+
+  <section>
+    <p class="section-label">Homework</p>
+    <h2>Before day 2</h2>
+    <ul>
+      <li>Run the completeness check on one real document from your own work and note what it caught that you would have missed.</li>
+      <li>Write down three documentation tasks you do repeatedly—you will use them in day 2.</li>
+    </ul>
+  </section>
+
+  <section>
+    <p class="section-label">Checklist</p>
+    <h2>Novice checklist</h2>
+    <ul class="objectives">
+      <li>I can explain an LLM to a colleague without using the word "magic".</li>
+      <li>I completed at least one documentation task with Claude.</li>
+      <li>I have a Claude account I can sign in to.</li>
+    </ul>
+  </section>
+
+  <nav class="card-grid" style="grid-template-columns:1fr 1fr;margin-top:10px">
+    <a class="card" href="index.html"><span class="card-foot">← Program overview</span></a>
+    <a class="card" href="day-2.html" style="text-align:right"><span class="card-foot">Day 2—Introduction to MCP →</span></a>
+  </nav>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div>Tech Writer's Tribe · AI-powered documentation mastery</div>
+      <p class="footer-tagline">Tech Writer's platform for certification and corporate training, networking, IT services, jobs, and documentation.</p>
+      <p class="footer-social">Connect with us: <a href="https://www.linkedin.com/company/tech-writers-tribe">LinkedIn</a> · <a href="https://www.facebook.com/techwriters.tribe">Facebook</a> · <a href="https://twitter.com/Techwriterstri1">X</a> · <a href="https://t.me/joinchat/PgbbIhRd6Hpmf7YMrc5BnQ">Telegram</a> · <a href="https://www.youtube.com/TechWriterstribe">YouTube</a> · <a href="https://www.instagram.com/tech_writers_tribe">Instagram</a> · <a href="https://whatsapp.com/channel/0029VamjDen2kNFtScCixH36">WhatsApp channel</a></p>
+      <p class="footer-author">Created by <a href="https://www.linkedin.com/in/amantalwar/">Amandeep Singh Talwar</a></p>
+    </div>
+    <div class="footer-links">
+      <a href="index.html">Overview</a>
+      <a href="lessons.html">Lessons</a>
+      <a href="lesson-plan.html">Lesson plan</a>
+      <a href="claude-web-guide.html">Claude.ai web</a>
+      <a href="playbook.html">Playbook</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

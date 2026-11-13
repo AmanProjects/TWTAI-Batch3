@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Using the Claude.ai web interface</title>
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">AI</span>
+      <span>AI-powered documentation mastery<small>Tech Writer's Tribe training program</small></span>
+    </a>
+    <nav class="nav">
+      <a href="index.html">Overview</a>
+      <a href="lessons.html">Lessons</a>
+      <a href="lesson-plan.html">Lesson plan</a>
+      <a href="claude-web-guide.html" class="active">Claude.ai web</a>
+      <a href="playbook.html">Playbook</a>
+    </nav>
+  </div>
+</header>
+
+<section class="subhero">
+  <div class="subhero-inner">
+    <div class="crumb"><a href="index.html">Overview</a> &nbsp;/&nbsp; Claude.ai web</div>
+    <h1>Using the Claude.ai web interface</h1>
+    <div class="metatags">
+      <span class="pill">No install</span>
+      <span class="pill">No API key</span>
+      <span class="pill">Projects · Skills · Connectors</span>
+    </div>
+  </div>
+</section>
+
+<main>
+
+  <section>
+    <p class="section-label">Why this page exists</p>
+    <h2>The course was written for Claude Code—you can do most of it in a browser</h2>
+    <p class="lead-text">The lessons assume Claude Code, the command-line tool. But the writing, reviewing, and skill-building that make up days 1 through 5 can be done entirely in the Claude.ai web interface, through three features: Projects, custom Skills, and Connectors. This page maps the command-line world onto the browser and is honest about where the browser stops.</p>
+    <div class="callout tip">
+      <div class="callout-title">The short version</div>
+      <p>Days 1–3 are fully web-friendly. Day 5 is partly web-friendly through Connectors. Days 4, 6, and 8—plugins, local MCP servers, and plugin authoring—need Claude Code or Claude Desktop. Day 7 publishes from the browser.</p>
+    </div>
+  </section>
+
+  <section>
+    <p class="section-label">The three features</p>
+    <h2>What the browser gives you</h2>
+    <div class="card-grid">
+      <div class="card">
+        <h3>Projects</h3>
+        <p>A persistent workspace that groups related chats with shared <b>custom instructions</b> and uploaded <b>knowledge files</b>. This is where a repeatable prompt and your reference docs live so every chat in the project starts with the same context.</p>
+      </div>
+      <div class="card">
+        <h3>Skills</h3>
+        <p>Reusable instruction sets Claude loads on demand. Create them under <b>Customize → Skills</b>: write the instructions, upload a <code>SKILL.md</code>, or let Claude build one from a description. This is the browser's version of a slash-command skill.</p>
+      </div>
+      <div class="card">
+        <h3>Connectors</h3>
+        <p>MCP servers, surfaced in the browser. Enable a remote connector—an issue tracker, a knowledge base, calendars—so Claude can read from and act in external systems without any configuration file.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <p class="section-label">The translation table</p>
+    <h2>Claude Code → Claude.ai web</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>In the lessons (Claude Code)</th><th>In the browser (Claude.ai web)</th><th>Feasible?</th></tr></thead>
+        <tbody>
+          <tr><td>Open <code>claude</code> and paste a prompt; reference files by path</td><td>Start a chat, upload the file, paste the prompt</td><td><b style="color:var(--green)">Fully</b></td></tr>
+          <tr><td>Save a prompt as <code>.claude/commands/name.md</code></td><td>Create a Skill under Customize → Skills, or a Project custom instruction</td><td><b style="color:var(--green)">Fully</b></td></tr>
+          <tr><td>Invoke a skill with <code>/name</code></td><td>Claude loads the Skill automatically, or you name it in the chat</td><td><b style="color:var(--green)">Fully</b></td></tr>
+          <tr><td><code>/plugin install skill-creator@...</code> to scaffold a skill</td><td>Customize → Skills → Add → Create with Claude</td><td><b style="color:var(--green)">Fully</b></td></tr>
+          <tr><td><code>claude mcp add</code> a remote server (e.g. Atlassian)</td><td>Enable it as a Connector in settings</td><td><b style="color:var(--green)">Fully</b></td></tr>
+          <tr><td><code>claude mcp add</code> a local server (e.g. Git)</td><td>Use Claude Desktop, which runs local MCP servers</td><td><b style="color:var(--amber)">Desktop</b></td></tr>
+          <tr><td>Build and run your own local MCP server (day 6)</td><td>Draft and explain the code in the browser; run it in Claude Desktop or Claude Code</td><td><b style="color:var(--amber)">Partly</b></td></tr>
+          <tr><td>Generate a static site (day 7)</td><td>Generate it as an Artifact in a chat</td><td><b style="color:var(--green)">Fully</b></td></tr>
+          <tr><td>Deploy with <code>git</code> / <code>gh</code> (day 7)</td><td>Create the repo and turn on GitHub Pages in the browser</td><td><b style="color:var(--green)">Fully</b></td></tr>
+          <tr><td><code>/plugin marketplace add</code> and install a plugin (day 4)</td><td>No browser equivalent; share a Skill file or use org-provisioned Skills</td><td><b style="color:var(--red)">CLI only</b></td></tr>
+          <tr><td>Author / validate a plugin, <code>claude plugin init</code> (day 8)</td><td>No browser equivalent</td><td><b style="color:var(--red)">CLI only</b></td></tr>
+          <tr><td>Build a language server, <code>.lsp.json</code> (day 7 bonus)</td><td>No browser equivalent</td><td><b style="color:var(--red)">CLI only</b></td></tr>
+          <tr><td>Write a <code>CLAUDE.md</code> for a project</td><td>Put the same conventions in a Project's custom instructions</td><td><b style="color:var(--green)">Fully</b></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <p class="section-label">Step by step</p>
+    <h2>Create your first Skill in the browser</h2>
+    <ol class="steps">
+      <li><h4 class="mt0">Open Customize → Skills</h4><p>From the Claude.ai interface, open Customize and find Skills. Custom Skills require code execution and file creation to be enabled, on Pro, Max, Team, or Enterprise plans.</p></li>
+      <li><h4 class="mt0">Add a Skill</h4><p>Choose to write the instructions directly, upload a finished <code>SKILL.md</code>, or pick <b>Create with Claude</b> and describe the task so Claude writes it for you.</p></li>
+      <li><h4 class="mt0">Write a good description</h4><p>The description tells Claude when to load the Skill. Make it specific—"review API reference docs for completeness" beats "doc helper".</p></li>
+      <li><h4 class="mt0">Use it</h4><p>Claude loads the Skill automatically when a request matches, or you can name it. Test it on a real document and iterate, exactly as in day 3.</p></li>
+    </ol>
+  </section>
+
+  <section>
+    <p class="section-label">Step by step</p>
+    <h2>Set up a Project for a documentation workflow</h2>
+    <ol class="steps">
+      <li><h4 class="mt0">Create a Project</h4><p>Name it for the workflow—for example, "API reference review".</p></li>
+      <li><h4 class="mt0">Add custom instructions</h4><p>Paste your RTCCO prompt as the project's standing instructions so every chat starts with the right role, task, and output format.</p></li>
+      <li><h4 class="mt0">Upload knowledge files</h4><p>Add your style guide and a known-good example doc. Claude treats them as persistent context across every chat in the project.</p></li>
+      <li><h4 class="mt0">Work in chats</h4><p>Drop a draft into a new chat and ask for the review. The project context does the rest.</p></li>
+    </ol>
+  </section>
+
+  <section>
+    <p class="section-label">Honest limits</p>
+    <h2>What genuinely needs the command line</h2>
+    <div class="callout clionly">
+      <div class="callout-title">Claude Code or Claude Desktop only</div>
+      <p>Three things in this course have no browser equivalent today: installing and publishing <b>plugins and marketplaces</b> (day 4 and day 8), <b>building and running a local MCP server</b> of your own (day 6), and writing an <b>LSP language server</b> (day 7 bonus). For a whole team, the nearest web-native substitute for a plugin is an <b>organization-provisioned Skill</b> that a Team or Enterprise admin publishes once for everyone.</p>
+    </div>
+  </section>
+
+  <section>
+    <p class="section-label">Plans and access</p>
+    <h2>What you need enabled</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Feature</th><th>Availability</th></tr></thead>
+        <tbody>
+          <tr><td>Projects (custom instructions + knowledge files)</td><td>Free and paid; Free allows up to five projects</td></tr>
+          <tr><td>Custom Skills</td><td>Pro, Max, Team, Enterprise, with code execution and file creation enabled</td></tr>
+          <tr><td>Anthropic prebuilt Skills (Word, Excel, PowerPoint, PDF)</td><td>Paid plans; activate automatically when relevant</td></tr>
+          <tr><td>Remote MCP Connectors</td><td>Free through Enterprise; Free limited to one custom connector</td></tr>
+          <tr><td>Organization-provisioned Skills</td><td>Team and Enterprise; enabled by an admin for the org</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="small muted" style="margin-top:14px">Availability and feature names change over time. Confirm current details in Anthropic's documentation at docs.claude.com and support.claude.com before a session.</p>
+  </section>
+
+  <nav class="card-grid" style="grid-template-columns:1fr 1fr;margin-top:10px">
+    <a class="card" href="lesson-plan.html"><span class="card-foot">← Lesson plan</span></a>
+    <a class="card" href="playbook.html" style="text-align:right"><span class="card-foot">The participant playbook →</span></a>
+  </nav>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div>Tech Writer's Tribe · AI-powered documentation mastery</div>
+      <p class="footer-tagline">Tech Writer's platform for certification and corporate training, networking, IT services, jobs, and documentation.</p>
+      <p class="footer-social">Connect with us: <a href="https://www.linkedin.com/company/tech-writers-tribe">LinkedIn</a> · <a href="https://www.facebook.com/techwriters.tribe">Facebook</a> · <a href="https://twitter.com/Techwriterstri1">X</a> · <a href="https://t.me/joinchat/PgbbIhRd6Hpmf7YMrc5BnQ">Telegram</a> · <a href="https://www.youtube.com/TechWriterstribe">YouTube</a> · <a href="https://www.instagram.com/tech_writers_tribe">Instagram</a> · <a href="https://whatsapp.com/channel/0029VamjDen2kNFtScCixH36">WhatsApp channel</a></p>
+      <p class="footer-author">Created by <a href="https://www.linkedin.com/in/amantalwar/">Amandeep Singh Talwar</a></p>
+    </div>
+    <div class="footer-links">
+      <a href="index.html">Overview</a>
+      <a href="lessons.html">Lessons</a>
+      <a href="lesson-plan.html">Lesson plan</a>
+      <a href="playbook.html">Playbook</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 4—Sharing your skills</title>
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">AI</span>
+      <span>AI-powered documentation mastery<small>Tech Writer's Tribe training program</small></span>
+    </a>
+    <nav class="nav">
+      <a href="index.html">Overview</a>
+      <a href="lessons.html">Lessons</a>
+      <a href="lesson-plan.html">Lesson plan</a>
+      <a href="claude-web-guide.html">Claude.ai web</a>
+      <a href="playbook.html">Playbook</a>
+    </nav>
+  </div>
+</header>
+
+<section class="subhero">
+  <div class="subhero-inner">
+    <div class="crumb"><a href="index.html">Overview</a> &nbsp;/&nbsp; Day 4</div>
+    <h1>Day 4—Sharing your skills: marketplaces and plugins</h1>
+    <div class="metatags">
+      <span class="badge intermediate">Intermediate</span>
+      <span class="pill">Module 4</span>
+      <span class="pill">2 hours</span>
+      <span class="pill">Paired workshop</span>
+      <span class="pill">Claude Code</span>
+    </div>
+  </div>
+</section>
+
+<main>
+
+  <div class="callout web">
+    <div class="callout-title">Full lesson</div>
+    <p>This page is the workshop summary and agenda. For the complete lesson text, open <a href="lessons/module-4.html">the Module 4 lesson</a>.</p>
+  </div>
+
+  <section>
+    <p class="section-label">Overview</p>
+    <h2>From a skill you use to a skill your team uses</h2>
+    <p class="lead-text">A skill that only you can run helps one person. Day 4 is about distribution: the marketplace → plugin → component hierarchy, the difference between a command, a skill, an agent, a hook, and an MCP server, and the hands-on loop of bundling your skills into a plugin and publishing a marketplace a teammate can install from.</p>
+    <div class="callout clionly">
+      <div class="callout-title">Mostly Claude Code today</div>
+      <p>Plugins and marketplaces are a Claude Code feature. There is no browser equivalent for publishing a marketplace yet. Writers staying on the web can still share—see the web alternatives below for how to distribute skills without plugins.</p>
+    </div>
+  </section>
+
+  <section>
+    <p class="section-label">Learning objectives</p>
+    <h2>By the end of this day you can</h2>
+    <ul class="objectives">
+      <li>Explain the marketplace → plugin → component hierarchy in plain language.</li>
+      <li>Tell the difference between a command, a skill, an agent, a hook, and an MCP server inside a plugin.</li>
+      <li>Install a marketplace and a plugin as an individual.</li>
+      <li>Bundle your own skills into a plugin and publish a marketplace on GitHub.</li>
+      <li>Help a teammate add your marketplace and run your skills.</li>
+    </ul>
+  </section>
+
+  <section>
+    <p class="section-label">The hierarchy</p>
+    <h2>Four nouns, nested</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Noun</th><th>What it is</th></tr></thead>
+        <tbody>
+          <tr><td><b>Marketplace</b></td><td>A GitHub repo that lists one or more plugins people can add.</td></tr>
+          <tr><td><b>Plugin</b></td><td>An installable bundle of components with a manifest.</td></tr>
+          <tr><td><b>Component</b></td><td>A command, skill, agent, hook, or MCP server inside the plugin.</td></tr>
+          <tr><td><b>Component types</b></td><td>Each does one job; day 8 covers all of them end to end.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <p class="section-label">Agenda</p>
+    <h2>Two-hour flow</h2>
+    <ul class="agenda">
+      <li><div class="time">0:00–0:15</div><div class="what">Recap and why sharing matters</div><div class="detail">The cost of every writer rebuilding the same skill.</div></li>
+      <li><div class="time">0:15–0:40</div><div class="what">The hierarchy and the four component types</div><div class="detail">Command vs. skill vs. agent vs. hook, and how they connect.</div></li>
+      <li><div class="time">0:40–1:00</div><div class="what">Install as an individual</div><div class="detail">Add the live example marketplace and install a plugin.</div></li>
+      <li><div class="time">1:00–1:40</div><div class="what">Workshop: publish your own marketplace</div><div class="detail">The five-step publish loop, then your partner installs it.</div></li>
+      <li><div class="time">1:40–2:00</div><div class="what">Lighter-weight sharing and wrap-up</div><div class="detail">When a plugin is overkill, and how else to hand a skill to someone.</div></li>
+    </ul>
+  </section>
+
+  <section>
+    <p class="section-label">Workshop</p>
+    <h2>Publish and install, paired</h2>
+    <ol class="steps">
+      <li><h4 class="mt0">Install the live example</h4><p>Add the example marketplace, then install its doc-skills plugin, to see the install experience from the user's side first.</p></li>
+      <li><h4 class="mt0">Bundle your skills</h4><p>Collect the skills you built in day 3 into a plugin with a manifest.</p></li>
+      <li><h4 class="mt0">Publish to GitHub</h4><p>Push the marketplace repo so it has a public address.</p></li>
+      <li><h4 class="mt0">Have your partner install it</h4><p>Your partner adds your marketplace and runs your skills cold—the real test.</p></li>
+    </ol>
+  </section>
+
+  <section>
+    <p class="section-label">Doing it on the web</p>
+    <h2>Claude.ai web alternatives</h2>
+    <div class="compare">
+      <div class="col cli">
+        <h4>Claude Code (as written)</h4>
+        <p class="small">Add a marketplace with <code>/plugin marketplace add</code> and install with <code>/plugin install doc-skills@twtai</code>. Publishing means pushing a marketplace repo to GitHub.</p>
+      </div>
+      <div class="col web">
+        <h4>Claude.ai web interface</h4>
+        <p class="small">There is no marketplace install in the browser. To share a web Skill, export its <code>SKILL.md</code> and send it; your teammate adds it under <b>Customize → Skills → Upload</b>. For whole teams, a Team or Enterprise admin provisions org Skills centrally so everyone gets them automatically.</p>
+      </div>
+    </div>
+    <div class="callout tip">
+      <div class="callout-title">The underlying idea is shared either way</div>
+      <p>A marketplace is "one place my team installs from." On the web, org-provisioned Skills play that role: the admin is the marketplace. The plugin mechanics are Claude Code; the distribution goal is the same.</p>
+    </div>
+  </section>
+
+  <section>
+    <p class="section-label">Homework</p>
+    <h2>Before day 5</h2>
+    <ul>
+      <li>Publish your own plugin or marketplace and get one teammate running it.</li>
+      <li>Bring one skill you would like a second writer to review in day 5.</li>
+    </ul>
+  </section>
+
+  <section>
+    <p class="section-label">Checklist</p>
+    <h2>Intermediate checklist</h2>
+    <ul class="objectives">
+      <li>Someone other than me has installed and run my skill.</li>
+      <li>I can name all four component types.</li>
+      <li>I know when a plugin is overkill versus worth it.</li>
+    </ul>
+  </section>
+
+  <nav class="card-grid" style="grid-template-columns:1fr 1fr;margin-top:10px">
+    <a class="card" href="day-3.html"><span class="card-foot">← Day 3—Prompt engineering</span></a>
+    <a class="card" href="day-5.html" style="text-align:right"><span class="card-foot">Day 5—Advanced skills →</span></a>
+  </nav>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div>Tech Writer's Tribe · AI-powered documentation mastery</div>
+      <p class="footer-tagline">Tech Writer's platform for certification and corporate training, networking, IT services, jobs, and documentation.</p>
+      <p class="footer-social">Connect with us: <a href="https://www.linkedin.com/company/tech-writers-tribe">LinkedIn</a> · <a href="https://www.facebook.com/techwriters.tribe">Facebook</a> · <a href="https://twitter.com/Techwriterstri1">X</a> · <a href="https://t.me/joinchat/PgbbIhRd6Hpmf7YMrc5BnQ">Telegram</a> · <a href="https://www.youtube.com/TechWriterstribe">YouTube</a> · <a href="https://www.instagram.com/tech_writers_tribe">Instagram</a> · <a href="https://whatsapp.com/channel/0029VamjDen2kNFtScCixH36">WhatsApp channel</a></p>
+      <p class="footer-author">Created by <a href="https://www.linkedin.com/in/amantalwar/">Amandeep Singh Talwar</a></p>
+    </div>
+    <div class="footer-links">
+      <a href="index.html">Overview</a>
+      <a href="lessons.html">Lessons</a>
+      <a href="lesson-plan.html">Lesson plan</a>
+      <a href="claude-web-guide.html">Claude.ai web</a>
+      <a href="playbook.html">Playbook</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

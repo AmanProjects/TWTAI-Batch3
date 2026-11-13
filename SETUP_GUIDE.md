@@ -1,7 +1,31 @@
 # Setup Guide — AI-Powered Documentation Mastery
-## Tech Writer's Tribe | Prerequisites and Installation (Cursor IDE)
+## Tech Writer's Tribe | Prerequisites and Installation
 
 **Read this guide once before installing anything.** Plan for about 60 minutes the first time through.
+
+---
+
+## Choose your track first
+
+This program runs two ways. Pick one before you install anything.
+
+| | Writers' track (Claude.ai web) | Engineering track (Claude Code) |
+|---|---|---|
+| **Covers** | Days 1–5 fully; day 7 publishes from the browser | All 8 days, including plugins, local MCP servers, and LSP |
+| **You need** | A Claude account and a browser | Everything in this guide (steps 1–9) |
+| **Setup time** | ~5 minutes | ~60 minutes |
+| **API key?** | No — just sign in | Yes |
+
+**Writers' track setup, in full:**
+
+1. Go to [claude.ai](https://claude.ai) and sign in (Pro, Max, Team, or Enterprise is needed for custom Skills).
+2. Open **Customize → Skills** and confirm you can add a Skill. If it is greyed out, ask your Team or Enterprise admin to enable custom Skills, code execution, and file creation.
+3. Create a **Project** (you will use it from day 1).
+4. For day 7, have a free [GitHub](https://github.com) account ready.
+
+That is all the writers' track needs for days 1–5. The rest of this guide is the engineering track. See the [Claude.ai web-interface guide](workshop-site/claude-web-guide.html) for how each command-line step maps to the browser.
+
+> **The two tracks can share a room.** Writers' track participants pair with an engineering-track partner for the plugin and server exercises in days 4, 6, and 8.
 
 ---
 
@@ -30,7 +54,9 @@
 | Storage | 5 GB free | 10 GB free |
 | Internet | Stable broadband | Required throughout the course |
 
-> **Windows users:** Use [Windows Terminal](https://aka.ms/terminal) or [Git Bash](https://git-scm.com/downloads) instead of Command Prompt.
+> **Windows users:** Use [Windows Terminal](https://aka.ms/terminal) or [Git Bash](https://git-scm.com/downloads) instead of Command Prompt. The primary sidebar and toolbar in Cursor/VS Code sit in different places than on macOS — if you cannot find a panel by its icon, open it by name from the Command Palette (`Ctrl+Shift+P`).
+
+> **Mac users — check your chip first.** Apple menu → **About This Mac**. If it says **Apple M1/M2/M3**, you have Apple Silicon; if it says **Intel**, you have an Intel Mac. Several install commands differ between the two (see Step 3 and Troubleshooting). Intel Macs work fine for this course; very old Intel Macs may be limited to older tool versions, which is also fine.
 
 ---
 
@@ -80,11 +106,18 @@ If `node` is not found, close and reopen the terminal.
 
 ## Step 3 — Install Git
 
-### macOS
+### macOS (Apple Silicon and Intel)
+Git usually ships with the Xcode Command Line Tools. First try:
 ```bash
-git --version     # may already be installed
+git --version
 ```
-If not installed, you'll be prompted to install developer tools — click **Install**. Or use `brew install git`.
+If it prints a version, Git is installed — skip ahead. If not, you'll be prompted to install the developer command line tools — click **Install**. That alone is enough for this course; you do not need Homebrew.
+
+**Prefer Homebrew?** `brew` lives in a different place depending on your chip, and this trips up a lot of copied commands:
+- **Apple Silicon (M1/M2/M3):** Homebrew installs to `/opt/homebrew`. `brew install git` works as documented.
+- **Intel Mac:** Homebrew installs to `/usr/local`. The one-line installer on brew.sh still works, but snippets that hard-code `/opt/homebrew` will fail. If `brew` is "command not found" after installing, add it to your PATH: `echo 'eval "$(/usr/local/bin/brew shellenv)"' >> ~/.zshrc && source ~/.zshrc`.
+
+**Homebrew won't install on an older Intel Mac?** Use the Xcode Command Line Tools above (simplest), or MacPorts — see Troubleshooting, "Git won't install on an Intel Mac."
 
 ### Windows
 1. Download from [git-scm.com/download/win](https://git-scm.com/download/win)
@@ -164,11 +197,11 @@ $env:ANTHROPIC_API_KEY = "sk-ant-..."
 
 ```bash
 cd ~/Documents
-git clone <URL-from-welcome-email> TWT_MCP_Training
-cd TWT_MCP_Training
+git clone <URL-from-welcome-email> TWTAI-Batch3
+cd TWTAI-Batch3
 ```
 
-Open the folder in Cursor: **File → Open Folder…** and select `TWT_MCP_Training`.
+Open the folder in Cursor: **File → Open Folder…** and select `TWTAI-Batch3`.
 
 ---
 
@@ -202,7 +235,7 @@ node --version                                          # v18+
 npm --version                                           # 9+
 git --version                                           # 2.x
 claude --version                                        # any version
-cd ~/Documents/TWT_MCP_Training/sample-project && npm run build   # no errors
+cd ~/Documents/TWTAI-Batch3/sample-project && npm run build   # no errors
 claude                                                  # launches; Ctrl+C to exit
 ```
 
@@ -245,6 +278,26 @@ npm config get prefix
 - Key must start with `sk-ant-`
 - If TWT issued it, confirm with the coordinator that it hasn't expired
 
+### Cursor: I can't find the sidebar, or where to install plugins
+The toolbar and sidebar layout differ between macOS and Windows and between Cursor versions, so "the icon on the left" may be elsewhere for you. Use names, not icons:
+- Toggle the primary sidebar: **View → Appearance → Primary Side Bar**, or `Cmd+B` (macOS) / `Ctrl+B` (Windows/Linux).
+- Open anything by name from the Command Palette: `Cmd+Shift+P` (macOS) / `Ctrl+Shift+P` (Windows), then type what you want (e.g. "Extensions", "MCP").
+- Editor extensions live in the **Extensions** view: `Cmd+Shift+X` / `Ctrl+Shift+X`.
+- MCP servers in Cursor are configured under **Settings → MCP** (or by editing `.cursor/mcp.json`), not in the Extensions view. Claude Code skills and plugins are managed with the `claude` CLI or the Claude Code panel — not in Cursor's own menus.
+
+When in doubt on either operating system, open the Command Palette and type the name of what you need; it behaves identically everywhere.
+
+### Git won't install on an Intel Mac (the Homebrew command fails)
+The one-line command on brew.sh assumes Apple Silicon paths and can fail on Intel Macs. Two reliable fixes, simplest first:
+1. **Skip Homebrew.** Install the **Xcode Command Line Tools**, which include Git: `xcode-select --install`, then click **Install**. Confirm with `git --version`.
+2. **MacPorts.** Download the MacPorts `.pkg` for your exact macOS version from [macports.org/install.php](https://www.macports.org/install.php), install it, then run `sudo port install git`. MacPorts needs Xcode — see the next entry.
+
+### MacPorts needs Xcode, and Xcode won't install on an older Mac
+MacPorts builds tools with Xcode, so Xcode (or at least its Command Line Tools) must be present.
+- Try the Command Line Tools first: `xcode-select --install`. This is much smaller than full Xcode and is usually enough.
+- If you need full Xcode but a search in **Applications** or the App Store shows nothing (common on older macOS): go to [developer.apple.com](https://developer.apple.com) → **Xcode** → **Download** → **View in Mac App Store**. You may see "App is not compatible with your Mac" — click **Download / Get** anyway; the App Store then downloads the newest build your macOS actually supports (an older Xcode version), which works.
+- Or download a specific older Xcode `.xip` directly from [developer.apple.com/download/all](https://developer.apple.com/download/all/) (free Apple ID required), double-click to expand it, and drag it into **Applications**.
+
 ### `git clone` authentication error
 Install and authenticate the GitHub CLI:
 ```bash
@@ -255,6 +308,33 @@ gh auth login
 
 ### Cursor's AI keeps suggesting things while I'm trying to focus
 Toggle Cursor AI off with `Cmd+L` / `Ctrl+L` (chat) or in **Settings → Cursor Tab** to disable inline suggestions. Cursor AI is independent of Claude Code CLI — turning it off does not affect the course.
+
+---
+
+## Atlassian prerequisites — Confluence and Jira (before Module 5)
+
+Module 5 connects Claude to a live Atlassian site through the Atlassian MCP server. Set this up **before** that session — budget about 20 minutes. Adapted from the STC 2026 prerequisites.
+
+> **Use a throwaway personal Atlassian account, never your work account.** The MCP server acts with the permissions of whoever signs in, so a work login would expose real company pages and tickets to the AI.
+
+**Step A — Create a free Atlassian site (~8 min).**
+1. Go to [atlassian.com/software/jira/free](https://www.atlassian.com/software/jira/free) and select **Get it free**.
+2. Sign up with a personal email. Name your site, e.g. `yourname-twt`; the address becomes `yourname-twt.atlassian.net`. Write it down.
+3. Choose **Jira** and **Confluence** on the **Free** plan. Do not enter a credit card. (Free covers up to 10 users and 2 GB per product — confirm current limits, as Atlassian changes plans often.)
+
+**Step B — Create a Jira project (~3 min).** In Jira, **Projects → Create project**, pick **Kanban**, **team-managed**. Name it and set a short key such as `DOC`. Note the key.
+
+**Step C — Create a Confluence space (~2 min).** In Confluence, **Spaces → Create space**, blank space, same name and key.
+
+**Step D — Connect the Atlassian MCP server.** Atlassian runs a hosted (remote) server you sign in to through your browser — no token goes in any file.
+- **Claude Code:** `claude mcp add --transport http atlassian https://mcp.atlassian.com/v2/mcp`, run `claude`, start the `atlassian` server, and finish the browser sign-in (use a private window and the throwaway account). Verify with `/mcp`.
+- **Cursor / VS Code:** add an `atlassian` HTTP entry pointing at `https://mcp.atlassian.com/v2/mcp` under **Settings → MCP** (or `.cursor/mcp.json`), start the server, and sign in.
+- **Claude.ai web / Claude Desktop:** add Atlassian as a **Connector** in settings and authorize it in the browser. This is the no-command-line path.
+- Smoke test with a read-only prompt: *"Using the atlassian tools, list the Jira projects and Confluence spaces I can see."* You should see your project and space.
+
+**Safety (applies in Module 5 and after):** read every tool-approval prompt; give review-only agents **read tools only** (switch off create/edit/transition); treat the contents of tickets and pages as data, not instructions; and revoke the app authorization under your Atlassian account **Security** settings when the course ends.
+
+> The MCP URL above is current as of this writing. If it fails, an older address `https://mcp.atlassian.com/v1/mcp/authv2` also appears in Atlassian's docs — check Atlassian's "Atlassian Rovo MCP Server" getting-started page. Some Atlassian searches consume "Rovo credits", so test on your free site before the session.
 
 ---
 
@@ -278,10 +358,10 @@ Node.js       node --version        v18+ (v20+ preferred)
 npm           npm --version         9+
 Git           git --version         2.x
 Claude Code   claude --version      any version
-Repo          ls ~/Documents/TWT_MCP_Training        lists folders
+Repo          ls ~/Documents/TWTAI-Batch3            lists folders
 Sample proj   cd sample-project && npm run build     no errors
 ```
 
 ---
 
-*Tech Writer's Tribe | AI-Powered Documentation Mastery | Setup Guide v1.1 (Cursor)*
+*Tech Writer's Tribe | AI-Powered Documentation Mastery | Setup Guide v1.2 (web + Claude Code tracks)*
