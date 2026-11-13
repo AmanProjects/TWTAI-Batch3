@@ -14,7 +14,7 @@ This program runs two ways. Pick one before you install anything.
 | **Covers** | Days 1–5 fully; day 7 publishes from the browser | All 8 days, including plugins, local MCP servers, and LSP |
 | **You need** | A Claude account and a browser | Everything in this guide (steps 1–9) |
 | **Setup time** | ~5 minutes | ~60 minutes |
-| **API key?** | No — just sign in | Yes |
+| **Accounts** | Claude account (plus GitHub for day 7) | Claude, GitHub, and Atlassian accounts |
 
 **Writers' track setup, in full:**
 
@@ -29,25 +29,27 @@ That is all the writers' track needs for days 1–5. The rest of this guide is t
 
 ---
 
-## What You'll Install
+## Before You Start: Required Prerequisites
 
-| # | Tool | Purpose |
-|---|------|---------|
-| 1 | Cursor IDE | Your editor for writing skills and reading MCP server code |
-| 2 | Node.js 18+ | Runs the MCP server you'll build in Modules 6–7 |
-| 3 | Git | Clones the training repo and shares your work |
-| 4 | Claude Code CLI | The AI shell where you'll run your skills |
-| 5 | Anthropic API key | Authenticates Claude Code |
-| 6 | Training repo | Course files, sample project, and starter skills |
+Before beginning the workshop, install and confirm the following tools and accounts:
 
-> **Cursor AI vs. Claude Code CLI — they are different.**
-> Cursor's built-in AI helps you edit files inside the editor. Claude Code CLI is a separate command-line tool the course uses for skills and slash commands. You need **both**.
+| # | Requirement | Why it's required |
+|---|-------------|------------------|
+| 1 | Cursor IDE | Your editor for writing, reading project files, and working with MCP-related projects |
+| 2 | Node.js 18+ (LTS recommended) | Required to build and run the sample project and MCP server exercises |
+| 3 | Git | Required to clone the training repository and manage your work |
+| 4 | GitHub account | Needed to access the course repo and publish work when required |
+| 5 | Atlassian account | Required for the Atlassian MCP exercise in Module 5 (Jira/Confluence access) |
+| 6 | Claude Code CLI | The CLI used throughout the workshop for skills, plugins, and agent workflows |
+| 7 | Course training repo | The workshop materials, sample project, and starter exercise files |
+
+> You need both Cursor and Claude Code CLI. They are separate tools. Cursor is for editing files; Claude Code is the command-line AI shell used in the course.
 
 ---
 
 ## System Requirements
 
-| | Minimum | Recommended |
+| Requirement | Minimum | Recommended |
 |---|---|---|
 | OS | macOS 12+, Windows 10+, Ubuntu 20.04+ | macOS 14+ or Ubuntu 22.04+ |
 | RAM | 8 GB | 16 GB |
@@ -64,7 +66,7 @@ That is all the writers' track needs for days 1–5. The rest of this guide is t
 
 1. Go to [cursor.com](https://cursor.com)
 2. Download the installer for your OS and run it (accept defaults)
-3. Launch Cursor; sign in with GitHub or Google (free tier is fine)
+3. Launch Cursor and sign in with GitHub or Google (free tier is fine)
 
 **Recommended extensions** (open the Extensions panel: `Cmd+Shift+X` / `Ctrl+Shift+X`):
 - **Markdown All in One** — better markdown editing
@@ -73,7 +75,7 @@ That is all the writers' track needs for days 1–5. The rest of this guide is t
 
 **Verify:** Cursor opens and you can create a new file (`Cmd+N` / `Ctrl+N`). Done.
 
-> **Why Cursor for this course?** Cursor supports the Model Context Protocol natively via `.cursor/mcp.json`. In Modules 6–7 you'll plug the MCP server you build into Cursor itself and watch it work end-to-end — no extra tooling required.
+> **Why Cursor for this course?** Cursor supports the Model Context Protocol natively via `.cursor/mcp.json`, which is used in the later workshop modules.
 
 ---
 
@@ -85,7 +87,7 @@ That is all the writers' track needs for days 1–5. The rest of this guide is t
 
 ### Windows
 1. Download the **LTS Windows Installer (.msi)** from [nodejs.org](https://nodejs.org)
-2. Run it — check "Automatically install necessary tools" when prompted
+2. Run it — check **"Automatically install necessary tools"** when prompted
 3. Close and reopen your terminal afterward
 
 ### Linux (Ubuntu/Debian)
@@ -145,15 +147,18 @@ If you don't already have one: sign up at [github.com](https://github.com) and v
 
 ---
 
-## Step 5 — Get Your Anthropic API Key
+## Step 5 — Create an Atlassian Account
 
-1. Sign in at [console.anthropic.com](https://console.anthropic.com)
-2. Go to **API Keys** → **Create Key**
-3. Name it "TWT Training"
-4. **Copy the key immediately** — you cannot view it again
-5. Store it in a password manager
+This is needed for the Atlassian MCP server exercise in Module 5, where Claude connects to Jira and Confluence.
 
-> Never paste your API key into a chat, email, or shared document.
+1. Go to [id.atlassian.com](https://id.atlassian.com/) and sign up or sign in
+2. If you already have an Atlassian account, use it. If not, create a personal Atlassian account that you can access during the workshop
+3. If needed, create or join a Jira project and Confluence space for the workshop exercises
+4. Keep your login ready — Claude Code will prompt you to authorize access when the Atlassian MCP server is configured
+
+> Use an account you control personally. Do not rely on a work-only account if your employer restricts third-party access or app authorization.
+
+> If you are not using the Atlassian exercise in Module 5, you can skip this for now. It is still recommended for the full workshop experience.
 
 ---
 
@@ -175,29 +180,22 @@ claude --version
 
 If `claude` is not found, close and reopen your terminal.
 
-### Authenticate
+### Sign in / Authenticate
 ```bash
 claude
 ```
 
-On first launch, follow the prompts to connect your API key.
-
-**Using your own key?** Set the environment variable first, then re-run `claude`:
-```bash
-# macOS / Linux
-export ANTHROPIC_API_KEY="sk-ant-..."
-
-# Windows (PowerShell)
-$env:ANTHROPIC_API_KEY = "sk-ant-..."
-```
+On first launch, follow the prompts to sign in to your Claude/Anthropic account. If your environment requires a direct API key, follow the prompt shown by the CLI.
 
 ---
 
 ## Step 7 — Clone the Training Repo
 
+Clone the workshop repo from the official course repository:
+
 ```bash
 cd ~/Documents
-git clone <URL-from-welcome-email> TWTAI-Batch3
+git clone https://github.com/AmanProjects/TWTAI-Batch3.git
 cd TWTAI-Batch3
 ```
 
@@ -207,7 +205,7 @@ Open the folder in Cursor: **File → Open Folder…** and select `TWTAI-Batch3`
 
 ## Step 8 — Build the Sample Project
 
-The sample project is the MCP server you'll extend in Modules 6–7. Build it once now:
+The sample project is the MCP server you'll extend in the later workshop modules. Build it once now:
 
 ```bash
 cd sample-project
@@ -228,7 +226,7 @@ Press `Ctrl+C` to stop. If it started without errors, you're done.
 
 ## Step 9 — Full Environment Check
 
-Run all six. Every one must pass before Module 1.
+Run all six. Every one must pass before the workshop begins.
 
 ```bash
 node --version                                          # v18+
@@ -240,7 +238,6 @@ claude                                                  # launches; Ctrl+C to ex
 ```
 
 All six green? You're ready.
-
 
 ---
 
@@ -273,11 +270,6 @@ npm config get prefix
 # Add the printed-path/bin to your PATH and re-source your shell config
 ```
 
-### API key rejected
-- No leading/trailing spaces in the key
-- Key must start with `sk-ant-`
-- If TWT issued it, confirm with the coordinator that it hasn't expired
-
 ### Cursor: I can't find the sidebar, or where to install plugins
 The toolbar and sidebar layout differ between macOS and Windows and between Cursor versions, so "the icon on the left" may be elsewhere for you. Use names, not icons:
 - Toggle the primary sidebar: **View → Appearance → Primary Side Bar**, or `Cmd+B` (macOS) / `Ctrl+B` (Windows/Linux).
@@ -306,14 +298,20 @@ winget install gh      # Windows
 gh auth login
 ```
 
+### Atlassian MCP authorization fails
+- Sign in to the correct Atlassian account used by your Jira/Confluence workspace
+- Confirm your Atlassian user has access to the target Jira project or Confluence space
+- Re-run `claude` and complete the browser authorization flow again
+- If your organization blocks external app access, switch to a personal Atlassian account or a sandbox/test workspace you can access
+
 ### Cursor's AI keeps suggesting things while I'm trying to focus
-Toggle Cursor AI off with `Cmd+L` / `Ctrl+L` (chat) or in **Settings → Cursor Tab** to disable inline suggestions. Cursor AI is independent of Claude Code CLI — turning it off does not affect the course.
+Toggle Cursor AI off with `Cmd+L` / `Ctrl+L` (chat) or in **Settings → Cursor Tab** to disable inline suggestions. Cursor AI is independent of Claude Code CLI — turning it off does not affect Claude Code.
 
 ---
 
 ## Atlassian prerequisites — Confluence and Jira (before Module 5)
 
-Module 5 connects Claude to a live Atlassian site through the Atlassian MCP server. Set this up **before** that session — budget about 20 minutes. Adapted from the STC 2026 prerequisites.
+Module 5 connects Claude to a live Atlassian site through the Atlassian MCP server. This expands Step 5 into the site, project, and space you will actually use, so set it up **before** that session — budget about 20 minutes. Adapted from the STC 2026 prerequisites.
 
 > **Use a throwaway personal Atlassian account, never your work account.** The MCP server acts with the permissions of whoever signs in, so a work login would expose real company pages and tickets to the AI.
 
@@ -338,30 +336,32 @@ Module 5 connects Claude to a live Atlassian site through the Atlassian MCP serv
 
 ---
 
-## Getting Help Before Module 1
+## Getting Help Before the Workshop
 
 1. Post in the TWT community channel — include the exact error and command
-2. Attend the setup help session (weekend before Module 1)
-3. Email the course coordinator for API key or access problems
+2. Attend the setup help session before the workshop begins
+3. Email the course coordinator for access problems or environment setup issues
 
-> Don't arrive at Module 1 without a working environment. Setup is the only thing you need to solve before class begins.
+> Don't arrive at the workshop without a working environment. Setup is the only thing you need to solve before class begins.
 
 ---
 
 ## Quick Reference Card
 
 ```
-TOOL          VERIFY WITH           EXPECTED
-──────────────────────────────────────────────────────
-Cursor        open the app          window opens
-Node.js       node --version        v18+ (v20+ preferred)
-npm           npm --version         9+
-Git           git --version         2.x
-Claude Code   claude --version      any version
-Repo          ls ~/Documents/TWTAI-Batch3            lists folders
-Sample proj   cd sample-project && npm run build     no errors
+TOOL          VERIFY WITH                                 EXPECTED
+───────────────────────────────────────────────────────────────────
+Cursor        open the app                                window opens
+Node.js       node --version                              v18+ (v20+ preferred)
+npm           npm --version                               9+
+Git           git --version                               2.x
+Claude Code   claude --version                            any version
+GitHub        github.com account                           active account
+Atlassian     id.atlassian.com account                    active Jira/Confluence access
+Repo          cd ~/Documents/TWTAI-Batch3 && ls           lists folders
+Sample proj   cd sample-project && npm run build           no errors
 ```
 
 ---
 
-*Tech Writer's Tribe | AI-Powered Documentation Mastery | Setup Guide v1.2 (web + Claude Code tracks)*
+*Tech Writer's Tribe | AI-Powered Documentation Mastery | Setup Guide v1.4 (Cursor — writers' and engineering tracks)*
